@@ -1,0 +1,66 @@
+﻿@page
+@model RazorLogin.Pages.Admin.Deps.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependant[0].DependentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependant[0].DependentSex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependant[0].DependentDob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependant[0].Relationship)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependant[0].HealthcareTier)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dependant[0].Employee)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Dependant) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DependentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DependentSex)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DependentDob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Relationship)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HealthcareTier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.DepndantId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.DepndantId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.DepndantId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
