@@ -7,37 +7,40 @@
 
 <h1>Account Details</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Customer[0].CustomerFirstName)</th>
-            <th>@Html.DisplayNameFor(model => model.Customer[0].CustomerLastName)</th>
-            <th>@Html.DisplayNameFor(model => model.Customer[0].CustomerDob)</th>
-            <th>@Html.DisplayNameFor(model => model.Customer[0].CustomerAddress)</th>
-            <th>@Html.DisplayNameFor(model => model.Customer[0].CustomerEmail)</th>
-            <th>@Html.DisplayNameFor(model => model.Customer[0].MembershipStartDate)</th>
-            <th>@Html.DisplayNameFor(model => model.Customer[0].MembershipEndDate)</th>
-            <th>@Html.DisplayNameFor(model => model.Customer[0].MembershipType)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Customer)
-        {
+@if (Model.Customer != null)
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.CustomerFirstName)</td>
-                <td>@Html.DisplayFor(modelItem => item.CustomerLastName)</td>
-                <td>@Html.DisplayFor(modelItem => item.CustomerDob)</td>
-                <td>@Html.DisplayFor(modelItem => item.CustomerAddress)</td>
-                <td>@Html.DisplayFor(modelItem => item.CustomerEmail)</td>
-                <td>@Html.DisplayFor(modelItem => item.MembershipStartDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.MembershipEndDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.MembershipType)</td>
+                <th>@Html.DisplayNameFor(model => Model.Customer.CustomerFirstName)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.CustomerLastName)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.CustomerDob)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.CustomerAddress)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.CustomerEmail)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.MembershipStartDate)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.MembershipEndDate)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.MembershipType)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.CustomerFirstName)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.CustomerLastName)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.CustomerDob)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.CustomerAddress)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.CustomerEmail)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipStartDate)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipEndDate)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipType)</td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.CustomerId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.CustomerId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.CustomerId">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@Model.Customer.CustomerId">Edit</a> |
                 </td>
             </tr>
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No account details found.</p>
+}
