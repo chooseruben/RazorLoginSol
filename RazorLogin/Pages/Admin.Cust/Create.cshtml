@@ -13,6 +13,27 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="Customer.CustomerFirstName" class="control-label"></label>
+                <input asp-for="Customer.CustomerFirstName" class="form-control" />
+                <span asp-validation-for="Customer.CustomerFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.CustomerLastName" class="control-label"></label>
+                <input asp-for="Customer.CustomerLastName" class="form-control" />
+                <span asp-validation-for="Customer.CustomerLastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.CustomerDob" class="control-label"></label>
+                <input asp-for="Customer.CustomerDob" class="form-control" />
+                <span asp-validation-for="Customer.CustomerDob" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.CustomerAddress" class="control-label"></label>
+                <input asp-for="Customer.CustomerAddress" class="form-control" />
+                <span asp-validation-for="Customer.CustomerAddress" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Customer.MembershipStartDate" class="control-label"></label>
                 <input asp-for="Customer.MembershipStartDate" class="form-control" />
@@ -24,8 +45,12 @@
                 <span asp-validation-for="Customer.MembershipEndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Customer.MembershipType" class="control-label"></label>
-                <input asp-for="Customer.MembershipType" class="form-control" />
+                <label asp-for="Customer.MembershipType" class="control-label"></label>><br />
+                <select asp-for="Customer.MembershipType">
+                    <option value="FREE TIER">FREE</option>
+                    <option value="FAMILY TIER">FAMILY</option>
+                    <option value="VIP TIER">VIP</option>
+                </select>
                 <span asp-validation-for="Customer.MembershipType" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,6 +58,7 @@
                 <input asp-for="Customer.CustomerEmail" class="form-control" />
                 <span asp-validation-for="Customer.CustomerEmail" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

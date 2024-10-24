@@ -13,7 +13,7 @@ public partial class Manager
 
     public DateOnly? ManagerEmploymentDate { get; set; }
 
-    public virtual Employee Employee { get; set; } = null!;
+    public virtual Employee? Employee { get; set; } = null!;
 
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 }

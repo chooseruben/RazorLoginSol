@@ -24,14 +24,12 @@
                 
                      @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                 {
-
-
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Users/Index">Users</a>
                         </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Users2/Index">Users2</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin.UserRoles/Index">Users</a>
                             </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Cust/Index">Customers</a>
@@ -41,6 +39,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Mana/Index">Managers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Zook/Index">Zookeepers</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Deps/Index">Dependants</a>

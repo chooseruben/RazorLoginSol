@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Employee[0].Ssn)
+                @Html.DisplayNameFor(model => model.Employee[0].EmployeeId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Employee[0].EmployeeFirstName)
@@ -22,24 +22,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Employee[0].EmployeeLastName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].EmployeeDob)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].EmployeeAddress)
-            </th>
+    
             <th>
                 @Html.DisplayNameFor(model => model.Employee[0].EmployeeSalary)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].DateOfEmployment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].Degree)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].EmployeePhoneNumber)
-            </th>
+     
             <th>
                 @Html.DisplayNameFor(model => model.Employee[0].Department)
             </th>
@@ -62,7 +49,7 @@
 @foreach (var item in Model.Employee) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Ssn)
+                @Html.DisplayFor(modelItem => item.EmployeeId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EmployeeFirstName)
@@ -71,22 +58,7 @@
                 @Html.DisplayFor(modelItem => item.EmployeeLastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmployeeDob)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeAddress)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.EmployeeSalary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfEmployment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Degree)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeePhoneNumber)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Department)
