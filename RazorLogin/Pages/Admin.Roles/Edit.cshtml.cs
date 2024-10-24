@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.Emp
+namespace RazorLogin.Pages.Admin.Roles
 {
     public class EditModel : PageModel
     {
@@ -20,26 +20,21 @@ namespace RazorLogin.Pages.Admin.Emp
         }
 
         [BindProperty]
-        public Employee Employee { get; set; } = default!;
+        public AspNetRole AspNetRole { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var employee =  await _context.Employees.FirstOrDefaultAsync(m => m.EmployeeId == id);
-            if (employee == null)
+            var aspnetrole =  await _context.AspNetRoles.FirstOrDefaultAsync(m => m.Id == id);
+            if (aspnetrole == null)
             {
                 return NotFound();
             }
-            Employee = employee;
-
-           ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
-           ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
-           ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
-
+            AspNetRole = aspnetrole;
             return Page();
         }
 
@@ -52,7 +47,7 @@ namespace RazorLogin.Pages.Admin.Emp
                 return Page();
             }
 
-            _context.Attach(Employee).State = EntityState.Modified;
+            _context.Attach(AspNetRole).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +55,7 @@ namespace RazorLogin.Pages.Admin.Emp
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmployeeExists(Employee.EmployeeId))
+                if (!AspNetRoleExists(AspNetRole.Id))
                 {
                     return NotFound();
                 }
@@ -73,9 +68,9 @@ namespace RazorLogin.Pages.Admin.Emp
             return RedirectToPage("./Index");
         }
 
-        private bool EmployeeExists(int id)
+        private bool AspNetRoleExists(string id)
         {
-            return _context.Employees.Any(e => e.EmployeeId == id);
+            return _context.AspNetRoles.Any(e => e.Id == id);
         }
     }
 }

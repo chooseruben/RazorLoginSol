@@ -16,7 +16,7 @@ public partial class ZooDbContext : DbContext
     }
 
     public virtual DbSet<Animal> Animals { get; set; }
-
+     
     public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
 
     public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
@@ -338,6 +338,8 @@ public partial class ZooDbContext : DbContext
         modelBuilder.Entity<Employee>(entity =>
         {
             entity.HasKey(e => e.EmployeeId).HasName("PK_Employee_Employee_ID");
+
+            entity.ToTable(tb => tb.HasTrigger("[dbo].[check_employee_over_18]"));
 
             entity.ToTable("Employee");
 
