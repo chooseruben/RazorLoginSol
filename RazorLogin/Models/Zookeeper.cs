@@ -19,7 +19,7 @@ public partial class Zookeeper
 
     public virtual ICollection<Animal> Animals { get; set; } = new List<Animal>();
 
-    public virtual Employee Employee { get; set; } = null!;
+    public virtual Employee? Employee { get; set; } = null!;
 
     public virtual ICollection<Enclosure> Enclosures { get; set; } = new List<Enclosure>();
 }

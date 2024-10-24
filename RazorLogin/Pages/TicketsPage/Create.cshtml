@@ -1,0 +1,91 @@
+﻿@page
+@model RazorLogin.Pages.TicketsPage.CreateModel
+
+@{
+    ViewData["Title"] = "Purchase Ticket";
+}
+
+<h1>Purchase Ticket</h1>
+
+<h4>Ticket</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Ticket Type Dropdown -->
+            <div class="form-group">
+                <label asp-for="SelectedTicketType" class="control-label"></label>
+                <select asp-for="SelectedTicketType" class="form-control" onchange="updateTicketPrice()">
+                    <option value="">Select Ticket Type</option>
+                    @foreach (var ticketType in Model.TicketTypes)
+                    {
+                        <option value="@ticketType.Key">@ticketType.Key</option>
+                    }
+                </select>
+                <span asp-validation-for="SelectedTicketType" class="text-danger"></span>
+            </div>
+
+            <!-- Ticket Price Display -->
+            <div class="form-group">
+                <label>Ticket Price:</label>
+                <p id="ticketPrice">$0</p>
+            </div>
+
+            <!-- Entry Time Dropdown -->
+            <div class="form-group">
+                <label asp-for="SelectedEntryTime" class="control-label"></label>
+                <select asp-for="SelectedEntryTime" class="form-control">
+                    <option value="">Select Entry Time</option>
+                    @foreach (var time in Model.AvailableEntryTimes)
+                    {
+                        <option value="@time">@time</option>
+                    }
+                </select>
+                <span asp-validation-for="SelectedEntryTime" class="text-danger"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Purchase" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Update ticket price based on selected ticket type
+        function updateTicketPrice() {
+            var ticketType = document.getElementById('SelectedTicketType').value;
+            var ticketPrice = 0;
+
+            // Define prices
+            switch (ticketType) {
+                case 'Adult':
+                    ticketPrice = 25;
+                    break;
+                case 'Child':
+                case 'Senior':
+                    ticketPrice = 10;
+                    break;
+                case 'Veteran':
+                    ticketPrice = 7;
+                    break;
+                default:
+                    ticketPrice = 0;
+            }
+
+            // Display the ticket price
+            document.getElementById('ticketPrice').innerText = '$' + ticketPrice;
+        }
+    </script>
+}

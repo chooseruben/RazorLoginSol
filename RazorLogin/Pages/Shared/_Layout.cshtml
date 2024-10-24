@@ -24,9 +24,16 @@
                 
                      @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                 {
-
-
                     <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Users/Index">Users</a>
+                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin.UserRoles/Index">Users</a>
+                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Cust/Index">Customers</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Emp/Index">Employees</a>
                         </li>
@@ -34,7 +41,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Mana/Index">Managers</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Zook/Index">Zookeepers</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Deps/Index">Dependants</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin.GShps/Index">Stores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin.FShps/Index">Dining</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Roles/Index">Roles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Reports/Index">Finances</a>
                         </li>
                     </ul>
                 }
@@ -69,6 +91,12 @@
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Customer"))
                 {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/TicketsPage/Index">Tickets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/CustomerPage/Index">My Account</a>
+                        </li>
 
 
                 }

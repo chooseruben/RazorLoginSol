@@ -138,6 +138,51 @@ using (var scope = app.Services.CreateScope())
 
 }
 
+/// FOR TEST PURPOSES, REMOVE AFTERWARDS
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    string email = "Customer2@zoo.com";
+    string password = "Test1234!";
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+
+        var user = new IdentityUser();
+        user.UserName = email;
+        user.Email = email;
+
+        await userManager.CreateAsync(user, password);
+
+        await userManager.AddToRoleAsync(user, "Customer");
+
+    }
+
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    string email = "Customer3@zoo.com";
+    string password = "Test1234!";
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+
+        var user = new IdentityUser();
+        user.UserName = email;
+        user.Email = email;
+
+        await userManager.CreateAsync(user, password);
+
+        await userManager.AddToRoleAsync(user, "Customer");
+
+    }
+
+}
+
+/// END TEST
+
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();

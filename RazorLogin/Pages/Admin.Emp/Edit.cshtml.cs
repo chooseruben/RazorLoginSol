@@ -35,9 +35,11 @@ namespace RazorLogin.Pages.Admin.Emp
                 return NotFound();
             }
             Employee = employee;
+
            ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
            ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
            ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
+
             return Page();
         }
 

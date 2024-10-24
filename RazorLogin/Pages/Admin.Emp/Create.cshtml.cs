@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
 namespace RazorLogin.Pages.Admin.Emp
@@ -21,7 +22,25 @@ namespace RazorLogin.Pages.Admin.Emp
         public IActionResult OnGet()
         {
         ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
-        ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
+
+            List<SelectListItem> selectList = _context.FoodStores
+                .AsNoTracking()
+                .Select(x => new SelectListItem()
+                {
+                    Value = x.FoodStoreId.ToString(),
+                  
+                })
+                .ToList();
+
+            selectList.Insert(0, new SelectListItem()
+            {
+                Value = "",
+                Text = "--- Select Related Entity ---"
+            });
+
+            ViewData["RelatedEntity_Id"] = selectList;
+
+            ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
         ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
             return Page();
         }
