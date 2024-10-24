@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.Mana
+namespace RazorLogin.Pages.Admin.UserRoles
 {
     public class CreateModel : PageModel
     {
@@ -19,27 +18,23 @@ namespace RazorLogin.Pages.Admin.Mana
             _context = context;
         }
 
-       
         public IActionResult OnGet()
         {
-
-
             return Page();
         }
 
         [BindProperty]
-        public Manager Manager { get; set; } = default!;
+        public AspNetRole AspNetRole { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                Debug.WriteLine("Model state is not valid!");
                 return Page();
             }
 
-            _context.Managers.Add(Manager);
+            _context.AspNetRoles.Add(AspNetRole);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

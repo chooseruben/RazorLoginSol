@@ -45,8 +45,12 @@
                 <span asp-validation-for="Customer.MembershipEndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Customer.MembershipType" class="control-label"></label>
-                <input asp-for="Customer.MembershipType" class="form-control" />
+                <label asp-for="Customer.MembershipType" class="control-label"></label><br />
+                <select asp-for="Customer.MembershipType">
+                    <option value="FREE TIER">FREE</option>
+                    <option value="FAMILY TIER">FAMILY</option>
+                    <option value="VIP TIER">VIP</option>
+                </select>
                 <span asp-validation-for="Customer.MembershipType" class="text-danger"></span>
             </div>
             <div class="form-group">

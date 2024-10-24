@@ -57,8 +57,17 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Employee.Degree" class="control-label"></label>
-                <input asp-for="Employee.Degree" class="form-control" />
+                <label asp-for="Employee.Degree" class="control-label"></label><br />
+                <select asp-for="Employee.Degree">
+                    <option value=""></option>
+                    <option value="NO SCHOOLING">NONE</option>
+                    <option value="HIGH SCHOOL DIPLOMA">HIGHSCHOOL</option>
+                    <option value="ASSOCIATE DEGREE">ASSOCIATE</option>
+                    <option value="BACHELORS DEGREE">BACHELOR</option>
+                    <option value="MASTERS DEGREE">MASTER</option>
+                    <option value="DOCTORAL DEGREE">DOCTORAL</option>
+                    <option value="PROFESSIONAL DEGREE">PROFESSIONAL</option>
+                </select>
                 <span asp-validation-for="Employee.Degree" class="text-danger"></span>
             </div>
 
