@@ -72,21 +72,22 @@ namespace RazorLogin.Pages.TicketsPage
             // Generate a unique Ticket_ID manually
             Ticket.TicketId = GenerateUniqueTicketId();
 
+            Ticket.TicketPurchaseDate = DateOnly.FromDateTime(DateTime.Now);
+
             // Create a new Purchase with a unique PurchaseId and associate it with the customer
             var purchase = new Purchase
             {
                 PurchaseId = GenerateUniquePurchaseId(),
-                CustomerId = customer.CustomerId 
+                CustomerId = customer.CustomerId,
+                PurchaseDate = Ticket.TicketPurchaseDate  // Set PurchaseDate to match TicketDate
             };
 
-            
             _context.Purchases.Add(purchase);
             await _context.SaveChangesAsync();
 
             // Link the Purchase to the Ticket
             Ticket.Purchase = purchase;
 
-            
             _context.Tickets.Add(Ticket);
 
             try
@@ -102,6 +103,7 @@ namespace RazorLogin.Pages.TicketsPage
 
             return RedirectToPage("/Ticketspage/Index");
         }
+
 
         private int GenerateUniqueTicketId()
         {
