@@ -8,10 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\CustomerTickets\**" />
-    <Content Remove="Pages\CustomerTickets\**" />
-    <EmbeddedResource Remove="Pages\CustomerTickets\**" />
-    <None Remove="Pages\CustomerTickets\**" />
+
+    <Compile Remove="obj\**" />
+    <Compile Remove="Pages\Admin.Purch\old dont use this folder\**" />
+    <Compile Remove="Pages\Admin.Purch\old\**" />
+    <Content Remove="obj\**" />
+    <Content Remove="Pages\Admin.Purch\old dont use this folder\**" />
+    <Content Remove="Pages\Admin.Purch\old\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <EmbeddedResource Remove="Pages\Admin.Purch\old dont use this folder\**" />
+    <EmbeddedResource Remove="Pages\Admin.Purch\old\**" />
+    <None Remove="obj\**" />
+    <None Remove="Pages\Admin.Purch\old dont use this folder\**" />
+    <None Remove="Pages\Admin.Purch\old\**" />
+
   </ItemGroup>
 
   <ItemGroup>
