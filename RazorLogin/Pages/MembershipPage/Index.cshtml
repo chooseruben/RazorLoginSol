@@ -1,0 +1,36 @@
+﻿@page
+@model RazorLogin.Pages.CustomerPage.IndexModel
+
+@{
+    ViewData["Title"] = "My Membership";
+}
+
+<h1>My Membership</h1>
+
+@if (Model.Customer != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => Model.Customer.MembershipStartDate)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.MembershipEndDate)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.MembershipType)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipStartDate)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipEndDate)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipType)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@Model.Customer.CustomerId">Update or Upgrade Membership </a> |
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No account details found.</p>
+}
