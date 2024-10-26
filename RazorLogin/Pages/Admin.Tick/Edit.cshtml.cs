@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.UserRoles
+namespace RazorLogin.Pages.Admin.Tick
 {
     public class EditModel : PageModel
     {
@@ -20,21 +20,22 @@ namespace RazorLogin.Pages.Admin.UserRoles
         }
 
         [BindProperty]
-        public AspNetRole AspNetRole { get; set; } = default!;
+        public Ticket Ticket { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var aspnetrole =  await _context.AspNetRoles.FirstOrDefaultAsync(m => m.Id == id);
-            if (aspnetrole == null)
+            var ticket =  await _context.Tickets.FirstOrDefaultAsync(m => m.TicketId == id);
+            if (ticket == null)
             {
                 return NotFound();
             }
-            AspNetRole = aspnetrole;
+            Ticket = ticket;
+           ViewData["PurchaseId"] = new SelectList(_context.Purchases, "PurchaseId", "PurchaseId");
             return Page();
         }
 
@@ -47,7 +48,7 @@ namespace RazorLogin.Pages.Admin.UserRoles
                 return Page();
             }
 
-            _context.Attach(AspNetRole).State = EntityState.Modified;
+            _context.Attach(Ticket).State = EntityState.Modified;
 
             try
             {
@@ -55,7 +56,7 @@ namespace RazorLogin.Pages.Admin.UserRoles
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AspNetRoleExists(AspNetRole.Id))
+                if (!TicketExists(Ticket.TicketId))
                 {
                     return NotFound();
                 }
@@ -68,9 +69,9 @@ namespace RazorLogin.Pages.Admin.UserRoles
             return RedirectToPage("./Index");
         }
 
-        private bool AspNetRoleExists(string id)
+        private bool TicketExists(int id)
         {
-            return _context.AspNetRoles.Any(e => e.Id == id);
+            return _context.Tickets.Any(e => e.TicketId == id);
         }
     }
 }

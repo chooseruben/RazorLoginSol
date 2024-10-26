@@ -121,7 +121,7 @@ using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-    string email = "Cutomer@zoo.com";
+    string email = "Customer@zoo.com";
     string password = "Test1234!";
     if (await userManager.FindByEmailAsync(email) == null)
     {

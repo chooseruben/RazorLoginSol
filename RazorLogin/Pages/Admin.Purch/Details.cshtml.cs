@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.UserRoles
+namespace RazorLogin.Pages.Admin.Purch
 {
     public class DetailsModel : PageModel
     {
@@ -18,23 +18,23 @@ namespace RazorLogin.Pages.Admin.UserRoles
             _context = context;
         }
 
-        public AspNetRole AspNetRole { get; set; } = default!;
+        public Purchase Purchase { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var aspnetrole = await _context.AspNetRoles.FirstOrDefaultAsync(m => m.Id == id);
-            if (aspnetrole == null)
+            var purchase = await _context.Purchases.FirstOrDefaultAsync(m => m.PurchaseId == id);
+            if (purchase == null)
             {
                 return NotFound();
             }
             else
             {
-                AspNetRole = aspnetrole;
+                Purchase = purchase;
             }
             return Page();
         }

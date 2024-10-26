@@ -17,13 +17,13 @@
                 @Html.DisplayNameFor(model => model.Manager[0].ManagerId)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Manager[0].EmployeeId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Manager[0].Department)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Manager[0].ManagerEmploymentDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Manager[0].Employee)
             </th>
             <th></th>
         </tr>
@@ -32,16 +32,16 @@
 @foreach (var item in Model.Manager) {
         <tr>
             <td>
-                    @Html.DisplayFor(modelItem => item.ManagerId)
+                @Html.DisplayFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Department)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ManagerEmploymentDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ManagerId">Edit</a> |

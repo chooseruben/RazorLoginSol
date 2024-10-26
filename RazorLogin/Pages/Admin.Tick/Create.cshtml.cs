@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.UserRoles
+namespace RazorLogin.Pages.Admin.Tick
 {
     public class CreateModel : PageModel
     {
@@ -20,11 +20,12 @@ namespace RazorLogin.Pages.Admin.UserRoles
 
         public IActionResult OnGet()
         {
+        ViewData["PurchaseId"] = new SelectList(_context.Purchases, "PurchaseId", "PurchaseId");
             return Page();
         }
 
         [BindProperty]
-        public AspNetRole AspNetRole { get; set; } = default!;
+        public Ticket Ticket { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -34,7 +35,7 @@ namespace RazorLogin.Pages.Admin.UserRoles
                 return Page();
             }
 
-            _context.AspNetRoles.Add(AspNetRole);
+            _context.Tickets.Add(Ticket);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
