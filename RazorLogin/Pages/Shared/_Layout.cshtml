@@ -92,13 +92,14 @@
                 }
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Customer"))
-                {
+                {   <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/TicketsPage/Index">Tickets</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/CustomerPage/Index">My Account</a>
                         </li>
+                    </ul>
 
 
                 }

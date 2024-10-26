@@ -33,18 +33,6 @@
                 <p id="ticketPrice">$0</p>
             </div>
 
-            <!-- Entry Time Dropdown -->
-            <div class="form-group">
-                <label asp-for="SelectedEntryTime" class="control-label"></label>
-                <select asp-for="SelectedEntryTime" class="form-control">
-                    <option value="">Select Entry Time</option>
-                    @foreach (var time in Model.AvailableEntryTimes)
-                    {
-                        <option value="@time">@time</option>
-                    }
-                </select>
-                <span asp-validation-for="SelectedEntryTime" class="text-danger"></span>
-            </div>
 
             <!-- Submit Button -->
             <div class="form-group">

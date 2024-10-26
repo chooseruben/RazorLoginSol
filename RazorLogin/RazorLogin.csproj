@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+
     <Compile Remove="obj\**" />
     <Compile Remove="Pages\Admin.Purch\old dont use this folder\**" />
     <Compile Remove="Pages\Admin.Purch\old\**" />
@@ -20,6 +21,7 @@
     <None Remove="obj\**" />
     <None Remove="Pages\Admin.Purch\old dont use this folder\**" />
     <None Remove="Pages\Admin.Purch\old\**" />
+
   </ItemGroup>
 
   <ItemGroup>
