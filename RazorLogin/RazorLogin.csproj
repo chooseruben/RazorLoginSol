@@ -10,17 +10,14 @@
   <ItemGroup>
 
     <Compile Remove="obj\**" />
-    <Compile Remove="Pages\Admin.Purch\old dont use this folder\**" />
-    <Compile Remove="Pages\Admin.Purch\old\**" />
+
+    <Compile Remove="Pages\Admin.Purch\**" />
     <Content Remove="obj\**" />
-    <Content Remove="Pages\Admin.Purch\old dont use this folder\**" />
-    <Content Remove="Pages\Admin.Purch\old\**" />
+    <Content Remove="Pages\Admin.Purch\**" />
     <EmbeddedResource Remove="obj\**" />
-    <EmbeddedResource Remove="Pages\Admin.Purch\old dont use this folder\**" />
-    <EmbeddedResource Remove="Pages\Admin.Purch\old\**" />
+    <EmbeddedResource Remove="Pages\Admin.Purch\**" />
     <None Remove="obj\**" />
-    <None Remove="Pages\Admin.Purch\old dont use this folder\**" />
-    <None Remove="Pages\Admin.Purch\old\**" />
+    <None Remove="Pages\Admin.Purch\**" />
 
   </ItemGroup>
 
