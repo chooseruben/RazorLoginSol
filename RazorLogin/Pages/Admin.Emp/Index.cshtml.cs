@@ -45,11 +45,9 @@ namespace RazorLogin.Pages.Admin.Emp
                         var roles = await _userManager.GetRolesAsync(user);
                         EmployeeRoles[employee.EmployeeEmail] = roles.ToList();
                     }
-
-                   // var roles = await _userManager.GetRolesAsync(new IdentityUser { Id = employee.EmployeeEmail });
-                    //EmployeeRoles[employee.EmployeeEmail] = roles.ToList();
                 }
             }
+                    //EmployeeRoles[employee.EmployeeEmail] = roles.ToList();
         }
     }
 }
