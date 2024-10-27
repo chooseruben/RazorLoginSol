@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.UserRoles
+namespace RazorLogin.Pages.MembershipPage
 {
     public class IndexModel : PageModel
     {
@@ -18,11 +18,11 @@ namespace RazorLogin.Pages.Admin.UserRoles
             _context = context;
         }
 
-        public IList<AspNetRole> AspNetRole { get;set; } = default!;
+        public IList<Customer> Customer { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            AspNetRole = await _context.AspNetRoles.ToListAsync();
+            Customer = await _context.Customers.ToListAsync();
         }
     }
 }

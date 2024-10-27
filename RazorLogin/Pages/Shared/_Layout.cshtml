@@ -22,12 +22,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
                 
-                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                {
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Users/Index">Users</a>
-                        </li>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Users/Index">Users</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Cust/Index">Customers</a>
                             </li>
@@ -66,7 +67,6 @@
                                     <li>
                                         <a class="dropdown-item" asp-area="" asp-page="/Admin.Reports2/Index">Employee Demographics Report</a>
                                     </li>
-                                 
                                 </ul>
                             </li>
                         </ul>
@@ -93,13 +93,17 @@
                 }
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Customer"))
-                {
+                {   <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/TicketsPage/Index">Tickets</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/MembershipPage/Index">Memberships</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/CustomerPage/Index">My Account</a>
                         </li>
+                    </ul>
 
 
                 }

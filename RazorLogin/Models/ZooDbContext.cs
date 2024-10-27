@@ -524,7 +524,9 @@ public partial class ZooDbContext : DbContext
         {
             entity.HasKey(e => e.ShopId).HasName("PK_Gift_shop_Shop_ID");
 
-            entity.ToTable("Gift_shop");
+            //entity.ToTable("Gift_shop");
+            entity.ToTable("Gift_shop", tb => tb.HasTrigger("InvalidClosingTime_GiftShop"));
+
 
             entity.HasIndex(e => e.ShopId, "Gift_shop$Shop_ID_UNIQUE").IsUnique();
 
@@ -648,7 +650,7 @@ public partial class ZooDbContext : DbContext
 
             entity.ToTable("Purchase");
 
-            entity.HasIndex(e => e.CustomerId, "Purchase$Customer_ID_UNIQUE").IsUnique();
+            //entity.HasIndex(e => e.CustomerId, "Purchase$Customer_ID_UNIQUE").IsUnique();
 
             entity.HasIndex(e => e.PurchaseId, "Purchase$Purchase_ID_UNIQUE").IsUnique();
 

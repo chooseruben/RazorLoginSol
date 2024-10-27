@@ -2,22 +2,111 @@
 @model RazorLogin.Pages.Admin.Reports.IndexModel
 @{
 }
-public class IndexModel : PageModel
-{
-    private readonly RazorPagesMovie.Data.RazorPagesMovieContext _context;
 
-    public IndexModel(RazorPagesMovie.Data.RazorPagesMovieContext context)
+<h1>Trending Report</h1>
+<span>Please choose a date range for report</span>
+<form method="post">
+    <input type="date" asp-for="startDay" name="from" />
+    <input type="date" asp-for="endDay" name="to" />
+    <input type="submit" class="input-bg px-2" value="View Report" />
+</form>
+
+@{
+    if (Model.ErrMsg != null)
     {
-        _context = context;
+        <span class="text-danger">@Model.ErrMsg</span>
     }
 
-    public IList<Movie>
-    Movie { get;set; }  = default!;
+}
 
-    [BindProperty(SupportsGet = true)]
-    public string? SearchString { get; set; }
+@{
+    if (Model.ButtonSub == true) 
+    {
+        <div class="table-container">
+            <table class="table mb-0">
+                <thead>
+                    <tr style="background: white;">
+                        <th colspan="2">Trending report for date range: @Model.startDay - @Model.endDay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>
+                            Label
+                        </th>
+                        <th>
+                            Value
+                        </th>
+                    </tr>
 
-    public SelectList? Genres { get; set; }
+                    @foreach (var item in Model.PurchRep)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Label)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Value)
+                            </td>
+                        </tr>
+                    }
 
-    [BindProperty(SupportsGet = true)]
-    public string? MovieGenre { get; set; }
+
+                </tbody>
+            </table>
+        </div>
+
+        <div style="width:100%;height:20%;align-content:center">
+            <canvas id="barChartCanvas" width="100" height="30"></canvas>
+        </div>
+
+        <div style="width:100%;height:20%;align-content:center">
+            <canvas id="lineChartCanvas" width="100" height="30"></canvas>
+        </div>
+
+        ////////////
+        
+        <div class="table-container">
+            <table class="table mb-0">
+                <thead>
+                    <tr style="background: white;">
+                        <th colspan="2">Trending report for date range: @Model.startDay - @Model.endDay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>
+                            Label
+                        </th>
+                        <th>
+                            Value
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model.TickRep)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Label)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Value)
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div style="width:100%;height:20%;align-content:center">
+            <canvas id="barChartCanvas" width="100" height="30"></canvas>
+        </div>
+
+        <div style="width:100%;height:20%;align-content:center">
+            <canvas id="lineChartCanvas" width="100" height="30"></canvas>
+        </div>
+
+    }
+}

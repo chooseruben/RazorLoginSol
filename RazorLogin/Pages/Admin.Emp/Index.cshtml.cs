@@ -48,8 +48,6 @@ namespace RazorLogin.Pages.Admin.Emp
                 }
             }
                     //EmployeeRoles[employee.EmployeeEmail] = roles.ToList();
-                
-            
         }
     }
 }
