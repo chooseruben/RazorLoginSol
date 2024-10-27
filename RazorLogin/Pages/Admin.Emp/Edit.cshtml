@@ -14,6 +14,8 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Employee.EmployeeId" />
+
+            <!-- Existing fields -->
             <div class="form-group">
                 <label asp-for="Employee.Ssn" class="control-label"></label>
                 <input asp-for="Employee.Ssn" class="form-control" />
@@ -51,7 +53,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Employee.Degree" class="control-label"></label><br />
-                <select asp-for="Employee.Degree">
+                <select asp-for="Employee.Degree" class="form-control">
                     <option value=""></option>
                     <option value="NO SCHOOLING">NONE</option>
                     <option value="HIGH SCHOOL DIPLOMA">HIGHSCHOOL</option>
@@ -71,13 +73,13 @@
             <div class="form-group">
                 <label asp-for="Employee.SupervisorId" class="control-label"></label>
                 <select asp-for="Employee.SupervisorId" class="form-control" asp-items="ViewBag.SupervisorId">
-                    <option value="">Select Supervisor's' ID</option> <!-- Allowing null -->
+                    <option value="">Select Supervisor's ID</option>
                 </select>
                 <span asp-validation-for="Employee.SupervisorId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Employee.Department" class="control-label"></label> <br/>
-                <select asp-for="Employee.Department">
+                <label asp-for="Employee.Department" class="control-label"></label> <br />
+                <select asp-for="Employee.Department" class="form-control">
                     <option value="DINING">FOOD</option>
                     <option value="SHOPS">SHOP</option>
                     <option value="ZOO">ZOO</option>
@@ -88,14 +90,14 @@
             <div class="form-group">
                 <label asp-for="Employee.ShopId" class="control-label"></label>
                 <select asp-for="Employee.ShopId" class="form-control" asp-items="ViewBag.ShopId">
-                    <option value="">Select Shop ID</option> <!-- Allowing null -->
+                    <option value="">Select Shop ID</option>
                 </select>
                 <span asp-validation-for="Employee.ShopId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Employee.FoodStoreId" class="control-label"></label>
                 <select asp-for="Employee.FoodStoreId" class="form-control" asp-items="ViewBag.FoodStoreId">
-                    <option value="">Select Dining ID</option> <!-- Allowing null -->
+                    <option value="">Select Dining ID</option>
                 </select>
                 <span asp-validation-for="Employee.FoodStoreId" class="text-danger"></span>
             </div>
@@ -104,6 +106,16 @@
                 <input asp-for="Employee.EmployeeEmail" class="form-control" />
                 <span asp-validation-for="Employee.EmployeeEmail" class="text-danger"></span>
             </div>
+
+            <!-- Role selection -->
+            <div class="form-group">
+                <label asp-for="SelectedRole">Assign Role:</label>
+                <select asp-for="SelectedRole" class="form-control" asp-items="Model.Roles">
+                    <option value="">Select Role</option>
+                </select>
+                <span asp-validation-for="SelectedRole" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -116,5 +128,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

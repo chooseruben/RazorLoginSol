@@ -15,9 +15,5 @@ public partial class Event
 
     public int EventEmployeeRepId { get; set; }
 
-    public DateOnly? EventDate { get; set; }
-
-    public string? EventLocation { get; set; }
-
     public virtual Employee EventEmployeeRep { get; set; } = null!;
 }

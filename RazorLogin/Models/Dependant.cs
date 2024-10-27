@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace RazorLogin.Models;
 
+
+
+#nullable disable //evan
+
+
 public partial class Dependant
 {
     public int DepndantId { get; set; }

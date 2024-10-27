@@ -1,0 +1,126 @@
+﻿@page
+@model RazorLogin.Pages.Admin.Reports.EmployeeDataReportModel
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<h2>Employee Reports</h2>
+
+<div>
+    <canvas id="salaryChart" width="400" height="200"></canvas>
+</div>
+<div>
+    <canvas id="dependentIncomeChart" width="400" height="200"></canvas>
+</div>
+<div>
+    <canvas id="zookeeperChart" width="400" height="200"></canvas>
+</div>
+<div>
+    <canvas id="managerChart" width="400" height="200"></canvas>
+</div>
+
+@section Scripts {
+    <script>
+        const salaryData = {
+            labels: ['Total Cost', 'Average Salary', 'Min Salary', 'Max Salary'],
+            datasets: [{
+                label: 'Salary Stats',
+                data: [@Model.Report.TotalEmployeeCost, @Model.Report.AverageSalary, @Model.Report.MinSalary, @Model.Report.MaxSalary],
+                backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        };
+
+        const dependentIncomeData = {
+            labels: ['Tier 1 Income', 'Tier 2 Income', 'Tier 3 Income'],
+            datasets: [{
+                label: 'Dependent Income',
+                data: [@Model.Report.Tier1Income, @Model.Report.Tier2Income, @Model.Report.Tier3Income],
+                backgroundColor: ['rgba(255, 205, 86, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(255, 205, 86, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        };
+
+        const zookeeperData = {
+            labels: ['Average Age', 'Min Age', 'Max Age', 'Average Salary', 'Min Salary', 'Max Salary'],
+            datasets: [{
+                label: 'Zookeeper Stats',
+                data: [@Model.Report.ZookeeperAvgAge, @Model.Report.ZookeeperMinAge, @Model.Report.ZookeeperMaxAge, @Model.Report.ZookeeperAvgSalary, @Model.Report.ZookeeperMinSalary, @Model.Report.ZookeeperMaxSalary],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+                borderWidth: 1
+            }]
+        };
+
+        const managerData = {
+            labels: ['Average Age', 'Average Salary', 'Min Salary', 'Max Salary'],
+            datasets: [{
+                label: 'Manager Stats',
+                data: [@Model.Report.ManagerAvgAge, @Model.Report.ManagerAvgSalary, @Model.Report.ManagerMinSalary, @Model.Report.ManagerMaxSalary],
+                backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        };
+
+        new Chart(document.getElementById('salaryChart'), {
+            type: 'bar',
+            data: salaryData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('dependentIncomeChart'), {
+            type: 'pie',
+            data: dependentIncomeData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Dependent Income'
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('zookeeperChart'), {
+            type: 'radar',
+            data: zookeeperData,
+            options: {
+                elements: {
+                    line: {
+                        tension: 0.1
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('managerChart'), {
+            type: 'doughnut',
+            data: managerData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Manager Stats'
+                    }
+                }
+            }
+        });
+    </script>
+}

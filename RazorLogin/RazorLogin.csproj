@@ -8,6 +8,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+
+    <Compile Remove="obj\**" />
+    <Compile Remove="Pages\Admin.Purch\old dont use this folder\**" />
+    <Compile Remove="Pages\Admin.Purch\old\**" />
+    <Content Remove="obj\**" />
+    <Content Remove="Pages\Admin.Purch\old dont use this folder\**" />
+    <Content Remove="Pages\Admin.Purch\old\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <EmbeddedResource Remove="Pages\Admin.Purch\old dont use this folder\**" />
+    <EmbeddedResource Remove="Pages\Admin.Purch\old\**" />
+    <None Remove="obj\**" />
+    <None Remove="Pages\Admin.Purch\old dont use this folder\**" />
+    <None Remove="Pages\Admin.Purch\old\**" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Admin.Reports\EmployeeDataReport.cshtml.cs" />
+    <Compile Remove="Pages\Admin.Reports\Index.cshtml.cs" />
+    <Compile Remove="test\Employee.cs" />
+    <Compile Remove="test\Event_wthout_day_n_loca.cs" />
+    <Compile Remove="test\tempcontext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Admin.Reports\EmployeeDataReport.cshtml" />
+    <Content Remove="Pages\Admin.Reports\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.10" />
@@ -18,6 +48,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="test\" />
   </ItemGroup>
 
 </Project>

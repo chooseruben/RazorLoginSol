@@ -41,7 +41,7 @@ namespace RazorLogin.Pages.Admin.Emp
             ViewData["RelatedEntity_Id"] = selectList;
 
             ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
-        ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
+            ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
             return Page();
         }
 

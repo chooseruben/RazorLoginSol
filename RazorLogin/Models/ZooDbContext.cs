@@ -464,8 +464,13 @@ public partial class ZooDbContext : DbContext
             entity.Property(e => e.EventId)
                 .ValueGeneratedNever()
                 .HasColumnName("Event_ID");
+            entity.Property(e => e.EventDate).HasColumnName("Event_date");
             entity.Property(e => e.EventEmployeeRepId).HasColumnName("Event_employee_rep_ID");
             entity.Property(e => e.EventEndTime).HasColumnName("Event_end_time");
+            entity.Property(e => e.EventLocation)
+                .HasMaxLength(70)
+                .IsFixedLength()
+                .HasColumnName("Event_Location");
             entity.Property(e => e.EventName)
                 .HasMaxLength(45)
                 .HasDefaultValueSql("(NULL)")

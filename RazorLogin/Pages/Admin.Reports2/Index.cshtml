@@ -1,0 +1,152 @@
+﻿@page
+@model RazorLogin.Pages.Admin.Reports2.IndexModel
+@{
+    ViewData["Title"] = "Employee Demographics Report";
+}
+
+<h1>Employee Statistics Report</h1>
+
+<form method="get">
+    <div>
+        <label for="StartDate">Start Date:</label>
+        <input type="date" asp-for="StartDate" />
+    </div>
+    <div>
+        <label for="EndDate">End Date:</label>
+        <input type="date" asp-for="EndDate" />
+    </div>
+    <div>
+        <input type="checkbox" asp-for="SearchAll" />
+        <label asp-for="SearchAll">Search All Employees</label>
+    </div>
+    <button type="submit">Filter</button>
+</form>
+
+<h2>Employee Stats</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Degree</th>
+            <th>Average Age</th>
+            <th>Min Age</th>
+            <th>Max Age</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stat in Model.Report.EmployeeStats)
+        {
+            <tr>
+                <td>@stat.Degree</td>
+                <td>@stat.AverageAge</td>
+                <td>@stat.MinAge</td>
+                <td>@stat.MaxAge</td>
+                <td>@stat.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Manager Stats</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Degree</th>
+            <th>Average Age</th>
+            <th>Min Age</th>
+            <th>Max Age</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stat in Model.Report.ManagerStats)
+        {
+            <tr>
+                <td>@stat.Degree</td>
+                <td>@stat.AverageAge</td>
+                <td>@stat.MinAge</td>
+                <td>@stat.MaxAge</td>
+                <td>@stat.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Zookeeper Stats</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Degree</th>
+            <th>Average Age</th>
+            <th>Min Age</th>
+            <th>Max Age</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stat in Model.Report.ZookeeperStats)
+        {
+            <tr>
+                <td>@stat.Degree</td>
+                <td>@stat.AverageAge</td>
+                <td>@stat.MinAge</td>
+                <td>@stat.MaxAge</td>
+                <td>@stat.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Report.EmployeeStats.Any() && !Model.Report.ManagerStats.Any() && !Model.Report.ZookeeperStats.Any())
+{
+    <p>No data available for the selected date range.</p>
+}
+
+
+
+
+
+
+
+
+
+
+
+FROM DATE TO DATE IF DATE OF EMPLOYEMENT FALLS BETWEEN THOSE 
+
+OR ALL EMPLOYEES
+
+1.
+- avg/min/max age of all employees 
+- num/category of degrees for all employee
+
+2.
+- avg/min/max age of manager 
+- num/category of degrees per manager
+
+3.
+- avg/min/max age of zookeeper 
+- num/category of degrees per zookeeper
+
+4.
+- bar chart comparing ages and degrees
+
+////////////////////////
+
+YEARLY COST OF EMPLOYEE
+1. 
+- avg/min/max age of all employees 
+- avg/min/max of all employees salary 
+
+2.
+- yearly income from dependants of employees (multiply cost by 12 since its per month)
+
+
+
+3. 
+- avg/min/max age of mnager 
+- avg/min/max of all manager salary 
+
+4. 
+- avg/min/max age of zook 
+- avg/min/max of all zook salary 
