@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.UserRoles
+namespace RazorLogin.Pages.MembershipPage
 {
     public class DeleteModel : PageModel
     {
@@ -19,40 +19,40 @@ namespace RazorLogin.Pages.Admin.UserRoles
         }
 
         [BindProperty]
-        public AspNetRole AspNetRole { get; set; } = default!;
+        public Customer Customer { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var aspnetrole = await _context.AspNetRoles.FirstOrDefaultAsync(m => m.Id == id);
+            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == id);
 
-            if (aspnetrole == null)
+            if (customer == null)
             {
                 return NotFound();
             }
             else
             {
-                AspNetRole = aspnetrole;
+                Customer = customer;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var aspnetrole = await _context.AspNetRoles.FindAsync(id);
-            if (aspnetrole != null)
+            var customer = await _context.Customers.FindAsync(id);
+            if (customer != null)
             {
-                AspNetRole = aspnetrole;
-                _context.AspNetRoles.Remove(AspNetRole);
+                Customer = customer;
+                _context.Customers.Remove(Customer);
                 await _context.SaveChangesAsync();
             }
 

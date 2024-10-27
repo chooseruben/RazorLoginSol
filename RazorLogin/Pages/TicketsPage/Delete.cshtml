@@ -2,12 +2,12 @@
 @model RazorLogin.Pages.TicketsPage.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Cancel Ticket";
 }
 
-<h1>Delete</h1>
+<h1>Cancel Ticket</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to cancel?</h3>
 <div>
     <h4>Ticket</h4>
     <hr />
@@ -46,7 +46,7 @@
     
     <form method="post">
         <input type="hidden" asp-for="Ticket.TicketId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Cancel" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>
 </div>

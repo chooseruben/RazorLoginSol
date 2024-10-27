@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,8 +27,12 @@ namespace RazorLogin.Pages.Admin.Users
         [BindProperty]
         public AspNetUser AspNetUser { get; set; } = default!;
 
+        [BindProperty]
+        public Employee Employee { get; set; } = default!; //new Employee(); // Initialize it
+
+
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(Employee Employee)
         {
             if (!ModelState.IsValid)
             {

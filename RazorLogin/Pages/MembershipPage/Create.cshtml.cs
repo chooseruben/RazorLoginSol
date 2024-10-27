@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.UserRoles
+namespace RazorLogin.Pages.MembershipPage
 {
     public class CreateModel : PageModel
     {
@@ -24,7 +24,7 @@ namespace RazorLogin.Pages.Admin.UserRoles
         }
 
         [BindProperty]
-        public AspNetRole AspNetRole { get; set; } = default!;
+        public Customer Customer { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -34,7 +34,7 @@ namespace RazorLogin.Pages.Admin.UserRoles
                 return Page();
             }
 
-            _context.AspNetRoles.Add(AspNetRole);
+            _context.Customers.Add(Customer);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
