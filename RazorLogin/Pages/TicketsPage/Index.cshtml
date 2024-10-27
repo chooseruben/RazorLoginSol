@@ -42,9 +42,7 @@
                         @Html.DisplayFor(modelItem => item.TicketPurchaseDate)
                     </td>
                     <td>
-                        <a asp-page="./Edit" asp-route-id="@item.TicketId">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.TicketId">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.TicketId">Delete</a>
+                        <a asp-page="./Delete" asp-route-id="@item.TicketId">Cancel Ticket</a>
                     </td>
                 </tr>
             }
