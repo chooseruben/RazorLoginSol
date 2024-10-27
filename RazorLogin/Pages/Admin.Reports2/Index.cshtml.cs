@@ -46,22 +46,28 @@ namespace RazorLogin.Pages.Admin.Reports2
 
             // 1. Employee Stats
             var employeeStats = employees
-                .GroupBy(e => e.Degree)
+                .GroupBy(e => e.Degree ?? "null")
                 .Select(g => new StatDto
                 {
                     Degree = g.Key,
-                    AverageAge = g.Average(e => e.EmployeeDob.HasValue
-                        ? DateTime.Now.Year - e.EmployeeDob.Value.Year - (DateTime.Now.DayOfYear < e.EmployeeDob.Value.DayOfYear ? 1 : 0)
-                        : 0),
-                    MinAge = g.Min(e => e.EmployeeDob.HasValue
-                        ? DateTime.Now.Year - e.EmployeeDob.Value.Year - (DateTime.Now.DayOfYear < e.EmployeeDob.Value.DayOfYear ? 1 : 0)
-                        : 0),
-                    MaxAge = g.Max(e => e.EmployeeDob.HasValue
-                        ? DateTime.Now.Year - e.EmployeeDob.Value.Year - (DateTime.Now.DayOfYear < e.EmployeeDob.Value.DayOfYear ? 1 : 0)
-                        : 0),
+                    AverageAge = g.Where(e => e.EmployeeDob.HasValue)
+                                  .Average(e => DateTime.Now.Year - e.EmployeeDob.Value.Year -
+                                                (DateTime.Now.DayOfYear < e.EmployeeDob.Value.DayOfYear ? 1 : 0)),
+                    MinAge = g.Where(e => e.EmployeeDob.HasValue)
+                               .Min(e => DateTime.Now.Year - e.EmployeeDob.Value.Year -
+                                         (DateTime.Now.DayOfYear < e.EmployeeDob.Value.DayOfYear ? 1 : 0)),
+                    MaxAge = g.Where(e => e.EmployeeDob.HasValue)
+                               .Max(e => DateTime.Now.Year - e.EmployeeDob.Value.Year -
+                                         (DateTime.Now.DayOfYear < e.EmployeeDob.Value.DayOfYear ? 1 : 0)),
                     Count = g.Count()
                 })
                 .ToList();
+
+            // If no stats found, set a message
+            if (!employeeStats.Any())
+            {
+                employeeStats.Add(new StatDto { Degree = "No Data", AverageAge = 0, MinAge = 0, MaxAge = 0, Count = 0 });
+            }
 
             Report.EmployeeStats = employeeStats;
 
@@ -71,22 +77,27 @@ namespace RazorLogin.Pages.Admin.Reports2
                 .ToListAsync(); // Retrieve data into memory
 
             var managerGroupedStats = managerStats
-                .GroupBy(em => em.e.Degree)
+                .GroupBy(em => em.e.Degree ?? "null")
                 .Select(g => new StatDto
                 {
                     Degree = g.Key,
-                    AverageAge = g.Average(em => em.e.EmployeeDob.HasValue
-                        ? DateTime.Now.Year - em.e.EmployeeDob.Value.Year - (DateTime.Now.DayOfYear < em.e.EmployeeDob.Value.DayOfYear ? 1 : 0)
-                        : 0),
-                    MinAge = g.Min(em => em.e.EmployeeDob.HasValue
-                        ? DateTime.Now.Year - em.e.EmployeeDob.Value.Year - (DateTime.Now.DayOfYear < em.e.EmployeeDob.Value.DayOfYear ? 1 : 0)
-                        : 0),
-                    MaxAge = g.Max(em => em.e.EmployeeDob.HasValue
-                        ? DateTime.Now.Year - em.e.EmployeeDob.Value.Year - (DateTime.Now.DayOfYear < em.e.EmployeeDob.Value.DayOfYear ? 1 : 0)
-                        : 0),
+                    AverageAge = g.Where(em => em.e.EmployeeDob.HasValue)
+                                  .Average(em => DateTime.Now.Year - em.e.EmployeeDob.Value.Year -
+                                                 (DateTime.Now.DayOfYear < em.e.EmployeeDob.Value.DayOfYear ? 1 : 0)),
+                    MinAge = g.Where(em => em.e.EmployeeDob.HasValue)
+                               .Min(em => DateTime.Now.Year - em.e.EmployeeDob.Value.Year -
+                                         (DateTime.Now.DayOfYear < em.e.EmployeeDob.Value.DayOfYear ? 1 : 0)),
+                    MaxAge = g.Where(em => em.e.EmployeeDob.HasValue)
+                               .Max(em => DateTime.Now.Year - em.e.EmployeeDob.Value.Year -
+                                         (DateTime.Now.DayOfYear < em.e.EmployeeDob.Value.DayOfYear ? 1 : 0)),
                     Count = g.Count()
                 })
                 .ToList();
+
+            if (!managerGroupedStats.Any())
+            {
+                managerGroupedStats.Add(new StatDto { Degree = "No Data", AverageAge = 0, MinAge = 0, MaxAge = 0, Count = 0 });
+            }
 
             Report.ManagerStats = managerGroupedStats;
 
@@ -96,26 +107,54 @@ namespace RazorLogin.Pages.Admin.Reports2
                 .ToListAsync(); // Retrieve data into memory
 
             var zookeeperGroupedStats = zookeeperStats
-                .GroupBy(ze => ze.e.Degree)
+                .GroupBy(ze => ze.e.Degree ?? "null")
                 .Select(g => new StatDto
                 {
                     Degree = g.Key,
-                    AverageAge = g.Average(ze => ze.e.EmployeeDob.HasValue
-                        ? DateTime.Now.Year - ze.e.EmployeeDob.Value.Year - (DateTime.Now.DayOfYear < ze.e.EmployeeDob.Value.DayOfYear ? 1 : 0)
-                        : 0),
-                    MinAge = g.Min(ze => ze.e.EmployeeDob.HasValue
-                        ? DateTime.Now.Year - ze.e.EmployeeDob.Value.Year - (DateTime.Now.DayOfYear < ze.e.EmployeeDob.Value.DayOfYear ? 1 : 0)
-                        : 0),
-                    MaxAge = g.Max(ze => ze.e.EmployeeDob.HasValue
-                        ? DateTime.Now.Year - ze.e.EmployeeDob.Value.Year - (DateTime.Now.DayOfYear < ze.e.EmployeeDob.Value.DayOfYear ? 1 : 0)
-                        : 0),
+                    AverageAge = g.Where(ze => ze.e.EmployeeDob.HasValue)
+                                  .Average(ze => DateTime.Now.Year - ze.e.EmployeeDob.Value.Year -
+                                                 (DateTime.Now.DayOfYear < ze.e.EmployeeDob.Value.DayOfYear ? 1 : 0)),
+                    MinAge = g.Where(ze => ze.e.EmployeeDob.HasValue)
+                               .Min(ze => DateTime.Now.Year - ze.e.EmployeeDob.Value.Year -
+                                         (DateTime.Now.DayOfYear < ze.e.EmployeeDob.Value.DayOfYear ? 1 : 0)),
+                    MaxAge = g.Where(ze => ze.e.EmployeeDob.HasValue)
+                               .Max(ze => DateTime.Now.Year - ze.e.EmployeeDob.Value.Year -
+                                         (DateTime.Now.DayOfYear < ze.e.EmployeeDob.Value.DayOfYear ? 1 : 0)),
                     Count = g.Count()
                 })
                 .ToList();
 
+            if (!zookeeperGroupedStats.Any())
+            {
+                zookeeperGroupedStats.Add(new StatDto { Degree = "No Data", AverageAge = 0, MinAge = 0, MaxAge = 0, Count = 0 });
+            }
+
             Report.ZookeeperStats = zookeeperGroupedStats;
 
-            // Prepare data for the bar chart if necessary
+            // Prepare data for average ages overview
+            Report.AverageAgesOverview = new double[]
+            {
+                employeeStats.Average(s => s.AverageAge),
+                managerGroupedStats.Average(s => s.AverageAge),
+                zookeeperGroupedStats.Average(s => s.AverageAge)
+            };
+
+            // Prepare data for degree counts overview
+            Report.DegreeCountsOverview = new Dictionary<string, int>();
+            foreach (var stat in employeeStats.Concat(managerGroupedStats).Concat(zookeeperGroupedStats))
+            {
+                if (!string.IsNullOrEmpty(stat.Degree)) // Check if Degree is not null or empty
+                {
+                    if (Report.DegreeCountsOverview.ContainsKey(stat.Degree))
+                    {
+                        Report.DegreeCountsOverview[stat.Degree] += stat.Count;
+                    }
+                    else
+                    {
+                        Report.DegreeCountsOverview[stat.Degree] = stat.Count;
+                    }
+                }
+            }
         }
     }
 
@@ -124,6 +163,10 @@ namespace RazorLogin.Pages.Admin.Reports2
         public List<StatDto> EmployeeStats { get; set; } = new List<StatDto>();
         public List<StatDto> ManagerStats { get; set; } = new List<StatDto>();
         public List<StatDto> ZookeeperStats { get; set; } = new List<StatDto>();
+
+        // New properties for graphs
+        public double[] AverageAgesOverview { get; set; }
+        public Dictionary<string, int> DegreeCountsOverview { get; set; } = new Dictionary<string, int>();
     }
 
     public class StatDto

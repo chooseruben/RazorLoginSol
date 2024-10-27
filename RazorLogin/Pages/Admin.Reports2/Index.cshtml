@@ -1,152 +1,174 @@
 ﻿@page
 @model RazorLogin.Pages.Admin.Reports2.IndexModel
 @{
-    ViewData["Title"] = "Employee Demographics Report";
+    ViewData["Title"] = "Reports";
 }
 
-<h1>Employee Statistics Report</h1>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<form method="get">
-    <div>
-        <label for="StartDate">Start Date:</label>
-        <input type="date" asp-for="StartDate" />
+<h2 class="mt-4">Employee Reports</h2>
+
+<div class="container mt-4 mb-5">
+    <!-- Added mb-5 for bottom margin -->
+    <div class="mt-4">
+        <h3>Employee Statistics</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Degree</th>
+                    <th>Average Age</th>
+                    <th>Min Age</th>
+                    <th>Max Age</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Report.EmployeeStats.Any())
+                {
+                    foreach (var stat in Model.Report.EmployeeStats)
+                    {
+                        <tr>
+                            <td>@stat.Degree</td>
+                            <td>@stat.AverageAge</td>
+                            <td>@stat.MinAge</td>
+                            <td>@stat.MaxAge</td>
+                            <td>@stat.Count</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">No data available for Employees.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3>Manager Statistics</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Degree</th>
+                    <th>Average Age</th>
+                    <th>Min Age</th>
+                    <th>Max Age</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Report.ManagerStats.Any())
+                {
+                    foreach (var stat in Model.Report.ManagerStats)
+                    {
+                        <tr>
+                            <td>@stat.Degree</td>
+                            <td>@stat.AverageAge</td>
+                            <td>@stat.MinAge</td>
+                            <td>@stat.MaxAge</td>
+                            <td>@stat.Count</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">No data available for Managers.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3>Zookeeper Statistics</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Degree</th>
+                    <th>Average Age</th>
+                    <th>Min Age</th>
+                    <th>Max Age</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Report.ZookeeperStats.Any())
+                {
+                    foreach (var stat in Model.Report.ZookeeperStats)
+                    {
+                        <tr>
+                            <td>@stat.Degree</td>
+                            <td>@stat.AverageAge</td>
+                            <td>@stat.MinAge</td>
+                            <td>@stat.MaxAge</td>
+                            <td>@stat.Count</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">No data available for Zookeepers.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-    <div>
-        <label for="EndDate">End Date:</label>
-        <input type="date" asp-for="EndDate" />
-    </div>
-    <div>
-        <input type="checkbox" asp-for="SearchAll" />
-        <label asp-for="SearchAll">Search All Employees</label>
-    </div>
-    <button type="submit">Filter</button>
-</form>
+</div>
 
-<h2>Employee Stats</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Degree</th>
-            <th>Average Age</th>
-            <th>Min Age</th>
-            <th>Max Age</th>
-            <th>Count</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var stat in Model.Report.EmployeeStats)
-        {
-            <tr>
-                <td>@stat.Degree</td>
-                <td>@stat.AverageAge</td>
-                <td>@stat.MinAge</td>
-                <td>@stat.MaxAge</td>
-                <td>@stat.Count</td>
-            </tr>
+<div class="container mt-4 mb-5">
+    <!-- Added mb-5 for bottom margin -->
+    <a class="btn btn-primary" asp-page="/Admin/Reports2/Index">Back to Reports</a>
+</div>
+
+<script>
+    // Data for average age chart
+    const averageAgeData = {
+        labels: ['Employees', 'Managers', 'Zookeepers'],
+        datasets: [{
+            label: 'Average Age',
+            data: [
+    @Model.Report.EmployeeStats.Any() ? Model.Report.EmployeeStats.Average(s => s.AverageAge) : 0,
+    @Model.Report.ManagerStats.Any() ? Model.Report.ManagerStats.Average(s => s.AverageAge) : 0,
+    @Model.Report.ZookeeperStats.Any() ? Model.Report.ZookeeperStats.Average(s => s.AverageAge) : 0
+            ],
+            backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 159, 64, 0.6)', 'rgba(153, 102, 255, 0.6)']
+        }]
+    };
+
+    // Data for degree count chart
+    const degreeCountLabels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Report.DegreeCountsOverview.Keys.ToList()));
+    const degreeCountData = {
+        labels: degreeCountLabels,
+        datasets: [{
+            label: 'Count of Degrees',
+            data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Report.DegreeCountsOverview.Values.ToList())),
+            backgroundColor: 'rgba(75, 192, 192, 0.6)'
+        }]
+    };
+
+    // Chart options
+    const options = {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
         }
-    </tbody>
-</table>
+    };
 
-<h2>Manager Stats</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Degree</th>
-            <th>Average Age</th>
-            <th>Min Age</th>
-            <th>Max Age</th>
-            <th>Count</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var stat in Model.Report.ManagerStats)
-        {
-            <tr>
-                <td>@stat.Degree</td>
-                <td>@stat.AverageAge</td>
-                <td>@stat.MinAge</td>
-                <td>@stat.MaxAge</td>
-                <td>@stat.Count</td>
-            </tr>
-        }
-    </tbody>
-</table>
+    // Render average age chart
+    const ctx1 = document.getElementById('averageAgeChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'bar',
+        data: averageAgeData,
+        options: options
+    });
 
-<h2>Zookeeper Stats</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Degree</th>
-            <th>Average Age</th>
-            <th>Min Age</th>
-            <th>Max Age</th>
-            <th>Count</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var stat in Model.Report.ZookeeperStats)
-        {
-            <tr>
-                <td>@stat.Degree</td>
-                <td>@stat.AverageAge</td>
-                <td>@stat.MinAge</td>
-                <td>@stat.MaxAge</td>
-                <td>@stat.Count</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@if (!Model.Report.EmployeeStats.Any() && !Model.Report.ManagerStats.Any() && !Model.Report.ZookeeperStats.Any())
-{
-    <p>No data available for the selected date range.</p>
-}
-
-
-
-
-
-
-
-
-
-
-
-FROM DATE TO DATE IF DATE OF EMPLOYEMENT FALLS BETWEEN THOSE 
-
-OR ALL EMPLOYEES
-
-1.
-- avg/min/max age of all employees 
-- num/category of degrees for all employee
-
-2.
-- avg/min/max age of manager 
-- num/category of degrees per manager
-
-3.
-- avg/min/max age of zookeeper 
-- num/category of degrees per zookeeper
-
-4.
-- bar chart comparing ages and degrees
-
-////////////////////////
-
-YEARLY COST OF EMPLOYEE
-1. 
-- avg/min/max age of all employees 
-- avg/min/max of all employees salary 
-
-2.
-- yearly income from dependants of employees (multiply cost by 12 since its per month)
-
-
-
-3. 
-- avg/min/max age of mnager 
-- avg/min/max of all manager salary 
-
-4. 
-- avg/min/max age of zook 
-- avg/min/max of all zook salary 
+    // Render degree count chart
+    const ctx2 = document.getElementById('degreeCountChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: degreeCountData,
+        options: options
+    });
+</script>
