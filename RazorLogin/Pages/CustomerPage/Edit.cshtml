@@ -33,16 +33,11 @@
         <span asp-validation-for="Customer.CustomerAddress" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Customer.CustomerEmail"></label>
-        <input asp-for="Customer.CustomerEmail" class="form-control" />
-        <span asp-validation-for="Customer.CustomerEmail" class="text-danger"></span>
-    </div>
-
     <!-- Hidden fields for fields that should not be edited -->
     <input type="hidden" asp-for="Customer.MembershipStartDate" />
     <input type="hidden" asp-for="Customer.MembershipEndDate" />
     <input type="hidden" asp-for="Customer.MembershipType" />
+    <input type="hidden" asp-for="Customer.CustomerEmail" />
 
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
