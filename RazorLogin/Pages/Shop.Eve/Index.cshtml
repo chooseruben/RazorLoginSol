@@ -1,0 +1,42 @@
+﻿@page
+@model RazorLogin.Pages.Shop.Eve.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Events</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Events)
+        {
+            <tr>
+                <td>@item.EventEmployeeRepId</td>
+                <td>@item.EventName</td>
+                <td>@item.EventStartTime</td>
+                <td>@item.EventEndTime</td>
+                <td>@item.EventDate</td>
+                <td>@item.EventLocation</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.EventId">Edit</a> |
+                    <form method="post" asp-page-handler="Delete" asp-route-eventId="@item.EventId" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this event?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-page="./Create">Create New Event</a>

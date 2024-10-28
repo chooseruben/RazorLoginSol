@@ -1,0 +1,34 @@
+﻿@page "{itemId:int}/{foodStoreId:int}"
+@model RazorLogin.Pages.Shop.Dining1.EditingModel
+@{
+    ViewData["Title"] = "Edit Item";
+}
+
+<h1>Edit Item</h1>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Item.ItemId" />
+    <input type="hidden" asp-for="Item.FoodStoreId" />
+    <div class="form-group">
+        <label asp-for="Item.ItemCount" class="control-label"></label>
+        <input asp-for="Item.ItemCount" class="form-control" />
+        <span asp-validation-for="Item.ItemCount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.RestockDate" class="control-label"></label>
+        <input asp-for="Item.RestockDate" class="form-control" type="date" />
+        <span asp-validation-for="Item.RestockDate" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+
+<div>
+    <a asp-page="./Inventory" asp-route-foodStoreId="@Model.Item.FoodStoreId">Back to Inventory</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

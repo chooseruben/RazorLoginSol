@@ -19,5 +19,5 @@ public partial class Event
 
     public string? EventLocation { get; set; }
 
-    public virtual Employee EventEmployeeRep { get; set; } = null!;
+    public virtual Employee? EventEmployeeRep { get; set; } = null!;
 }

@@ -28,18 +28,18 @@ namespace RazorLogin.Pages.Admin.Emp
             _roleManager = roleManager;
         }
 
-   
+
 
         public IActionResult OnGet()
         {
-        ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
+            ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
 
             List<SelectListItem> selectList = _context.FoodStores
                 .AsNoTracking()
                 .Select(x => new SelectListItem()
                 {
                     Value = x.FoodStoreId.ToString(),
-                  
+
                 })
                 .ToList();
 
@@ -96,12 +96,44 @@ namespace RazorLogin.Pages.Admin.Emp
             if (!string.IsNullOrEmpty(Role))
             {
                 await _userManager.AddToRoleAsync(user, Role);
-            }
 
+                // Generate a random numeric suffix
+                var randomSuffix = new Random().Next(10000, 99999); // Random number between 10000 and 99999
+
+                if (Role == "Manager")
+                {
+                    // Create a new Manager entry
+                    var manager = new Manager
+                    {
+                        EmployeeId = Employee.EmployeeId,
+                        // Concatenate EmployeeId with a random suffix
+                        ManagerId = int.Parse($"{Employee.EmployeeId}{randomSuffix}"), // Adjusted to be an int
+                        Department = Employee.Department, // Assuming you want to set the department
+                        ManagerEmploymentDate = DateOnly.FromDateTime(DateTime.Now) // Set to today's date
+                    };
+                    _context.Managers.Add(manager);
+                    await _context.SaveChangesAsync();
+                }
+                else if (Role == "Zookeeper")
+                {
+                    // Create a new Zookeeper entry
+                    var zookeeper = new Zookeeper
+                    {
+                        EmployeeId = Employee.EmployeeId,
+                        // Concatenate EmployeeId with a random suffix
+                        ZookeeperId = int.Parse($"{Employee.EmployeeId}{randomSuffix}"), // Adjusted to be an int
+                        TrainingRenewalDate = DateOnly.FromDateTime(DateTime.Now.AddYears(1)) // Set to one year from now
+                                                                                              // LastTrainingDate is left empty
+                    };
+                    _context.Zookeepers.Add(zookeeper);
+                    await _context.SaveChangesAsync(); 
+                }
+
+                    // Save the new Manager or Zookeeper entry
+                    await _context.SaveChangesAsync();
+            }
 
             return RedirectToPage("./Index");
         }
     }
-
-
 }

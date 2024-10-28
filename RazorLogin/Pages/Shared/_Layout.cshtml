@@ -25,8 +25,8 @@
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <ul class="navbar-nav flex-grow-1">
+                           
                             <li class="nav-item">
-
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Users/Index">Users</a>
                             </li>
                             <li class="nav-item">
@@ -67,6 +67,7 @@
                                     <li>
                                         <a class="dropdown-item" asp-area="" asp-page="/Admin.Reports2/Index">Employee Demographics Report</a>
                                     </li>
+                                  
                                 </ul>
                             </li>
                         </ul>
@@ -74,15 +75,31 @@
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Manager"))
                 {
+                        <ul class="navbar-nav flex-grow-1">
 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Report/Index">Dining Stores Report</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Report2/Index">Gift Shops Report</a>
+                            </li>
+                        </ul>
 
                 }
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Shop"))
                 {
-
-
-                   
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Shop.Dining1/Index">Food Stores</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Shop.GShop/Index">Gift Shops</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Shop.Eve/Index">Events</a>
+                            </li>
+                        </ul>
                 }
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Zookeeper"))

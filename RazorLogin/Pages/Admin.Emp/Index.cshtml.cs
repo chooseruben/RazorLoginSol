@@ -27,6 +27,9 @@ namespace RazorLogin.Pages.Admin.Emp
         public Dictionary<string, IList<string>> EmployeeRoles { get; set; } = new Dictionary<string, IList<string>>();
 
 
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; } = string.Empty;
+
         public async Task OnGetAsync()
         {
             Employee = await _context.Employees
