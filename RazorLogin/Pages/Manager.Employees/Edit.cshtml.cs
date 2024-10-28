@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.Mana
+namespace RazorLogin.Pages.Manager.Employees
 {
     public class EditModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace RazorLogin.Pages.Admin.Mana
         }
 
         [BindProperty]
-        public RazorLogin.Models.Manager Manager { get; set; } = default!;
+        public RazorLogin.Models.Employee Employee { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,13 +29,15 @@ namespace RazorLogin.Pages.Admin.Mana
                 return NotFound();
             }
 
-            var manager =  await _context.Managers.FirstOrDefaultAsync(m => m.ManagerId == id);
-            if (manager == null)
+            var employee =  await _context.Employees.FirstOrDefaultAsync(m => m.EmployeeId == id);
+            if (employee == null)
             {
                 return NotFound();
             }
-            Manager = manager;
-           ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
+            Employee = employee;
+           ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
+           ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
+           ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
             return Page();
         }
 
@@ -48,7 +50,7 @@ namespace RazorLogin.Pages.Admin.Mana
                 return Page();
             }
 
-            _context.Attach(Manager).State = EntityState.Modified;
+            _context.Attach(Employee).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +58,7 @@ namespace RazorLogin.Pages.Admin.Mana
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ManagerExists(Manager.ManagerId))
+                if (!EmployeeExists(Employee.EmployeeId))
                 {
                     return NotFound();
                 }
@@ -69,9 +71,9 @@ namespace RazorLogin.Pages.Admin.Mana
             return RedirectToPage("./Index");
         }
 
-        private bool ManagerExists(int id)
+        private bool EmployeeExists(int id)
         {
-            return _context.Managers.Any(e => e.ManagerId == id);
+            return _context.Employees.Any(e => e.EmployeeId == id);
         }
     }
 }

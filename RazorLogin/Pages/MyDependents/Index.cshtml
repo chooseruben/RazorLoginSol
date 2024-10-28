@@ -1,0 +1,56 @@
+﻿﻿@page
+@model RazorLogin.Pages.MyDependents.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>My Dependents</h1>
+
+<hr />
+
+<div>
+    <a asp-page="./Create" class="btn btn-primary">Add New Dependent</a>
+</div>
+
+<h2>Your Dependents</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Dependent ID</th>
+            <th>Dependent Name</th>
+            <th>DOB</th>
+            <th>Relationship</th>
+            <th>Healthcare Tier</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Dependant.Count == 0)
+        {
+            <tr>
+                <td colspan="6" class="text-center">No dependents found.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var dependent in Model.Dependant)
+            {
+                <tr>
+                    <td>@dependent.DepndantId</td>
+                    <td>@dependent.DependentName</td>
+                    <td>@dependent.DependentDob?.ToString("yyyy-MM-dd")</td>
+                    <td>@dependent.Relationship</td>
+                    <td>@dependent.HealthcareTier</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@dependent.DepndantId">Edit</a>|
+                        <a asp-page="./Delete" asp-route-id="@dependent.DepndantId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-page="./Index">Back to Profile</a>
+</div>

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.Mana
+namespace RazorLogin.Pages.Manager.Customers
 {
     public class CreateModel : PageModel
     {
@@ -18,14 +18,13 @@ namespace RazorLogin.Pages.Admin.Mana
             _context = context;
         }
 
+        [BindProperty]
+        public RazorLogin.Models.Employee Employee { get; set; } = new RazorLogin.Models.Employee();
+
         public IActionResult OnGet()
         {
-        ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             return Page();
         }
-
-        [BindProperty]
-        public RazorLogin.Models.Manager Manager { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -35,7 +34,7 @@ namespace RazorLogin.Pages.Admin.Mana
                 return Page();
             }
 
-            _context.Managers.Add(Manager);
+            _context.Employees.Add(Employee);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

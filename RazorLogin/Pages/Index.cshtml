@@ -5,71 +5,8 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Welcome to The Zoo</h1>
     <p>  </p>
 </div>
 
 
-@if (User.Identity.IsAuthenticated && User.IsInRole("Shop"))
-{
-    <div id="sidebar">
-        <div class="module">
-            <ul class="menu">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            </ul>
-        </div>
-        <div class="mainContent">
-            Hello, @User.Identity.Name !
-        </div>
-    </div>
-}
-
-@if (User.Identity.IsAuthenticated && User.IsInRole("Zookeeper"))
-{
-    <div id="sidebar">
-        <div class="module">
-            <ul class="menu">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            </ul>
-        </div>
-        <div class="mainContent">
-            Hello, @User.Identity.Name !
-        </div>
-    </div>
-}
-
-@if (User.Identity.IsAuthenticated && User.IsInRole("Manager"))
-{
-    <div id="sidebar">
-        <div class="module">
-            <ul class="menu">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            </ul>
-        </div>
-        <div class="mainContent">
-            Hello, @User.Identity.Name !
-        </div>
-    </div>
-}
-
-@if (User.Identity.IsAuthenticated && User.IsInRole("Customer"))
-{
-    <div id="sidebar">
-        <div class="module">
-            <ul class="menu">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-          
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            </ul>
-        </div>
-        <div class="mainContent">
-            Hello, @User.Identity.Name !
-        </div>
-    </div>
-}

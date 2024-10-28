@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.Mana
+namespace RazorLogin.Pages.Manager.Employees
 {
     public class IndexModel : PageModel
     {
@@ -18,12 +18,14 @@ namespace RazorLogin.Pages.Admin.Mana
             _context = context;
         }
 
-        public IList<RazorLogin.Models.Manager> Manager { get;set; } = default!;
+        public IList<RazorLogin.Models.Employee> Employee { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Manager = await _context.Managers
-                .Include(m => m.Employee).ToListAsync();
+            Employee = await _context.Employees
+                .Include(e => e.FoodStore)
+                .Include(e => e.Shop)
+                .Include(e => e.Supervisor).ToListAsync();
         }
     }
 }

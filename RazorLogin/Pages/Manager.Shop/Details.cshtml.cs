@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.Mana
+namespace RazorLogin.Pages.Manager.Shop
 {
     public class DetailsModel : PageModel
     {
@@ -18,7 +18,7 @@ namespace RazorLogin.Pages.Admin.Mana
             _context = context;
         }
 
-        public RazorLogin.Models.Manager Manager { get; set; } = default!;
+        public GiftShop GiftShop { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,15 +27,12 @@ namespace RazorLogin.Pages.Admin.Mana
                 return NotFound();
             }
 
-            var manager = await _context.Managers.FirstOrDefaultAsync(m => m.ManagerId == id);
-            if (manager == null)
+            GiftShop = await _context.GiftShops.FirstOrDefaultAsync(m => m.ShopId == id);
+            if (GiftShop == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Manager = manager;
-            }
+ 
             return Page();
         }
     }
