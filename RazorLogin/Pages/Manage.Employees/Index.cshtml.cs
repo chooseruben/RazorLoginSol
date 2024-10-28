@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Manager.Employees
+namespace RazorLogin.Pages.Manage.Employees
 {
     public class IndexModel : PageModel
     {

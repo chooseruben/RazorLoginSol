@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Manager.Employees
+namespace RazorLogin.Pages.Manage.Employees
 {
     public class EditModel : PageModel
     {

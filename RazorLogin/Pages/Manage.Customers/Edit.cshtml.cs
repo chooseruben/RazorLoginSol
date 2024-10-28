@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Manager.Shop
+namespace RazorLogin.Pages.Manage.Customers
 {
-    [Authorize(Roles = "Manager")]
     public class EditModel : PageModel
     {
         private readonly RazorLogin.Models.ZooDbContext _context;
@@ -22,21 +20,24 @@ namespace RazorLogin.Pages.Manager.Shop
         }
 
         [BindProperty]
-        public GiftShop GiftShop { get; set; } = default!;
+        public RazorLogin.Models.Employee Employee { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null) 
+            if (id == null)
             {
                 return NotFound();
             }
 
-            GiftShop = await _context.GiftShops.FirstOrDefaultAsync(m => m.ShopId == id);
-    
-            if (GiftShop == null)
+            var employee =  await _context.Employees.FirstOrDefaultAsync(m => m.EmployeeId == id);
+            if (employee == null)
             {
                 return NotFound();
             }
+            Employee = employee;
+           ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
+           ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
+           ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
             return Page();
         }
 
@@ -49,19 +50,30 @@ namespace RazorLogin.Pages.Manager.Shop
                 return Page();
             }
 
-            var giftShopToUpdate = await _context.GiftShops.FindAsync(GiftShop.ShopId);
-            if (giftShopToUpdate == null)
+            _context.Attach(Employee).State = EntityState.Modified;
+
+            try
             {
-                return NotFound();
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EmployeeExists(Employee.EmployeeId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            giftShopToUpdate.GiftShopName = GiftShop.GiftShopName;
-            giftShopToUpdate.GiftShopOpenTime = GiftShop.GiftShopOpenTime;
-            giftShopToUpdate.GiftShopCloseTime = GiftShop.GiftShopCloseTime;
-
-            await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
 
+        private bool EmployeeExists(int id)
+        {
+            return _context.Employees.Any(e => e.EmployeeId == id);
+        }
     }
 }

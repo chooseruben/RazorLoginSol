@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Manager.Employees
+namespace RazorLogin.Pages.Manage.Customers
 {
-    public class DetailsModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly RazorLogin.Models.ZooDbContext _context;
 
-        public DetailsModel(RazorLogin.Models.ZooDbContext context)
+        public DeleteModel(RazorLogin.Models.ZooDbContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
         public RazorLogin.Models.Employee Employee { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -28,6 +29,7 @@ namespace RazorLogin.Pages.Manager.Employees
             }
 
             var employee = await _context.Employees.FirstOrDefaultAsync(m => m.EmployeeId == id);
+
             if (employee == null)
             {
                 return NotFound();
@@ -37,6 +39,24 @@ namespace RazorLogin.Pages.Manager.Employees
                 Employee = employee;
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var employee = await _context.Employees.FindAsync(id);
+            if (employee != null)
+            {
+                Employee = employee;
+                _context.Employees.Remove(Employee);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }
