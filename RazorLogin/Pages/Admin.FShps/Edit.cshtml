@@ -1,0 +1,71 @@
+﻿@page
+@model RazorLogin.Pages.Admin.FShps.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>FoodStore</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FoodStore.FoodStoreId" />
+            <div class="form-group">
+                <label asp-for="FoodStore.FoodStoreId" class="control-label"></label>
+                <input asp-for="FoodStore.FoodStoreId" class="form-control" />
+                <span asp-validation-for="FoodStore.FoodStoreId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoodStore.FoodStoreName" class="control-label"></label>
+                <input asp-for="FoodStore.FoodStoreName" class="form-control" />
+                <span asp-validation-for="FoodStore.FoodStoreName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoodStore.FoodStoreLocation" class="control-label"></label>
+                <input asp-for="FoodStore.FoodStoreLocation" class="form-control" />
+                <span asp-validation-for="FoodStore.FoodStoreLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoodStore.FoodStoreOpenTime" class="control-label"></label>
+                <input asp-for="FoodStore.FoodStoreOpenTime" class="form-control" />
+                <span asp-validation-for="FoodStore.FoodStoreOpenTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoodStore.FoodStoreCloseTime" class="control-label"></label>
+                <input asp-for="FoodStore.FoodStoreCloseTime" class="form-control" />
+                <span asp-validation-for="FoodStore.FoodStoreCloseTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoodStore.FoodStoreCustomerCapacity" class="control-label"></label>
+                <input asp-for="FoodStore.FoodStoreCustomerCapacity" class="form-control" />
+                <span asp-validation-for="FoodStore.FoodStoreCustomerCapacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoodStore.FoodStoreType" class="control-label"></label>
+                <input asp-for="FoodStore.FoodStoreType" class="form-control" />
+                <span asp-validation-for="FoodStore.FoodStoreType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoodStore.FoodStoreYearToDateSales" class="control-label"></label>
+                <input asp-for="FoodStore.FoodStoreYearToDateSales" class="form-control" />
+                <span asp-validation-for="FoodStore.FoodStoreYearToDateSales" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

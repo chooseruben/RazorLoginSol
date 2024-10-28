@@ -1,0 +1,46 @@
+﻿@page
+@model RazorLogin.Pages.CustomerPage.IndexModel
+
+@{
+    ViewData["Title"] = "Account Details";
+}
+
+<h1>Account Details</h1>
+
+@if (Model.Customer != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => Model.Customer.CustomerFirstName)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.CustomerLastName)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.CustomerDob)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.CustomerAddress)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.CustomerEmail)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.MembershipStartDate)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.MembershipEndDate)</th>
+                <th>@Html.DisplayNameFor(model => Model.Customer.MembershipType)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.CustomerFirstName)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.CustomerLastName)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.CustomerDob)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.CustomerAddress)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.CustomerEmail)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipStartDate)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipEndDate)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipType)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@Model.Customer.CustomerId">Edit</a> 
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No account details found.</p>
+}

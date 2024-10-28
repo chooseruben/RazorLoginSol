@@ -13,20 +13,113 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Employee.Ssn" class="control-label"></label>
                 <input asp-for="Employee.Ssn" class="form-control" />
                 <span asp-validation-for="Employee.Ssn" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.EmployeeFirstName" class="control-label"></label>
+                <input asp-for="Employee.EmployeeFirstName" class="form-control" />
+                <span asp-validation-for="Employee.EmployeeFirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.EmployeeLastName" class="control-label"></label>
+                <input asp-for="Employee.EmployeeLastName" class="form-control" />
+                <span asp-validation-for="Employee.EmployeeLastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.EmployeeDob" class="control-label"></label>
+                <input asp-for="Employee.EmployeeDob" class="form-control" type="date" />
+                <span asp-validation-for="Employee.EmployeeDob" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.EmployeeAddress" class="control-label"></label>
+                <input asp-for="Employee.EmployeeAddress" class="form-control" />
+                <span asp-validation-for="Employee.EmployeeAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.EmployeeSalary" class="control-label"></label>
+                <input asp-for="Employee.EmployeeSalary" class="form-control" />
+                <span asp-validation-for="Employee.EmployeeSalary" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.DateOfEmployment" class="control-label"></label>
+                <input asp-for="Employee.DateOfEmployment" class="form-control" type="date" />
+                <span asp-validation-for="Employee.DateOfEmployment" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.Degree" class="control-label"></label><br />
+                <select asp-for="Employee.Degree">
+                    <option value=""></option>
+                    <option value="NO SCHOOLING">NONE</option>
+                    <option value="HIGH SCHOOL DIPLOMA">HIGHSCHOOL</option>
+                    <option value="ASSOCIATE DEGREE">ASSOCIATE</option>
+                    <option value="BACHELORS DEGREE">BACHELOR</option>
+                    <option value="MASTERS DEGREE">MASTER</option>
+                    <option value="DOCTORAL DEGREE">DOCTORAL</option>
+                    <option value="PROFESSIONAL DEGREE">PROFESSIONAL</option>
+                </select>
+                <span asp-validation-for="Employee.Degree" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Employee.EmployeePhoneNumber" class="control-label"></label>
                 <input asp-for="Employee.EmployeePhoneNumber" class="form-control" />
                 <span asp-validation-for="Employee.EmployeePhoneNumber" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.SupervisorId" class="control-label"></label>
+                <input asp-for="Employee.SupervisorId" class="form-control" />
+                <span asp-validation-for="Employee.SupervisorId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.Department" class="control-label"></label>
+                <input asp-for="Employee.Department" class="form-control" />
+                <span asp-validation-for="Employee.Department" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.ShopId" class="control-label"></label>
+                <input asp-for="Employee.ShopId" class="form-control" />
+                <span asp-validation-for="Employee.ShopId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Employee.FoodStoreId" class="control-label"></label>
+                <input asp-for="Employee.FoodStoreId" class="form-control" />
+                <span asp-validation-for="Employee.FoodStoreId" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Employee.EmployeeEmail" class="control-label"></label>
                 <input asp-for="Employee.EmployeeEmail" class="form-control" />
                 <span asp-validation-for="Employee.EmployeeEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role" class="control-label"></label><br />
+                <select asp-for="Role">
+                    <option value="ADMIN">Admin</option>
+                    <option value="MANAGER">Manager</option>
+                    <option value="ZOOKEEPER">Zookeeper</option>
+                    <option value="SHOP">Shop</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

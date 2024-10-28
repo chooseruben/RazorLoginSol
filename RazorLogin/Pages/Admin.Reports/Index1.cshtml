@@ -1,0 +1,195 @@
+﻿@page
+@model RazorLogin.Pages.Admin.Reports.Index1Model
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Annual Employee Cost</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Employee Report</h1>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5>Employee Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Average Age: @Model.Report.EmployeeAvgAge</li>
+                            <li class="list-group-item">Minimum Age: @Model.Report.EmployeeMinAge</li>
+                            <li class="list-group-item">Maximum Age: @Model.Report.EmployeeMaxAge</li>
+                            <li class="list-group-item">Average Salary: @Model.Report.EmployeeAvgSalary</li>
+                            <li class="list-group-item">Minimum Salary: @Model.Report.EmployeeMinSalary</li>
+                            <li class="list-group-item">Maximum Salary: @Model.Report.EmployeeMaxSalary</li>
+                        </ul>
+                        <canvas id="employeeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5>Manager Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Average Age: @Model.Report.ManagerAvgAge</li>
+                            <li class="list-group-item">Minimum Age: @Model.Report.ManagerMinAge</li>
+                            <li class="list-group-item">Maximum Age: @Model.Report.ManagerMaxAge</li>
+                            <li class="list-group-item">Average Salary: @Model.Report.ManagerAvgSalary</li>
+                            <li class="list-group-item">Minimum Salary: @Model.Report.ManagerMinSalary</li>
+                            <li class="list-group-item">Maximum Salary: @Model.Report.ManagerMaxSalary</li>
+                        </ul>
+                        <canvas id="managerChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5>Zookeeper Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Average Age: @Model.Report.ZookeeperAvgAge</li>
+                            <li class="list-group-item">Minimum Age: @Model.Report.ZookeeperMinAge</li>
+                            <li class="list-group-item">Maximum Age: @Model.Report.ZookeeperMaxAge</li>
+                            <li class="list-group-item">Average Salary: @Model.Report.ZookeeperAvgSalary</li>
+                            <li class="list-group-item">Minimum Salary: @Model.Report.ZookeeperMinSalary</li>
+                            <li class="list-group-item">Maximum Salary: @Model.Report.ZookeeperMaxSalary</li>
+                        </ul>
+                        <canvas id="zookeeperChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header bg-info text-white">
+                <h5>Dependent Healthcare Gains</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">Tier 1 Income: @Model.Report.Tier1Income</li>
+                    <li class="list-group-item">Tier 2 Income: @Model.Report.Tier2Income</li>
+                    <li class="list-group-item">Tier 3 Income: @Model.Report.Tier3Income</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- New Card for Total Difference -->
+        <div class="card mt-4 mb-5">
+            <!-- Added mb-5 class -->
+            <div class="card-header bg-danger text-white">
+                <h5>Total Net Cost of Employees</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">Total Difference: @Model.Report.TotalDifference</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const employeeCtx = document.getElementById('employeeChart').getContext('2d');
+        const managerCtx = document.getElementById('managerChart').getContext('2d');
+        const zookeeperCtx = document.getElementById('zookeeperChart').getContext('2d');
+
+        const employeeChart = new Chart(employeeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Average Age', 'Min Age', 'Max Age', 'Avg Salary', 'Min Salary', 'Max Salary'],
+                datasets: [{
+                    label: 'Employee Stats',
+                    data: [
+        @Model.Report.EmployeeAvgAge,
+        @Model.Report.EmployeeMinAge,
+        @Model.Report.EmployeeMaxAge,
+        @Model.Report.EmployeeAvgSalary,
+        @Model.Report.EmployeeMinSalary,
+        @Model.Report.EmployeeMaxSalary
+                            ],
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const managerChart = new Chart(managerCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Average Age', 'Min Age', 'Max Age', 'Avg Salary', 'Min Salary', 'Max Salary'],
+                datasets: [{
+                    label: 'Manager Stats',
+                    data: [
+        @Model.Report.ManagerAvgAge,
+        @Model.Report.ManagerMinAge,
+        @Model.Report.ManagerMaxAge,
+        @Model.Report.ManagerAvgSalary,
+        @Model.Report.ManagerMinSalary,
+        @Model.Report.ManagerMaxSalary
+                            ],
+                    backgroundColor: 'rgba(40, 167, 69, 0.5)',
+                    borderColor: 'rgba(40, 167, 69, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const zookeeperChart = new Chart(zookeeperCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Average Age', 'Min Age', 'Max Age', 'Avg Salary', 'Min Salary', 'Max Salary'],
+                datasets: [{
+                    label: 'Zookeeper Stats',
+                    data: [
+        @Model.Report.ZookeeperAvgAge,
+        @Model.Report.ZookeeperMinAge,
+        @Model.Report.ZookeeperMaxAge,
+        @Model.Report.ZookeeperAvgSalary,
+        @Model.Report.ZookeeperMinSalary,
+        @Model.Report.ZookeeperMaxSalary
+                            ],
+                    backgroundColor: 'rgba(255, 193, 7, 0.5)',
+                    borderColor: 'rgba(255, 193, 7, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

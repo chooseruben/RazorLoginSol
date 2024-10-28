@@ -1,0 +1,43 @@
+﻿@page
+@model RazorLogin.Pages.CustomerPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit Account";
+}
+
+<h1>Edit Account</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Customer.CustomerId" />
+    <div class="form-group">
+        <label asp-for="Customer.CustomerFirstName"></label>
+        <input asp-for="Customer.CustomerFirstName" class="form-control" />
+        <span asp-validation-for="Customer.CustomerFirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Customer.CustomerLastName"></label>
+        <input asp-for="Customer.CustomerLastName" class="form-control" />
+        <span asp-validation-for="Customer.CustomerLastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Customer.CustomerDob"></label>
+        <input asp-for="Customer.CustomerDob" class="form-control" type="date" />
+        <span asp-validation-for="Customer.CustomerDob" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Customer.CustomerAddress"></label>
+        <input asp-for="Customer.CustomerAddress" class="form-control" />
+        <span asp-validation-for="Customer.CustomerAddress" class="text-danger"></span>
+    </div>
+
+    <!-- Hidden fields for fields that should not be edited -->
+    <input type="hidden" asp-for="Customer.MembershipStartDate" />
+    <input type="hidden" asp-for="Customer.MembershipEndDate" />
+    <input type="hidden" asp-for="Customer.MembershipType" />
+    <input type="hidden" asp-for="Customer.CustomerEmail" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

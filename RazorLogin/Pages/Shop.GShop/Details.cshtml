@@ -1,0 +1,48 @@
+﻿@page "{id:int}"
+@model RazorLogin.Pages.Shop.GShop.DetailsModel
+@{
+    ViewData["Title"] = "Gift Shops Details";
+    <!--setting the title of the page-->
+}
+
+<h1> Gift Shop Details</h1> <!--Main heading for the page-->
+
+<div>
+    <h3>@Model.GiftShop.GiftShopName</h3> <!--Displays the name of the food store-->
+    <d1 class="row">
+        <!--A discription list for displaying details in a label-val format-->
+        <dt class="col-sm-2">ID</dt>
+        <dd class="col-sm-10">@Model.GiftShop.ShopId</dd>
+
+        <dt class="col-sm-2">Location</dt>
+        <dd class="col-sm-10">@Model.GiftShop.GiftShopLocation</dd>
+
+        <dt class="col-sm-2">Opening Time</dt>
+        <dd class="col-sm-10">@Model.GiftShop.GiftShopOpenTime</dd>
+
+        <dt class="col-sm-2">Closing Time</dt>
+        <dd class="col-sm-10">@Model.GiftShop.GiftShopCloseTime</dd>
+    </d1>
+</div>
+
+<h2>Employees Working at This Store</h2>
+<p> Total Employees: @Model.Employeecount</p>
+<table class="table">
+    <thread>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thread>
+    <tbody>
+        @foreach (var employee in Model.Employee)
+        {
+            <tr>
+                <td>@employee.EmployeeFirstName @employee.EmployeeLastName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-page="./Index">Back to List</a>
+</p>

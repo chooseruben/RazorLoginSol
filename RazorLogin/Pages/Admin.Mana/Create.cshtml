@@ -23,9 +23,18 @@
                 <select asp-for="Manager.EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Manager.Department" class="control-label"></label>
-                <input asp-for="Manager.Department" class="form-control" />
+                <label asp-for="Manager.Department" class="control-label"></label><br />
+                <select asp-for="Manager.Department">
+                    <option value="GENERAL">GENERAL</option>
+                    <option value="FOOD">DINING</option>
+                    <option value="SHOP">SHOP</option>
+                </select>
                 <span asp-validation-for="Manager.Department" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manager.ManagerEmploymentDate" class="control-label"></label>
+                <input asp-for="Manager.ManagerEmploymentDate" class="form-control" type="date" />
+                <span asp-validation-for="Manager.ManagerEmploymentDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -1,24 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace RazorLogin.Models;
 
 public partial class FoodStore
 {
+    [Key]
+    [Display(Name = "FoodStore Id")]
     public int FoodStoreId { get; set; }
 
+    [Display(Name = "Name")]
     public string FoodStoreName { get; set; } = null!;
 
+    [Display(Name = "Address")]
     public string FoodStoreLocation { get; set; } = null!;
 
+    [Display(Name = "Open Time")]
     public TimeOnly? FoodStoreOpenTime { get; set; }
 
+    [Display(Name = "Close Time")]
     public TimeOnly? FoodStoreCloseTime { get; set; }
 
+    [Display(Name = "Capacity")]
     public int? FoodStoreCustomerCapacity { get; set; }
 
     public string? FoodStoreType { get; set; }
 
+    [Display(Name = "YTD Sales")]
     public int FoodStoreYearToDateSales { get; set; }
 
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();

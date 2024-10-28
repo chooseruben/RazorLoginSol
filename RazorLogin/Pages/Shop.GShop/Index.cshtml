@@ -1,0 +1,51 @@
+﻿@page
+@model RazorLogin.Pages.Shop.GShop.IndexModel
+
+@{
+    ViewData["Title"] = "All Gift Shops";
+}
+
+<h1>All Food Stores</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GiftShops[0].GiftShopName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GiftShops[0].GiftShopLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GiftShops[0].GiftShopOpenTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GiftShops[0].GiftShopCloseTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var store in Model.GiftShops)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => store.GiftShopName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => store.GiftShopLocation)
+                </td>
+                <td>
+                    @(store.GiftShopOpenTime.ToString("hh:mm tt"))
+                </td>
+                <td>
+                    @(store.GiftShopCloseTime.ToString("hh:mm tt"))
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@store.ShopId">Details</a>
+                    <a asp-page="./Inventory" asp-route-shopId="@store.ShopId">View Inventory</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
