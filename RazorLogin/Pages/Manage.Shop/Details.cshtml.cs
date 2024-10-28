@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Manager.Shop
+namespace RazorLogin.Pages.Manage.Shop
 {
     public class DetailsModel : PageModel
     {

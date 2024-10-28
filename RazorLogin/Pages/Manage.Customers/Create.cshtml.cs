@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Manager.Customers
+namespace RazorLogin.Pages.Manage.Customers
 {
     public class CreateModel : PageModel
     {
