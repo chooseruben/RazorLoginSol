@@ -11,12 +11,17 @@
 
     <Compile Remove="obj\**" />
 
+    <Compile Remove="Pages\Admin.Eve\**" />
+
     <Compile Remove="Pages\Admin.Purch\**" />
     <Content Remove="obj\**" />
+    <Content Remove="Pages\Admin.Eve\**" />
     <Content Remove="Pages\Admin.Purch\**" />
     <EmbeddedResource Remove="obj\**" />
+    <EmbeddedResource Remove="Pages\Admin.Eve\**" />
     <EmbeddedResource Remove="Pages\Admin.Purch\**" />
     <None Remove="obj\**" />
+    <None Remove="Pages\Admin.Eve\**" />
     <None Remove="Pages\Admin.Purch\**" />
 
   </ItemGroup>

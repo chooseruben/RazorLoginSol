@@ -1,0 +1,57 @@
+﻿@page
+@model RazorLogin.Pages.Shop.Dining1.IndexModel
+
+@{
+    ViewData["Title"] = "All Food Stores";
+}
+
+<h1>All Food Stores</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodStores[0].FoodStoreName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodStores[0].FoodStoreLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodStores[0].FoodStoreOpenTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodStores[0].FoodStoreCloseTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodStores[0].FoodStoreType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var store in Model.FoodStores)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => store.FoodStoreName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => store.FoodStoreLocation)
+                </td>
+                <td>
+                    @(store.FoodStoreOpenTime.HasValue ? store.FoodStoreOpenTime.Value.ToString("hh:mm tt") : "N/A")    
+                </td>
+                <td>
+                    @(store.FoodStoreCloseTime.HasValue ? store.FoodStoreCloseTime.Value.ToString("hh:mm tt") : "N/A")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => store.FoodStoreType)
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@store.FoodStoreId">Details</a>
+                    <a asp-page="./Inventory" asp-route-foodStoreId="@store.FoodStoreId">View Inventory</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

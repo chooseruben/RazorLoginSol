@@ -2,10 +2,10 @@
 @model RazorLogin.Pages.Admin.Users.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Users";
 }
 
-<h1>Index</h1>
+<h1>User Account Emails</h1>
 
 <p>
     <!--<a asp-page="Create">Create New</a>-->
@@ -27,7 +27,7 @@
             </td>
             <td>
                     <!--<a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> | -->
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    <!--  <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> -->
             </td>
         </tr>
 }
