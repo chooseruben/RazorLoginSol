@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RazorLogin.styles.css" asp-append-version="true" />
+        }
+    </style>
 </head>
 <body>
 
@@ -75,7 +77,28 @@
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Manager"))
                 {
-                        <ul class="navbar-nav flex-grow-1">
+
+                      <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="Manager.Shop/Index">Shops</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Manager.Employees/Index">Employees</a>
+                        </li>
+                        </ul>
+
+
+                        
+                            //<li class="nav-item">
+                               // <a class="nav-link text dark" asp-area="" asp-area="/Manager.Reports/Index">Reports</a>
+                            //</li>
+                            //<li class="nav-item">
+                                //<a class="nav-link text dark" asp-area="" asp-area="/Manager.Customers/Index">Customers</a>
+                            //</li>
+                            //<li class="nav-item">
+                                //<a class="nav-link text-dark" asp-area="" asp-page="/MyDependents/Index">My Dependents</a>
+                            //</li>
+
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Report/Index">Dining Stores Report</a>

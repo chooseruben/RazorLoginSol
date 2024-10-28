@@ -1,4 +1,6 @@
-﻿using System;
+
+using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +23,9 @@ namespace RazorLogin.Pages.MyDependents
             _userManager = userManager;
         }
 
+
         public IList<Dependant> Dependant { get;set; } = new List<Dependant>();
+
 
         public async Task OnGetAsync()
         {
@@ -41,4 +45,6 @@ namespace RazorLogin.Pages.MyDependents
             }
         }
     }
+
 }
+

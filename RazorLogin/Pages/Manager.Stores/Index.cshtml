@@ -1,0 +1,32 @@
+﻿@page
+@model RazorLogin.Pages.Manager.Manager.Stores.IndexModel
+@{
+    ViewData["Title"] = "Store Salary Statistics";
+}
+
+<h1>Store Salary Statistics</h1>
+
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Store Name</th>
+            <th>Average Salary</th>
+            <th>Minimum Salary</th>
+            <th>Maximum Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var store in Model.StoreStatistics)
+    {
+        <tr>
+            <td>@store.StoreName</td>
+            <td>@store.AverageSalary</td>
+            <td>@store.MinimumSalary</td>
+            <td>@store.MaximumSalary</td>
+            <td>
+                <a asp-page="./Details" asp-route-itemid="@store.StoreId">Details</a>
+            </td>
+        </tr>
+    }
+</tbody>
+</table>

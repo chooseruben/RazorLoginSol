@@ -1,0 +1,18 @@
+﻿@page
+@model RazorLogin.Pages.Manager.Manager.Stores.DetailsModel
+@{
+    ViewData["Title"] = "Store Details";
+}
+
+<h1>Store Details</h1>
+
+<div>
+    <h4>@Model.Store.StoreName</h4>
+    <hr />
+    <p>Average Salary: @Model.Store.AverageSalary</p>
+    <p>Minimum Salary: @Model.Store.MinimumSalary</p>
+    <p>Maximum Salary: @Model.Store.MaximumSalary</p>
+</div>
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>

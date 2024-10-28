@@ -1,4 +1,6 @@
+
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +26,9 @@ namespace RazorLogin.Pages.MyDependents
 
         public IActionResult OnGet()
         {
+
         ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
+
             return Page();
         }
 
@@ -83,6 +87,7 @@ namespace RazorLogin.Pages.MyDependents
             return RedirectToPage("./Index"); // Redirect to the index page after successful creation
         }
     }
-    
-    
+
+
 }
+

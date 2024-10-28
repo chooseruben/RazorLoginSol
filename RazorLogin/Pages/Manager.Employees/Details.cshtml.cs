@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.Mana
+namespace RazorLogin.Pages.Manager.Employees
 {
     public class DetailsModel : PageModel
     {
@@ -18,7 +18,7 @@ namespace RazorLogin.Pages.Admin.Mana
             _context = context;
         }
 
-        public RazorLogin.Models.Manager Manager { get; set; } = default!;
+        public RazorLogin.Models.Employee Employee { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,14 +27,14 @@ namespace RazorLogin.Pages.Admin.Mana
                 return NotFound();
             }
 
-            var manager = await _context.Managers.FirstOrDefaultAsync(m => m.ManagerId == id);
-            if (manager == null)
+            var employee = await _context.Employees.FirstOrDefaultAsync(m => m.EmployeeId == id);
+            if (employee == null)
             {
                 return NotFound();
             }
             else
             {
-                Manager = manager;
+                Employee = employee;
             }
             return Page();
         }
