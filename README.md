@@ -1,6 +1,6 @@
 # RazorLoginSol
 
-ASP.NET ENTITY FRAMEWORK CORE MVC USING IDENTITY FOR LOGINS
+ASP.NET c# and RAZOR
 
 - theoretically, the customer will (and as of now, is able to) register and log into their accounnt. An employee's account will be made by admin. 
 
