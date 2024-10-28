@@ -87,18 +87,16 @@
                         </li>
                         
 
-
-                        
-                            //<li class="nav-item">
-                               // <a class="nav-link text dark" asp-area="" asp-area="/Manager.Reports/Index">Reports</a>
-                            //</li>
-                            //<li class="nav-item">
-                                //<a class="nav-link text dark" asp-area="" asp-area="/Manager.Customers/Index">Customers</a>
-                            //</li>
-                            //<li class="nav-item">
-                                //<a class="nav-link text-dark" asp-area="" asp-page="/MyDependents/Index">My Dependents</a>
-                            //</li>
-
+                         <!---  <li class="nav-item">
+                                <a class="nav-link text dark" asp-area="" asp-area="/Manager.Reports/Index">Reports</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text dark" asp-area="" asp-area="/Manager.Customers/Index">Customers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/MyDependents/Index">My Dependents</a>
+                            </li>
+                         --->
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Report/Index">Dining Stores Report</a>
@@ -109,6 +107,7 @@
                         </ul>
 
                 }
+                            
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Shop"))
                 {
