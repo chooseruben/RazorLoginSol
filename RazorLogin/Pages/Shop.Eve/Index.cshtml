@@ -2,41 +2,50 @@
 @model RazorLogin.Pages.Shop.Eve.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Events";
 }
 
-<h2>Events</h2>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Events</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Event Name</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Date</th>
-            <th>Location</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Events)
-        {
+    <div class="mb-3 text-end">
+        <a asp-page="./Create" class="btn btn-success">Create New Event</a>
+    </div>
+
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
             <tr>
-                <td>@item.EventEmployeeRepId</td>
-                <td>@item.EventName</td>
-                <td>@item.EventStartTime</td>
-                <td>@item.EventEndTime</td>
-                <td>@item.EventDate</td>
-                <td>@item.EventLocation</td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.EventId">Edit</a> |
-                    <form method="post" asp-page-handler="Delete" asp-route-eventId="@item.EventId" style="display:inline;">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this event?');">Delete</button>
-                    </form>
-                </td>
+                <th>Event Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Events)
+            {
+                <tr>
+                    <td>@item.EventName</td>
+                    <td>@item.EventStartTime.ToString("hh:mm tt")</td>
+                    <td>@item.EventEndTime.ToString("hh:mm tt")</td>
+                    <td>@item.EventDate</td>
+                    <td>@item.EventLocation</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.EventId" class="btn btn-primary btn-sm me-2">Edit</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-eventId="@item.EventId" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-<a asp-page="./Create">Create New Event</a>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
