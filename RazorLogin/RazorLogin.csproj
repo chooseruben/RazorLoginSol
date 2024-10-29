@@ -41,16 +41,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Admin.FShps\Details.cshtml.cs" />
+    <Compile Remove="Pages\Admin.GShps\Details.cshtml.cs" />
     <Compile Remove="Pages\Admin.Reports\EmployeeDataReport.cshtml.cs" />
     <Compile Remove="Pages\Admin.Reports\Index.cshtml.cs" />
+    <Compile Remove="Pages\Admin.Tick\Details.cshtml.cs" />
+    <Compile Remove="Pages\Admin.Zook\Details.cshtml.cs" />
     <Compile Remove="test\Employee.cs" />
     <Compile Remove="test\Event_wthout_day_n_loca.cs" />
     <Compile Remove="test\tempcontext.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Admin.FShps\Details.cshtml" />
+    <Content Remove="Pages\Admin.GShps\Details.cshtml" />
     <Content Remove="Pages\Admin.Reports\EmployeeDataReport.cshtml" />
     <Content Remove="Pages\Admin.Reports\Index.cshtml" />
+    <Content Remove="Pages\Admin.Tick\Details.cshtml" />
+    <Content Remove="Pages\Admin.Zook\Details.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
