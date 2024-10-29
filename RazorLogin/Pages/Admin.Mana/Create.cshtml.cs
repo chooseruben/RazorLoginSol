@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -19,23 +18,20 @@ namespace RazorLogin.Pages.Admin.Mana
             _context = context;
         }
 
-       
         public IActionResult OnGet()
         {
-
-
+        ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             return Page();
         }
 
         [BindProperty]
-        public Manager Manager { get; set; } = default!;
+        public RazorLogin.Models.Manager Manager { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                Debug.WriteLine("Model state is not valid!");
                 return Page();
             }
 

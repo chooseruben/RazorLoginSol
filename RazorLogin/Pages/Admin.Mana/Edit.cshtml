@@ -16,17 +16,26 @@
             <input type="hidden" asp-for="Manager.ManagerId" />
             <div class="form-group">
                 <label asp-for="Manager.ManagerId" class="control-label"></label>
-                <select asp-for="Manager.ManagerId" class="form-control" asp-items="ViewBag.ManagerId"></select>
+                <input asp-for="Manager.ManagerId" class="form-control" />
                 <span asp-validation-for="Manager.ManagerId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Manager.Department" class="control-label"></label>
-                <input asp-for="Manager.Department" class="form-control" />
+                <label asp-for="Manager.EmployeeId" class="control-label"></label>
+                <select asp-for="Manager.EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>
+                <span asp-validation-for="Manager.EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manager.Department" class="control-label"></label><br />
+                <select asp-for="Manager.Department">
+                    <option value="GENERAL">GENERAL</option>
+                    <option value="FOOD">DINING</option>
+                    <option value="SHOP">SHOP</option>
+                </select>
                 <span asp-validation-for="Manager.Department" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Manager.ManagerEmploymentDate" class="control-label"></label>
-                <input asp-for="Manager.ManagerEmploymentDate" class="form-control" />
+                <input asp-for="Manager.ManagerEmploymentDate" class="form-control" type="date" />
                 <span asp-validation-for="Manager.ManagerEmploymentDate" class="text-danger"></span>
             </div>
             <div class="form-group">

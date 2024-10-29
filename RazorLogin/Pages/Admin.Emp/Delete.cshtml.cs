@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +9,13 @@ namespace RazorLogin.Pages.Admin.Emp
 {
     public class DeleteModel : PageModel
     {
-        private readonly RazorLogin.Models.ZooDbContext _context;
+        private readonly ZooDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public DeleteModel(RazorLogin.Models.ZooDbContext context)
+        public DeleteModel(ZooDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -51,8 +51,26 @@ namespace RazorLogin.Pages.Admin.Emp
             var employee = await _context.Employees.FindAsync(id);
             if (employee != null)
             {
-                Employee = employee;
-                _context.Employees.Remove(Employee);
+                // Find the user associated with the employee's email
+                var user = await _userManager.FindByEmailAsync(employee.EmployeeEmail);
+
+                if (user != null)
+                {
+                    // Delete the Identity user
+                    var result = await _userManager.DeleteAsync(user);
+                    if (!result.Succeeded)
+                    {
+                        // Handle errors if user deletion fails
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return Page(); // Return to the page to display errors
+                    }
+                }
+
+                // Delete the employee record
+                _context.Employees.Remove(employee);
                 await _context.SaveChangesAsync();
             }
 

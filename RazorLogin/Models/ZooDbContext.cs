@@ -464,8 +464,13 @@ public partial class ZooDbContext : DbContext
             entity.Property(e => e.EventId)
                 .ValueGeneratedNever()
                 .HasColumnName("Event_ID");
+            entity.Property(e => e.EventDate).HasColumnName("Event_date");
             entity.Property(e => e.EventEmployeeRepId).HasColumnName("Event_employee_rep_ID");
             entity.Property(e => e.EventEndTime).HasColumnName("Event_end_time");
+            entity.Property(e => e.EventLocation)
+                .HasMaxLength(70)
+                .IsFixedLength()
+                .HasColumnName("Event_Location");
             entity.Property(e => e.EventName)
                 .HasMaxLength(45)
                 .HasDefaultValueSql("(NULL)")
@@ -519,7 +524,9 @@ public partial class ZooDbContext : DbContext
         {
             entity.HasKey(e => e.ShopId).HasName("PK_Gift_shop_Shop_ID");
 
-            entity.ToTable("Gift_shop");
+            //entity.ToTable("Gift_shop");
+            entity.ToTable("Gift_shop", tb => tb.HasTrigger("InvalidClosingTime_GiftShop"));
+
 
             entity.HasIndex(e => e.ShopId, "Gift_shop$Shop_ID_UNIQUE").IsUnique();
 
@@ -643,7 +650,7 @@ public partial class ZooDbContext : DbContext
 
             entity.ToTable("Purchase");
 
-            entity.HasIndex(e => e.CustomerId, "Purchase$Customer_ID_UNIQUE").IsUnique();
+            //entity.HasIndex(e => e.CustomerId, "Purchase$Customer_ID_UNIQUE").IsUnique();
 
             entity.HasIndex(e => e.PurchaseId, "Purchase$Purchase_ID_UNIQUE").IsUnique();
 

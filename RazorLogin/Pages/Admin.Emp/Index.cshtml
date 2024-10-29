@@ -2,14 +2,15 @@
 @model RazorLogin.Pages.Admin.Emp.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Employees";
 }
 
-<h1>Index</h1>
+<h1>Employees</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Add a new employee</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -22,11 +23,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Employee[0].EmployeeLastName)
             </th>
-    
             <th>
                 @Html.DisplayNameFor(model => model.Employee[0].EmployeeSalary)
             </th>
-     
             <th>
                 @Html.DisplayNameFor(model => model.Employee[0].Department)
             </th>
@@ -42,45 +41,58 @@
             <th>
                 @Html.DisplayNameFor(model => model.Employee[0].Supervisor)
             </th>
+            <th>Roles</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Employee) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeFirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeLastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeSalary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodStore.FoodStoreId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Shop.ShopId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Supervisor.ManagerId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.EmployeeId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.EmployeeId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.EmployeeId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Employee)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeLastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeSalary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FoodStore.FoodStoreId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shop.ShopId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supervisor.ManagerId)
+                </td>
+                <td>
+                    @if (Model.EmployeeRoles.ContainsKey(item.EmployeeEmail))
+                    {
+                        var roles = Model.EmployeeRoles[item.EmployeeEmail];
+                        @string.Join(", ", roles)
+                    }
+                    else
+                    {
+                        <span>No roles assigned</span>
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.EmployeeId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.EmployeeId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

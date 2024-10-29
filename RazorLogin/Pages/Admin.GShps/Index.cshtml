@@ -14,6 +14,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.GiftShop[0].ShopId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.GiftShop[0].GiftShopName)
             </th>
             <th>
@@ -34,6 +37,9 @@
     <tbody>
 @foreach (var item in Model.GiftShop) {
         <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShopId)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GiftShopName)
             </td>

@@ -1,0 +1,37 @@
+﻿@page
+@model RazorLogin.Pages.Manage.Shop.IndexModel
+@section Scripts {
+
+}
+@{
+    ViewData["Title"] = "Gift Shops";
+}
+
+<h1>Gift Shop</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.GiftShops[0].ShopId)</th>
+            <th>@Html.DisplayNameFor(model => model.GiftShops[0].GiftShopName)</th>
+            <th>@Html.DisplayNameFor(model => model.GiftShops[0].GiftShopOpenTime)</th>
+            <th>@Html.DisplayNameFor(model => model.GiftShops[0].GiftShopCloseTime)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var shop in Model.GiftShops) {
+        <tr>
+            <td>@shop.ShopId</td>
+            <td>@shop.GiftShopName</td>
+            <td>@shop.GiftShopOpenTime</td>
+            <td>@shop.GiftShopCloseTime</td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@shop.ShopId">Deatils</a> |
+                <a asp-page="./Edit" asp-route-id="@shop.ShopId">Edit</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

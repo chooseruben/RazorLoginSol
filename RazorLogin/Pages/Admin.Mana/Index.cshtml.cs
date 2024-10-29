@@ -18,7 +18,7 @@ namespace RazorLogin.Pages.Admin.Mana
             _context = context;
         }
 
-        public IList<Manager> Manager { get;set; } = default!;
+        public IList<RazorLogin.Models.Manager> Manager { get;set; } = default!;
 
         public async Task OnGetAsync()
         {

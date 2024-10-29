@@ -19,7 +19,7 @@ namespace RazorLogin.Pages.Admin.Mana
         }
 
         [BindProperty]
-        public Manager Manager { get; set; } = default!;
+        public RazorLogin.Models.Manager Manager { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

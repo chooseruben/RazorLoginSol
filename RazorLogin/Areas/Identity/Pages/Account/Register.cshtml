@@ -1,0 +1,136 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    body {
+        background-image: url('https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F0%2F0d%2FPeacock_Milwaukee_County_Zoo.jpg&f=1&nofb=1&ipt=ed53a9697f8ed7f1908a42e926f52bf2e2752d035d23399dcc9c9fe795205ebd&ipo=images'); 
+        background-size: cover;
+        background-position: center;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .register-container {
+        background-color: rgba(255, 255, 255, 0.9); 
+        border-radius: 8px;
+        padding: 40px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        margin: auto;
+        margin-top: 100px; 
+    }
+
+    .register-header {
+        font-size: 2rem;
+        color: white; 
+        text-align: center;
+        margin-bottom: 20px;
+        background-color: #004d00; 
+        padding: 10px; 
+        border-radius: 5px; 
+    }
+
+    .form-control {
+        border-radius: 5px;
+        border: 2px solid #004d00; 
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .btn-primary {
+        background-color: #004d00; 
+        border-color: #004d00;
+    }
+
+        .btn-primary:hover {
+            background-color: #003300; 
+            border-color: #003300;
+        }
+
+    .footer-links {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .footer-links a {
+            color: #004d00; 
+            text-decoration: none;
+        }
+
+            .footer-links a:hover {
+                text-decoration: underline;
+            }
+</style>
+
+<h1 class="register-header">@ViewData["Title"]</h1>
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="register-container">
+            <h2>Create a new account.</h2>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" required />
+                <label asp-for="Input.Email">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" placeholder="password" required />
+                <label asp-for="Input.Password">Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" placeholder="password" required />
+                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+        </form>
+    </div>
+
+    <!-- Uncomment this section if you want to include external registration options -->
+    <!-- <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h3>Use another service to register.</h3>
+            <hr />
+    @{
+        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+        {
+                            <div>
+                                <p>
+                                    There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                                    about setting up this ASP.NET application to support logging in via external services</a>.
+                                </p>
+                            </div>
+        }
+        else
+        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div>
+                                    <p>
+                        @foreach (var provider in Model.ExternalLogins!)
+                        {
+                                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                        }
+                                    </p>
+                                </div>
+                            </form>
+        }
+    }
+        </section>
+    </div> -->
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

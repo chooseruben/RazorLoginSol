@@ -8,7 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString, sqlOptions =>
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5, // Maximum number of retries
+            maxRetryDelay: TimeSpan.FromSeconds(30), // Maximum delay between retries
+            errorNumbersToAdd: null // Optional additional SQL error numbers to retry on
+        )
+    ));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -16,8 +22,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>();
-builder.Services.AddDbContext<RazorLogin.Models.ZooDbContext>();
-
+builder.Services.AddDbContext<RazorLogin.Models.ZooDbContext>(options =>
+    options.UseSqlServer(connectionString, sqlOptions =>
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(50),
+            errorNumbersToAdd: null
+        )
+    ));
 
 var app = builder.Build();
 
@@ -121,7 +133,8 @@ using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-    string email = "Cutomer@zoo.com";
+    string email = "Customer@zoo.com";
+
     string password = "Test1234!";
     if (await userManager.FindByEmailAsync(email) == null)
     {
@@ -165,6 +178,27 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
     string email = "Customer3@zoo.com";
+    string password = "Test1234!";
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+
+        var user = new IdentityUser();
+        user.UserName = email;
+        user.Email = email;
+
+        await userManager.CreateAsync(user, password);
+
+        await userManager.AddToRoleAsync(user, "Customer");
+
+    }
+
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    string email = "Customer4@zoo.com";
     string password = "Test1234!";
     if (await userManager.FindByEmailAsync(email) == null)
     {
