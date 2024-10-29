@@ -20,23 +20,24 @@ namespace RazorLogin.Pages.ZookeeperPage
 
         public Zookeeper Zookeeper { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+public async Task<IActionResult> OnGetAsync(int? id)
+    {
+        if (id == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var zookeeper = await _context.Zookeepers.FirstOrDefaultAsync(m => m.ZookeeperId == id);
-            if (zookeeper == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Zookeeper = zookeeper;
-            }
-            return Page();
+            return NotFound();
         }
+
+        Zookeeper = await _context.Zookeepers
+            .Include(z => z.Employee) 
+            .FirstOrDefaultAsync(m => m.ZookeeperId == id);
+
+        if (Zookeeper == null)
+        {
+            return NotFound();
+        }
+
+        return Page();
     }
+
+}
 }

@@ -20,18 +20,18 @@ namespace RazorLogin.Pages.ZookeeperPage
 
         public async Task OnGetAsync()
         {
-            // Try to fetch the data and handle errors gracefully
             try
             {
                 Zookeeper = await _context.Zookeepers
-                    .Include(z => z.Employee)  // Load related Employee data
+                    .Include(z => z.Employee) // Load related Employee data
+                    .OrderBy(z => z.AssignedDepartment) // Sort by Department
                     .ToListAsync();
             }
             catch (Exception ex)
             {
-                // Log the exception or show an error (optional)
                 Console.WriteLine($"Error loading data: {ex.Message}");
             }
         }
+
     }
 }

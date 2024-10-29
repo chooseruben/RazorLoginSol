@@ -1,29 +1,48 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using RazorLogin.Models;
+using RazorLogin.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using RazorLogin.Models;
 
 namespace RazorLogin.Pages.EnclosurePage
 {
     public class IndexModel : PageModel
     {
-        private readonly RazorLogin.Models.ZooDbContext _context;
+        private readonly ZooDbContext _context;
 
-        public IndexModel(RazorLogin.Models.ZooDbContext context)
+        public IndexModel(ZooDbContext context)
         {
             _context = context;
         }
 
-        public IList<Enclosure> Enclosure { get;set; } = default!;
+        // List to hold the ViewModel data
+        public IList<EnclosureViewModel> Enclosures { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Enclosure = await _context.Enclosures
-                .Include(e => e.Zookeeper).ToListAsync();
+            // Query the database and map the data to the ViewModel
+            Enclosures = await _context.Enclosures
+                .Include(e => e.Zookeeper) // Load related Zookeeper data
+                .Select(e => new EnclosureViewModel
+                {
+                    EnclosureId = e.EnclosureId,
+                    EnclosureName = e.EnclosureName,
+                    EnclosureDepartment = e.EnclosureDepartment,
+                    OccupancyStatus = e.OccupancyStatus,
+                    EnclosureOpenTime = e.EnclosureOpenTime,
+                    EnclosureCloseTime = e.EnclosureCloseTime,
+                    IsClosed = e.Closings.Any(c => c.EnclosureId == e.EnclosureId), // Check if closed
+                    ZookeeperId = e.Zookeeper != null ? e.Zookeeper.ZookeeperId : (int?)null // Nullable if unassigned
+                })
+                .ToListAsync();
+        }
+
+        // Helper method to determine if an enclosure is closed
+        public bool IsEnclosureClosed(EnclosureViewModel enclosure)
+        {
+            return enclosure.IsClosed;
         }
     }
 }

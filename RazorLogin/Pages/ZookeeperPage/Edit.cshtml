@@ -14,10 +14,9 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Zookeeper.ZookeeperId" />
-            <div class="form-group">
-                <label asp-for="Zookeeper.EmployeeId" class="control-label"></label>
-                <select asp-for="Zookeeper.EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>
-                <span asp-validation-for="Zookeeper.EmployeeId" class="text-danger"></span>
+            <<div class="form-group">
+                <label>Employee ID</label>
+                <span>@Model.Zookeeper.EmployeeId</span> 
             </div>
             <div class="form-group">
                 <label asp-for="Zookeeper.NumAssignedCages" class="control-label"></label>
@@ -36,9 +35,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Zookeeper.AssignedDepartment" class="control-label"></label>
-                <input asp-for="Zookeeper.AssignedDepartment" class="form-control" />
+                <select asp-for="Zookeeper.AssignedDepartment" class="form-control">
+                    <option value=""></option>
+                    <option value="LAND">LAND</option>
+                    <option value="SEA">SEA</option>
+                    <option value="SAFARI">SAFARI</option>
+                    <option value="PETTING">PETTING</option>
+                    <option value="TUNDRA">TUNDRA</option>
+                </select>
                 <span asp-validation-for="Zookeeper.AssignedDepartment" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

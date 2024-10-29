@@ -5,56 +5,35 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<<h1>Zookeeper Information</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Zookeeper[0].NumAssignedCages)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Zookeeper[0].TrainingRenewalDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Zookeeper[0].LastTrainingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Zookeeper[0].AssignedDepartment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Zookeeper[0].Employee)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].TrainingRenewalDate)</th>
+            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].LastTrainingDate)</th>
+            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].AssignedDepartment)</th>
+            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].Employee.EmployeeFirstName)</th>
+            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].Employee.EmployeeLastName)</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Zookeeper) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumAssignedCages)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrainingRenewalDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastTrainingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AssignedDepartment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ZookeeperId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ZookeeperId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ZookeeperId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Zookeeper)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.TrainingRenewalDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.LastTrainingDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.AssignedDepartment)</td>
+                <td>@Html.DisplayFor(modelItem => item.Employee.EmployeeFirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Employee.EmployeeLastName)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ZookeeperId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ZookeeperId">Details</a> |
+                    
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

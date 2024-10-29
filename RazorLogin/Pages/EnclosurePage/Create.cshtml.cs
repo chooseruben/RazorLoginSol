@@ -20,14 +20,20 @@ namespace RazorLogin.Pages.EnclosurePage
 
         public IActionResult OnGet()
         {
-        ViewData["ZookeeperId"] = new SelectList(_context.Zookeepers, "ZookeeperId", "ZookeeperId");
+            var zookeepers = _context.Zookeepers
+                .Select(z => new
+                {
+                    ZookeeperId = z.ZookeeperId,
+                    Name = z.Employee.EmployeeFirstName + " " + z.Employee.EmployeeLastName
+                }).ToList();
+
+            ViewData["ZookeeperId"] = new SelectList(zookeepers, "ZookeeperId", "Name");
             return Page();
         }
 
         [BindProperty]
         public Enclosure Enclosure { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
