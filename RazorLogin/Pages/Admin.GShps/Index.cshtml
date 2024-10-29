@@ -22,14 +22,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.GiftShop[0].GiftShopLocation)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GiftShop[0].GiftShopYearToDateSales)
-            </th>
+         
             <th>
                 @Html.DisplayNameFor(model => model.GiftShop[0].GiftShopOpenTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.GiftShop[0].GiftShopCloseTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GiftShop[0].GiftShopYearToDateSales)
             </th>
             <th></th>
         </tr>
@@ -46,18 +47,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.GiftShopLocation)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GiftShopYearToDateSales)
-            </td>
+          
             <td>
                 @Html.DisplayFor(modelItem => item.GiftShopOpenTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GiftShopCloseTime)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GiftShopYearToDateSales)
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ShopId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ShopId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ShopId">Delete</a>
             </td>
         </tr>

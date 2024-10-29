@@ -53,8 +53,19 @@
                             <li>
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Tick/Index">Tickets</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/MyDependents/Index">My Dependents</a>
+                         
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" id="personalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Account
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="financesDropdown">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-page="/MyDependents/Index">My Dependents</a>
+                                    </li>
+                                  <!--  <li>
+                                        <a class="dropdown-item" asp-area="" asp-page="/Admin.Personal/Index">Employee Info</a>
+                                    </li>-->
+                                </ul>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" id="financesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

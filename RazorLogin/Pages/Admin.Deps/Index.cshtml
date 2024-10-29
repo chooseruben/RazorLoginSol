@@ -5,19 +5,19 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>All Dependants</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Add Depndent to Database</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Dependant[0].DependentName)
+                @Html.DisplayNameFor(model => model.Dependant[0].DepndantId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Dependant[0].DependentSex)
+                @Html.DisplayNameFor(model => model.Dependant[0].DependentName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Dependant[0].DependentDob)
@@ -38,10 +38,10 @@
 @foreach (var item in Model.Dependant) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DependentName)
+                @Html.DisplayFor(modelItem => item.DepndantId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DependentSex)
+                @Html.DisplayFor(modelItem => item.DependentName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DependentDob)
@@ -57,7 +57,6 @@
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.DepndantId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.DepndantId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.DepndantId">Delete</a>
             </td>
         </tr>
