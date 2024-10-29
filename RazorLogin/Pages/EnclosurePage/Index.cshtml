@@ -1,0 +1,57 @@
+﻿@page
+@model RazorLogin.Pages.EnclosurePage.IndexModel
+
+<h1>Enclosure Information</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Enclosure Name</th>
+            <th>Department</th>
+            <th>Status</th>
+            <th>Open Time</th>
+            <th>Close Time</th>
+            <th>Zookeeper ID</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Enclosures)
+        {
+            <tr>
+                <td>@item.EnclosureName</td>
+                <td>@item.EnclosureDepartment</td>
+                <td>
+                    @if (item.IsClosed)
+                    {
+                        <span class="text-danger">Closed</span>
+                    }
+                    else
+                    {
+                        <span class="text-success">@item.OccupancyStatus</span>
+                    }
+                </td>
+                <td>@item.EnclosureOpenTime</td>
+                <td>@item.EnclosureCloseTime</td>
+                <td>
+                    @if (item.ZookeeperId.HasValue)
+                    {
+                        @item.ZookeeperId
+                    }
+                    else
+                    {
+                        <span>Unassigned</span>
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.EnclosureId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.EnclosureId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

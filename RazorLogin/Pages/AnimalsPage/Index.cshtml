@@ -1,0 +1,102 @@
+﻿@page
+@model RazorLogin.Pages.AnimalsPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].AnimalName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].AnimalSex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].AnimalDob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Species)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Diet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].ArrivalDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].MedicalNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].EndangeredStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].FeedingTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Enclosure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Zookeeper)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Animal) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnimalName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnimalSex)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnimalDob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Species)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MedicalNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndangeredStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedingTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Enclosure.EnclosureId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zookeeper.ZookeeperId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.AnimalId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.AnimalId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.AnimalId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

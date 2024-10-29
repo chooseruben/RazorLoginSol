@@ -1,0 +1,39 @@
+﻿@page
+@model RazorLogin.Pages.ZookeeperPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<<h1>Zookeeper Information</h1>
+
+<p>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].TrainingRenewalDate)</th>
+            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].LastTrainingDate)</th>
+            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].AssignedDepartment)</th>
+            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].Employee.EmployeeFirstName)</th>
+            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].Employee.EmployeeLastName)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Zookeeper)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.TrainingRenewalDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.LastTrainingDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.AssignedDepartment)</td>
+                <td>@Html.DisplayFor(modelItem => item.Employee.EmployeeFirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Employee.EmployeeLastName)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ZookeeperId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ZookeeperId">Details</a> |
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

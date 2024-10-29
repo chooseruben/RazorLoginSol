@@ -1,0 +1,48 @@
+﻿@page
+@model RazorLogin.Pages.AnimalsPage.CreateModel
+@{
+    ViewData["Title"] = "Create Animal";
+}
+
+<h1>Create New Animal</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Animal.AnimalName" class="control-label"></label>
+        <input asp-for="Animal.AnimalName" class="form-control" />
+        <span asp-validation-for="Animal.AnimalName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Animal.Species" class="control-label"></label>
+        <input asp-for="Animal.Species" class="form-control" />
+        <span asp-validation-for="Animal.Species" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Animal.AnimalDob" class="control-label">Date of Birth</label>
+        <input asp-for="Animal.AnimalDob" class="form-control" type="date" />
+        <span asp-validation-for="Animal.AnimalDob" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Animal.ArrivalDate" class="control-label">Arrival Date</label>
+        <input asp-for="Animal.ArrivalDate" class="form-control" type="date" />
+        <span asp-validation-for="Animal.ArrivalDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Animal.EnclosureId" class="control-label">Enclosure</label>
+        <select asp-for="Animal.EnclosureId" class="form-control" asp-items="@(ViewData["EnclosureId"] as IEnumerable<SelectListItem>)">
+            <option value="">-- Select Enclosure --</option>
+        </select>
+        <span asp-validation-for="Animal.EnclosureId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
