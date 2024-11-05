@@ -16,6 +16,7 @@ public partial class Item
     public int? ShopId { get; set; }
 
     public int? FoodStoreId { get; set; }
+    public int? ItemPrice { get; set; }
 
     public virtual ICollection<FoodStore> FoodStores { get; set; } = new List<FoodStore>();
 
