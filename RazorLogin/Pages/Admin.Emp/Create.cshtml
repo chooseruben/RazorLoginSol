@@ -78,8 +78,10 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Employee.SupervisorId" class="control-label"></label>
-                <input asp-for="Employee.SupervisorId" class="form-control" />
+                <label asp-for="Employee.SupervisorId" class="control-label"></label><br />
+                <select asp-for="Employee.SupervisorId" class="form-control" asp-items="ViewBag.SupervisorId">
+                    <option value="">Select Supervisor's ID</option>
+                </select>
                 <span asp-validation-for="Employee.SupervisorId" class="text-danger"></span>
             </div>
 
@@ -91,7 +93,7 @@
 
             <div class="form-group">
                 <label asp-for="Employee.ShopId" class="control-label"></label><br/>
-                <select asp-for="Employee.ShopId" class="form-control" asp-items="ViewBag.SupervisorId">
+                <select asp-for="Employee.ShopId" class="form-control" asp-items="ViewBag.ShopId">
                     <option value="">Select Shop's ID</option>
                 </select>
                 <span asp-validation-for="Employee.ShopId" class="text-danger"></span>
@@ -99,7 +101,7 @@
 
             <div class="form-group">
                 <label asp-for="Employee.FoodStoreId" class="control-label"></label><br/>
-                <select asp-for="Employee.FoodStoreId" class="form-control" asp-items="ViewBag.SupervisorId">
+                <select asp-for="Employee.FoodStoreId" class="form-control" asp-items="ViewBag.FoodStoreId">
                     <option value="">Select Food Store's ID</option>
                 </select>
                 <span asp-validation-for="Employee.FoodStoreId" class="text-danger"></span>

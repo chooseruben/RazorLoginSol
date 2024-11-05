@@ -100,7 +100,7 @@ namespace RazorLogin.Pages.Admin.Emp
                 // Generate a random numeric suffix
                 var randomSuffix = new Random().Next(10000, 99999); // Random number between 10000 and 99999
 
-                if (Role == "Manager")
+                if (Role == "MANAGER")
                 {
                     // Create a new Manager entry
                     var manager = new Manager
@@ -112,9 +112,9 @@ namespace RazorLogin.Pages.Admin.Emp
                         ManagerEmploymentDate = DateOnly.FromDateTime(DateTime.Now) // Set to today's date
                     };
                     _context.Managers.Add(manager);
-                    await _context.SaveChangesAsync();
+                    //await _context.SaveChangesAsync();
                 }
-                else if (Role == "Zookeeper")
+                else if (Role == "ZOOKEEPER")
                 {
                     // Create a new Zookeeper entry
                     var zookeeper = new Zookeeper
@@ -126,7 +126,7 @@ namespace RazorLogin.Pages.Admin.Emp
                                                                                               // LastTrainingDate is left empty
                     };
                     _context.Zookeepers.Add(zookeeper);
-                    await _context.SaveChangesAsync(); 
+                    //await _context.SaveChangesAsync(); 
                 }
 
                     // Save the new Manager or Zookeeper entry

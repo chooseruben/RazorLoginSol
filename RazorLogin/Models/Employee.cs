@@ -29,9 +29,9 @@ public partial class Employee
 
     public string? Department { get; set; }
 
-    public int? ShopId { get; set; }
+    public int? ShopId { get; set; } // POSSIBLE ERROR REMOVE QUESTION MRK
 
-    public int? FoodStoreId { get; set; }
+    public int? FoodStoreId { get; set; } // POSSIBLE ERROR REMOVE QUESTION MRK
 
     public string EmployeeEmail { get; set; } = null!;
 
