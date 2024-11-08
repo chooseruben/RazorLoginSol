@@ -27,7 +27,6 @@ namespace RazorLogin.Pages.CustomerEnclosures
         [BindProperty]
         public Enclosure Enclosure { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

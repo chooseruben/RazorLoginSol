@@ -24,22 +24,19 @@ namespace RazorLogin.Pages.CustomerShop
             _logger = logger;
         }
 
-        // ViewModel to display purchase data with item names
         public class PurchaseViewModel
         {
             public int PurchaseId { get; set; }
-            public string ItemName { get; set; } = string.Empty;
             public int NumItems { get; set; }
             public DateOnly? PurchaseDate { get; set; }
             public TimeOnly? PurchaseTime { get; set; }
         }
 
-        // Property to hold the list of purchases to display
         public IList<PurchaseViewModel> Purchases { get; set; } = new List<PurchaseViewModel>();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            // Get the current user's email from the HttpContext
+            // Get the current user's email
             var userEmail = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Email)?.Value;
 
             if (string.IsNullOrEmpty(userEmail))
@@ -64,7 +61,7 @@ namespace RazorLogin.Pages.CustomerShop
             Purchases = purchases.Select(p => new PurchaseViewModel
             {
                 PurchaseId = p.PurchaseId,
-                NumItems = p.NumItems ?? 0,  // Default to 0 if NumItems is null
+                NumItems = p.NumItems ?? 0, 
                 PurchaseDate = p.PurchaseDate,
                 PurchaseTime = p.PurchaseTime
             }).ToList();

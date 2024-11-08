@@ -26,7 +26,6 @@ namespace RazorLogin.Pages.CustomerShop
 
         public async Task OnGetAsync()
         {
-            // Retrieve the items from the database and display them
             Item = await _context.Items.ToListAsync();
         }
 
@@ -68,15 +67,15 @@ namespace RazorLogin.Pages.CustomerShop
                 purchaseId = random.Next(10000, 99999);
             } while (await _context.Purchases.AnyAsync(p => p.PurchaseId == purchaseId));
 
-            // Create a new purchase entry only once
+            
             var purchase = new Purchase
             {
-                PurchaseId = purchaseId,  // Assign the generated PurchaseId
+                PurchaseId = purchaseId, 
                 CustomerId = customer.CustomerId,
-                PurchaseDate = DateOnly.FromDateTime(DateTime.Now), // Convert DateTime to DateOnly
-                PurchaseTime = TimeOnly.FromDateTime(DateTime.Now), // Convert DateTime to TimeOnly
+                PurchaseDate = DateOnly.FromDateTime(DateTime.Now), 
+                PurchaseTime = TimeOnly.FromDateTime(DateTime.Now), 
                 NumItems = quantity,
-                StoreId = item.ShopId // Assign ShopId from Item to StoreId in Purchase
+                StoreId = item.ShopId
             };
 
             // Save the new purchase
