@@ -23,15 +23,30 @@
     <Compile Remove="Pages\Admin.Eve\**" />
 
     <Compile Remove="Pages\Admin.Purch\**" />
+
+    <Compile Remove="Pages\Admin.Reports2\**" />
+
+    <Compile Remove="Pages\Admin.Reports3\**" />
+
+    <Compile Remove="Pages\Manag.Sho\**" />
     <Content Remove="obj\**" />
     <Content Remove="Pages\Admin.Eve\**" />
     <Content Remove="Pages\Admin.Purch\**" />
+    <Content Remove="Pages\Admin.Reports2\**" />
+    <Content Remove="Pages\Admin.Reports3\**" />
+    <Content Remove="Pages\Manag.Sho\**" />
     <EmbeddedResource Remove="obj\**" />
     <EmbeddedResource Remove="Pages\Admin.Eve\**" />
     <EmbeddedResource Remove="Pages\Admin.Purch\**" />
+    <EmbeddedResource Remove="Pages\Admin.Reports2\**" />
+    <EmbeddedResource Remove="Pages\Admin.Reports3\**" />
+    <EmbeddedResource Remove="Pages\Manag.Sho\**" />
     <None Remove="obj\**" />
     <None Remove="Pages\Admin.Eve\**" />
     <None Remove="Pages\Admin.Purch\**" />
+    <None Remove="Pages\Admin.Reports2\**" />
+    <None Remove="Pages\Admin.Reports3\**" />
+    <None Remove="Pages\Manag.Sho\**" />
 
   </ItemGroup>
 
@@ -74,6 +89,7 @@
 
 
   <ItemGroup>
+    <Folder Include="test2\" />
     <Folder Include="test\" />
   </ItemGroup>
 
