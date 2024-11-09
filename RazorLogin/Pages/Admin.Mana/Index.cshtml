@@ -2,52 +2,56 @@
 @model RazorLogin.Pages.Admin.Mana.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Managers List";
 }
 
-<h1>Index</h1>
+<h1>Managers</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Manager[0].ManagerId)
+                @Html.DisplayNameFor(model => model.Managers[0].ManagerId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Manager[0].EmployeeId)
+                @Html.DisplayNameFor(model => model.Managers[0].EmployeeId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Manager[0].Department)
+                @Html.DisplayNameFor(model => model.Managers[0].Department)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Manager[0].ManagerEmploymentDate)
+                @Html.DisplayNameFor(model => model.Managers[0].ManagerEmploymentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Managers[0].AssignedStore) <!-- Added AssignedStore column -->
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Manager) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ManagerId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ManagerEmploymentDate)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ManagerId">Edit</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ManagerId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Managers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManagerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManagerEmploymentDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignedStore) <!-- Display AssignedStore here -->
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ManagerId">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ManagerId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

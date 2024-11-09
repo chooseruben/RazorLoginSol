@@ -238,10 +238,10 @@ namespace RazorLogin.Pages.Admin.TixRep
 
         public class TicketCost
         { 
-            public int ChildTotal { get; set; }
-            public int AdultTotal { get; set; }
-            public int SeniorTotal { get; set; }
-            public int VeteranTotal { get; set; }
+            public int? ChildTotal { get; set; }
+            public int? AdultTotal { get; set; }
+            public int? SeniorTotal { get; set; }
+            public int? VeteranTotal { get; set; }
         }
 
         public class TicketMembershipCount

@@ -32,28 +32,30 @@ namespace RazorLogin.Pages.Admin.Emp
 
         public IActionResult OnGet()
         {
-            ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
 
-            List<SelectListItem> selectList = _context.FoodStores
-                .AsNoTracking()
-                .Select(x => new SelectListItem()
-                {
-                    Value = x.FoodStoreId.ToString(),
+          ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
 
-                })
-                .ToList();
+             List<SelectListItem> selectList = _context.FoodStores
+                 .AsNoTracking()
+                 .Select(x => new SelectListItem()
+                 {
+                     Value = x.FoodStoreId.ToString(),
 
-            selectList.Insert(0, new SelectListItem()
-            {
-                Value = "",
-                Text = "--- Select Related Entity ---"
-            });
+                 })
+                 .ToList();
 
-            ViewData["RelatedEntity_Id"] = selectList;
+             selectList.Insert(0, new SelectListItem()
+             {
+                 Value = "",
+                 Text = "--- Select Related Entity ---"
+             });
 
-            ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
-            ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
-            return Page();
+             ViewData["RelatedEntity_Id"] = selectList;
+
+             ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
+             ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
+             return Page();
+            
         }
 
         [BindProperty]
@@ -70,6 +72,12 @@ namespace RazorLogin.Pages.Admin.Emp
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            // Set default department to "GENERAL" if not specified
+            if (string.IsNullOrWhiteSpace(Employee.Department))
+            {
+                Employee.Department = "GENERAL";
             }
 
             _context.Employees.Add(Employee);
@@ -129,8 +137,8 @@ namespace RazorLogin.Pages.Admin.Emp
                     //await _context.SaveChangesAsync(); 
                 }
 
-                    // Save the new Manager or Zookeeper entry
-                    await _context.SaveChangesAsync();
+                // Save the new Manager or Zookeeper entry
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
