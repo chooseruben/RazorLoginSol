@@ -5,11 +5,9 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Zookeepers</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -20,14 +18,9 @@
                 @Html.DisplayNameFor(model => model.Zookeeper[0].EmployeeId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Zookeeper[0].NumAssignedCages)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Zookeeper[0].TrainingRenewalDate)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Zookeeper[0].LastTrainingDate)
-            </th>
+        
             <th>
                 @Html.DisplayNameFor(model => model.Zookeeper[0].AssignedDepartment)
             </th>
@@ -44,14 +37,9 @@
                     @Html.DisplayFor(modelItem => item.EmployeeId)
                 </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NumAssignedCages)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.TrainingRenewalDate)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastTrainingDate)
-            </td>
+        
             <td>
                 @Html.DisplayFor(modelItem => item.AssignedDepartment)
             </td>

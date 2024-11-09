@@ -9,12 +9,108 @@
     <title>Annual Employee Cost</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Custom light brown background and dark brown text */
+        body {
+            background-color: #FFFFFF; /* White background */
+            color: #3E1F1B; /* Dark Brown */
+        }
+
+        .card-header {
+            background-color: #D6B39D; /* Lighter Brown for Card Headers */
+            color: #3E1F1B; /* Dark Brown Text */
+        }
+
+        .list-group-item {
+            background-color: #F4E1C1; /* Same as the body background */
+            border: 1px solid #D6B39D; /* Subtle border */
+        }
+
+        .btn-primary {
+            background-color: #9C6A47; /* Medium brown button */
+            border-color: #9C6A47;
+        }
+
+        .btn-primary:hover {
+            background-color: #7A4F33; /* Darker brown on hover */
+            border-color: #7A4F33;
+        }
+
+        .text-muted {
+            color: #6A3F30 !important; /* Muted dark brown for descriptions */
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Employee Report</h1>
 
+        <!-- Date Range Form -->
+        <form method="get" class="mb-5">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="StartDate">Start Date</label>
+                    <input type="date" class="form-control" asp-for="StartDate" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="EndDate">End Date</label>
+                    <input type="date" class="form-control" asp-for="EndDate" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Calculate Days</button>
+        </form>
+
+        <!-- Display the result if both dates are provided -->
+        @if (Model.StartDate.HasValue && Model.EndDate.HasValue)
+        {
+            <h3 class="mb-4">Days Between: @Model.TimeSpanInDays</h3>
+        }
+
+        <!-- Total Employee Salary Cost Card -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Total Employee Salary Cost</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">Total Cost: @Model.Report.totalEmployeeSalary</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Dependent Healthcare Premium Income Card -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Dependent Healthcare Premium Income</h5>
+                <h6 class="text-muted">Healthcare premiums for dependents are paid every 30 days:</h6>
+                <p class="mb-0">Tier 1: $70 | Tier 2: $140 | Tier 3: $200</p>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">Tier 1 (@Model.Report.Tier1CT Dependent(s)): @Model.Report.Tier1Income</li>
+                    <li class="list-group-item">Tier 2 (@Model.Report.Tier2CT Dependent(s)): @Model.Report.Tier2Income</li>
+                    <li class="list-group-item">Tier 3 (@Model.Report.Tier3CT Dependent(s)): @Model.Report.Tier3Income</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Total Net Cost of Employees Card -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Total Net Cost of Employees</h5>
+                <h6 class="text-muted">Calculated by the difference between Total Employee Cost and Dependent Healthcare Premiums.</h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">Total Difference: @Model.Report.TotalDifference</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Annual Employee Statistics -->
+        <h2 class="text-center mb-4">Annual Employee Statistics</h2>
         <div class="row">
+            <!-- Employee Statistics Card -->
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
@@ -34,6 +130,7 @@
                 </div>
             </div>
 
+            <!-- Manager Statistics Card -->
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-header bg-success text-white">
@@ -53,6 +150,7 @@
                 </div>
             </div>
 
+            <!-- Zookeeper Statistics Card -->
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-header bg-warning text-dark">
@@ -72,41 +170,18 @@
                 </div>
             </div>
         </div>
-
-        <div class="card mt-4">
-            <div class="card-header bg-info text-white">
-                <h5>Dependent Healthcare Gains</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-group">
-                    <li class="list-group-item">Tier 1 Income: @Model.Report.Tier1Income</li>
-                    <li class="list-group-item">Tier 2 Income: @Model.Report.Tier2Income</li>
-                    <li class="list-group-item">Tier 3 Income: @Model.Report.Tier3Income</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- New Card for Total Difference -->
-        <div class="card mt-4 mb-5">
-            <!-- Added mb-5 class -->
-            <div class="card-header bg-danger text-white">
-                <h5>Total Net Cost of Employees</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-group">
-                    <li class="list-group-item">Total Difference: @Model.Report.TotalDifference</li>
-                </ul>
-            </div>
-        </div>
     </div>
 
+    <!-- JavaScript and Chart.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Employee Chart
         const employeeCtx = document.getElementById('employeeChart').getContext('2d');
         const managerCtx = document.getElementById('managerChart').getContext('2d');
         const zookeeperCtx = document.getElementById('zookeeperChart').getContext('2d');
 
+        // Chart Data & Configuration
         const employeeChart = new Chart(employeeCtx, {
             type: 'bar',
             data: {
@@ -121,8 +196,8 @@
         @Model.Report.EmployeeMinSalary,
         @Model.Report.EmployeeMaxSalary
                             ],
-                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                    borderColor: 'rgba(0, 123, 255, 1)',
+                    backgroundColor: 'rgba(153, 106, 71, 0.5)', /* Soft brown */
+                    borderColor: 'rgba(153, 106, 71, 1)', /* Darker brown */
                     borderWidth: 1
                 }]
             },
@@ -149,8 +224,8 @@
         @Model.Report.ManagerMinSalary,
         @Model.Report.ManagerMaxSalary
                             ],
-                    backgroundColor: 'rgba(40, 167, 69, 0.5)',
-                    borderColor: 'rgba(40, 167, 69, 1)',
+                    backgroundColor: 'rgba(40, 167, 69, 0.5)', /* Soft green */
+                    borderColor: 'rgba(40, 167, 69, 1)', /* Dark green */
                     borderWidth: 1
                 }]
             },
@@ -177,8 +252,8 @@
         @Model.Report.ZookeeperMinSalary,
         @Model.Report.ZookeeperMaxSalary
                             ],
-                    backgroundColor: 'rgba(255, 193, 7, 0.5)',
-                    borderColor: 'rgba(255, 193, 7, 1)',
+                    backgroundColor: 'rgba(255, 193, 7, 0.5)', /* Soft yellow */
+                    borderColor: 'rgba(255, 193, 7, 1)', /* Darker yellow */
                     borderWidth: 1
                 }]
             },

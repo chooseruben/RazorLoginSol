@@ -5,26 +5,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Tickets</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ticket[0].TicketType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ticket[0].TicketPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ticket[0].TicketPurchaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ticket[0].Purchase)
-            </th>
+            <th>Ticket Type</th>  <!-- Manually setting the display name -->
+            <th>Ticket Price</th> <!-- Manually setting the display name -->
+            <th>Ticket Purchase Date</th> <!-- Manually setting the display name -->
+            <th>Purchase ID</th> <!-- Manually setting the display name -->
             <th></th>
         </tr>
     </thead>
@@ -45,7 +34,6 @@
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.TicketId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.TicketId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.TicketId">Delete</a>
             </td>
         </tr>
