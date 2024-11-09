@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Gift Shops and Stores</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Add New Gift Shop</a>
 </p>
 <table class="table">
     <thead>
@@ -28,9 +28,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.GiftShop[0].GiftShopCloseTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GiftShop[0].GiftShopYearToDateSales)
             </th>
             <th></th>
         </tr>
@@ -54,9 +51,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.GiftShopCloseTime)
             </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GiftShopYearToDateSales)
-                </td>
+              
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ShopId">Edit</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ShopId">Delete</a>

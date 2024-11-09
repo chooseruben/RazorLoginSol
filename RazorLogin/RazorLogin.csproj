@@ -20,8 +20,6 @@
 
     <Compile Remove="obj\**" />
 
-    <Compile Remove="Pages\Admin.Eve\**" />
-
     <Compile Remove="Pages\Admin.Purch\**" />
 
     <Compile Remove="Pages\Admin.Reports2\**" />
@@ -30,19 +28,16 @@
 
     <Compile Remove="Pages\Manag.Sho\**" />
     <Content Remove="obj\**" />
-    <Content Remove="Pages\Admin.Eve\**" />
     <Content Remove="Pages\Admin.Purch\**" />
     <Content Remove="Pages\Admin.Reports2\**" />
     <Content Remove="Pages\Admin.Reports3\**" />
     <Content Remove="Pages\Manag.Sho\**" />
     <EmbeddedResource Remove="obj\**" />
-    <EmbeddedResource Remove="Pages\Admin.Eve\**" />
     <EmbeddedResource Remove="Pages\Admin.Purch\**" />
     <EmbeddedResource Remove="Pages\Admin.Reports2\**" />
     <EmbeddedResource Remove="Pages\Admin.Reports3\**" />
     <EmbeddedResource Remove="Pages\Manag.Sho\**" />
     <None Remove="obj\**" />
-    <None Remove="Pages\Admin.Eve\**" />
     <None Remove="Pages\Admin.Purch\**" />
     <None Remove="Pages\Admin.Reports2\**" />
     <None Remove="Pages\Admin.Reports3\**" />
@@ -57,6 +52,48 @@
     <Compile Remove="Pages\Admin.Reports\Index.cshtml.cs" />
     <Compile Remove="Pages\Admin.Tick\Details.cshtml.cs" />
     <Compile Remove="Pages\Admin.Zook\Details.cshtml.cs" />
+    <Compile Remove="test2\Animal.cs" />
+    <Compile Remove="test2\AspNetRole.cs" />
+    <Compile Remove="test2\AspNetRoleClaim.cs" />
+    <Compile Remove="test2\AspNetUser.cs" />
+    <Compile Remove="test2\AspNetUserClaim.cs" />
+    <Compile Remove="test2\AspNetUserLogin.cs" />
+    <Compile Remove="test2\AspNetUserToken.cs" />
+    <Compile Remove="test2\Closing.cs" />
+    <Compile Remove="test2\Customer.cs" />
+    <Compile Remove="test2\Dependant.cs" />
+    <Compile Remove="test2\Employee.cs" />
+    <Compile Remove="test2\Enclosure.cs" />
+    <Compile Remove="test2\Event.cs" />
+    <Compile Remove="test2\FoodStore.cs" />
+    <Compile Remove="test2\GiftShop.cs" />
+    <Compile Remove="test2\Item.cs" />
+    <Compile Remove="test2\Manager.cs" />
+    <Compile Remove="test2\Purchase.cs" />
+    <Compile Remove="test2\tempContClos.cs" />
+    <Compile Remove="test2\Ticket.cs" />
+    <Compile Remove="test2\Zookeeper.cs" />
+    <Compile Remove="test3\Animal.cs" />
+    <Compile Remove="test3\AspNetRole.cs" />
+    <Compile Remove="test3\AspNetRoleClaim.cs" />
+    <Compile Remove="test3\AspNetUser.cs" />
+    <Compile Remove="test3\AspNetUserClaim.cs" />
+    <Compile Remove="test3\AspNetUserLogin.cs" />
+    <Compile Remove="test3\AspNetUserToken.cs" />
+    <Compile Remove="test3\Closing.cs" />
+    <Compile Remove="test3\Customer.cs" />
+    <Compile Remove="test3\Dependant.cs" />
+    <Compile Remove="test3\Employee.cs" />
+    <Compile Remove="test3\Enclosure.cs" />
+    <Compile Remove="test3\Event.cs" />
+    <Compile Remove="test3\FoodStore.cs" />
+    <Compile Remove="test3\GiftShop.cs" />
+    <Compile Remove="test3\Item.cs" />
+    <Compile Remove="test3\Manager.cs" />
+    <Compile Remove="test3\Purchase.cs" />
+    <Compile Remove="test3\tempContClos.cs" />
+    <Compile Remove="test3\Ticket.cs" />
+    <Compile Remove="test3\Zookeeper.cs" />
     <Compile Remove="test\Employee.cs" />
     <Compile Remove="test\Event_wthout_day_n_loca.cs" />
     <Compile Remove="test\tempcontext.cs" />
@@ -89,6 +126,8 @@
 
 
   <ItemGroup>
+    <Folder Include="test3\" />
+
     <Folder Include="test2\" />
     <Folder Include="test\" />
   </ItemGroup>
