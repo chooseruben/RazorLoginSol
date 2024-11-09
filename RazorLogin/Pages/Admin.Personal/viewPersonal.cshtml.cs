@@ -43,47 +43,33 @@ namespace RazorLogin.Pages.Admin.Personal
 
         public async Task<IActionResult> OnPostAsync()
         {
+           
             if (!ModelState.IsValid)
             {
                 return Page(); // Return to the same page to show validation errors
             }
 
-            // Update the Employee entity
+            // Find the employee to update
             var employeeToUpdate = await _context.Employees.FindAsync(Employee.EmployeeId);
             if (employeeToUpdate == null)
             {
                 return NotFound();
             }
 
-            // Check if the email has changed
-            if (employeeToUpdate.EmployeeEmail != Employee.EmployeeEmail)
-            {
-                // Update the identity user email
-                var identityUser = await _userManager.FindByEmailAsync(employeeToUpdate.EmployeeEmail);
-                if (identityUser != null)
-                {
-                    identityUser.Email = Employee.EmployeeEmail;
-                    var result = await _userManager.UpdateAsync(identityUser);
-                    if (!result.Succeeded)
-                    {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                        return Page(); // Return to show validation errors
-                    }
-                }
-            }
+            // Update the properties
+            employeeToUpdate.EmployeeFirstName = Employee.EmployeeFirstName;
+            employeeToUpdate.EmployeeLastName = Employee.EmployeeLastName;
+            employeeToUpdate.EmployeeAddress = Employee.EmployeeAddress; 
+            employeeToUpdate.EmployeePhoneNumber = Employee.EmployeePhoneNumber;
+            employeeToUpdate.EmployeeDob = Employee.EmployeeDob;
 
-            // Update the employee record
-            employeeToUpdate.EmployeeEmail = Employee.EmployeeEmail;
-            employeeToUpdate.EmployeeFirstName = Employee.EmployeeFirstName; // Update other properties as needed
-            employeeToUpdate.EmployeeLastName = Employee.EmployeeLastName; // Update other properties as needed
-            // Continue updating other properties...
 
+            // Save changes to the database
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+            
+
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using RazorLogin.Pages.Admin.Reports;
 
 namespace RazorLogin.Models;
 
@@ -193,15 +194,24 @@ public partial class ZooDbContext : DbContext
 
         modelBuilder.Entity<Closing>(entity =>
         {
-            entity.HasKey(e => e.ClosingId).HasName("PK_Closings_Closing_ID");
+            //entity.HasKey(e => e.ClosingId).HasName("PK_Closings_Closing_ID"); OLD
 
-            entity.HasIndex(e => e.ClosingId, "Closings$Closing_ID_UNIQUE").IsUnique();
+            //entity.HasIndex(e => e.ClosingId, "Closings$Closing_ID_UNIQUE").IsUnique(); OLD
 
-            entity.HasIndex(e => e.EnclosureId, "Closings_ibfk_1");
+            //entity.HasIndex(e => e.EnclosureId, "Closings_ibfk_1"); OLD
 
-            entity.Property(e => e.ClosingId)
-                .ValueGeneratedNever()
-                .HasColumnName("Closing_ID");
+
+            entity.HasKey(e => e.ClosingId).HasName("PK__Closings__1D417B3F30CFE06C"); //NEW
+
+            entity.HasIndex(e => e.ClosingId, "UQ__Closings__1D417B3E8415ED77").IsUnique(); //NEW
+
+            entity.Property(e => e.ClosingId).HasColumnName("Closing_ID"); //NEW
+
+
+            //entity.Property(e => e.ClosingId)  OLD
+            //    .ValueGeneratedNever()
+            //    .HasColumnName("Closing_ID");
+
             entity.Property(e => e.ClosingsEnd)
                 .HasPrecision(0)
                 .HasColumnName("Closings_end");
@@ -216,8 +226,9 @@ public partial class ZooDbContext : DbContext
 
             entity.HasOne(d => d.Enclosure).WithMany(p => p.Closings)
                 .HasForeignKey(d => d.EnclosureId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Closings$Closings_ibfk_1");
+                .HasConstraintName("FK_Enclosure_Closing");
+            // .OnDelete(DeleteBehavior.ClientSetNull) OLD
+            // .HasConstraintName("Closings$Closings_ibfk_1");
         });
 
         modelBuilder.Entity<Customer>(entity =>
@@ -455,7 +466,8 @@ public partial class ZooDbContext : DbContext
         {
             entity.HasKey(e => e.EventId).HasName("PK_Event_Event_ID");
 
-            entity.ToTable("Event");
+            entity.ToTable("Event"); 
+            //entity.ToTable("Event", tb => tb.HasTrigger("PreventDuplicateEvent")); new above
 
             entity.HasIndex(e => e.EventId, "Event$Event_ID_UNIQUE").IsUnique();
 
@@ -574,6 +586,7 @@ public partial class ZooDbContext : DbContext
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Item_name");
             entity.Property(e => e.ItemPrice).HasColumnName("item_price"); //change 11/9
+
             entity.Property(e => e.RestockDate).HasColumnName("Restock_date");
             entity.Property(e => e.ShopId)
                 .HasDefaultValueSql("(NULL)")
@@ -662,7 +675,7 @@ public partial class ZooDbContext : DbContext
 
             entity.ToTable("Purchase");
 
-            //entity.HasIndex(e => e.CustomerId, "Purchase$Customer_ID_UNIQUE").IsUnique();
+            //entity.HasIndex(e => e.CustomerId, "Purchase$Customer_ID_UNIQUE").IsUnique(); DON ADD NACK PROBS
 
             entity.HasIndex(e => e.PurchaseId, "Purchase$Purchase_ID_UNIQUE").IsUnique();
 
@@ -692,9 +705,16 @@ public partial class ZooDbContext : DbContext
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Total_purchases_price");
 
+            //new >>
+            //entity.HasOne(d => d.Customer).WithMany(p => p.Purchases)
+            //   .HasForeignKey(d => d.CustomerId)
+            // new above
             entity.HasOne(d => d.Customer).WithOne(p => p.Purchase)
                 .HasForeignKey<Purchase>(d => d.CustomerId)
                 .HasConstraintName("Purchase$Purchase_ibfk_1");
+            //new >>
+            //   .HasConstraintName("Purchase$Purchase_ibfk_1");
+            //new ^^
         });
 
         modelBuilder.Entity<Ticket>(entity =>

@@ -28,9 +28,9 @@
                     {
                         <ul class="navbar-nav flex-grow-1">
                            
-                           <!-- <li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Users/Index">Users</a>
-                             </li>-->
+                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Cust/Index">Customers</a>
                             </li>
@@ -93,9 +93,10 @@
                                     <li>
                                         <a class="dropdown-item" asp-area="" asp-page="/MyDependents/Index">My Dependents</a>
                                     </li>
-                                  <!--  <li>
+                                   <li>
                                         <a class="dropdown-item" asp-area="" asp-page="/Admin.Personal/Index">Employee Info</a>
-                                    </li>-->
+                                    </li>
+
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -108,6 +109,7 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item" asp-area="" asp-page="/Admin.TixRep/Index">Ticket Sales Report</a>
+
                                     </li>
                                   
                                 </ul>
@@ -125,6 +127,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Manage.Employees/Index">Employees</a>
                         </li>
+                           <!-- <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Sho/Index">shopRuben</a>
+                             </li> -->
                         
 
                          <!---  <li class="nav-item">
@@ -184,10 +189,16 @@
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Customer"))
                 {   <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/CustomerEnclosures/Index">Available Enclosures</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/TicketsPage/Index">Tickets</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/MembershipPage/Index">Memberships</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/CustomerShop/Index">Online Shop</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/CustomerPage/Index">My Account</a>

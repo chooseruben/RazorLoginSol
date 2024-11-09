@@ -1,0 +1,45 @@
+﻿@page
+@model RazorLogin.Pages.CustomerShop.IndexModel
+
+@{
+    ViewData["Title"] = "Online Shop";
+}
+
+<h1>Online Shop</h1>
+
+<p>
+    <a asp-page="MyPurchases">My Purchases</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Item[0].ItemName)</th>
+            <th>@Html.DisplayNameFor(model => model.Item[0].ItemCount)</th>
+            <th>Purchase</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Item)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
+                <td>@Html.DisplayFor(modelItem => item.ItemCount)</td>
+                <td>
+                    @if (item.ItemCount > 0)
+                    {
+                        <form method="post" asp-page="./Index">
+                            <input type="hidden" name="itemId" value="@item.ItemId" />
+                            <input type="number" name="quantity" min="1" max="@item.ItemCount" value="1" required />
+                            <button type="submit">Purchase</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span>Out of Stock</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

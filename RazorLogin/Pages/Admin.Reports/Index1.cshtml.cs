@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,7 @@ namespace RazorLogin.Pages.Admin.Reports
 
         public int TimeSpanInDays { get; set; } // user-defined days
 
+
         public async Task OnGetAsync()
         {
 
@@ -82,6 +84,7 @@ namespace RazorLogin.Pages.Admin.Reports
 
             var ETotSal = _context.Database.SqlQuery<int>($"SELECT SUM(CASE WHEN Employee_Salary IS NOT NULL THEN Employee_Salary ELSE 0 END) AS Value FROM dbo.Employee").FirstOrDefault();
             Report.totalEmployeeSalary = (int)(ETotSal * (TimeSpanInDays / 365.0)); //(int)ETotSal;
+
 
 
             //Dependent
@@ -153,6 +156,7 @@ namespace RazorLogin.Pages.Admin.Reports
     public class ReportData
     {
         public double TotalDifference { get; set; }
+
         public int totalEmployeeSalary { get; set; }
         public decimal EmployeeAvgAge { get; set; }
         public double EmployeeMinAge { get; set; }
@@ -166,6 +170,7 @@ namespace RazorLogin.Pages.Admin.Reports
         public double Tier1CT { get; set; }
         public double Tier2CT { get; set; }
         public double Tier3CT { get; set; }
+
         public decimal ManagerAvgAge { get; set; }
         public double ManagerMinAge { get; set; }
         public double ManagerMaxAge { get; set; }
@@ -389,6 +394,7 @@ var ETotSal = _context.Database.SqlQuery<int>($"SELECT SUM(CASE WHEN Employee_Sa
 
 
 
+
 /*using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -573,3 +579,4 @@ namespace RazorLogin.Pages.Admin.Reports
     }
 }
 */
+
