@@ -2,67 +2,43 @@
 @model RazorLogin.Pages.CustomerEnclosures.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Available Enclosures";
 }
 
 <h1>Available Enclosures</h1>
 
+<div class="enclosure-container">
+    @foreach (var item in Model.Enclosure)
+    {
+        <div class="enclosure-card">
+            <h2>@item.EnclosureName</h2>
+            <p><strong>Open Time:</strong> @item.EnclosureOpenTime.ToString("hh:mm tt")</p>
+            <p><strong>Close Time:</strong> @item.EnclosureCloseTime.ToString("hh:mm tt")</p>
+            <p><strong>Cleaning Time:</strong> @item.EnclosureCleaningTime.ToString("hh:mm tt")</p>
+            <p><strong>Feeding Time:</strong> @item.EnclosureFeedingTime.ToString("hh:mm tt")</p>
+        </div>
+    }
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Enclosure[0].EnclosureName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enclosure[0].EnclosureDepartment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enclosure[0].EnclosureOpenTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enclosure[0].EnclosureCloseTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enclosure[0].EnclosureCleaningTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enclosure[0].EnclosureFeedingTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enclosure[0].OccupancyStatus)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Enclosure) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnclosureName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnclosureDepartment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnclosureOpenTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnclosureCloseTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnclosureCleaningTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnclosureFeedingTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OccupancyStatus)
-            </td>
-            <td>
-                <a asp-page="./Details" asp-route-id="@item.EnclosureId">Details</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<style>
+    .enclosure-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .enclosure-card {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        width: 300px;
+        text-align: left;
+        background-color: #f9f9f9;
+    }
+    .enclosure-card h2 {
+        margin-top: 0;
+        font-size: 1.5em;
+        color: #333;
+    }
+</style>
