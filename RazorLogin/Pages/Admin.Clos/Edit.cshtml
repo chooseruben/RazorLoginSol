@@ -1,0 +1,50 @@
+﻿@page
+@model RazorLogin.Pages.Admin.Clos.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Closing</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Closing.ClosingId" />
+            <div class="form-group">
+                <label asp-for="Closing.ClosingsEnd" class="control-label"></label>
+                <input asp-for="Closing.ClosingsEnd" class="form-control" />
+                <span asp-validation-for="Closing.ClosingsEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Closing.ClosingsStart" class="control-label"></label>
+                <input asp-for="Closing.ClosingsStart" class="form-control" />
+                <span asp-validation-for="Closing.ClosingsStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Closing.ClosingsReason" class="control-label"></label>
+                <input asp-for="Closing.ClosingsReason" class="form-control" />
+                <span asp-validation-for="Closing.ClosingsReason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Closing.EnclosureId" class="control-label"></label>
+                <select asp-for="Closing.EnclosureId" class="form-control" asp-items="ViewBag.EnclosureId"></select>
+                <span asp-validation-for="Closing.EnclosureId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

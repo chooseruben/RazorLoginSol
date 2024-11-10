@@ -54,6 +54,10 @@ namespace RazorLogin.Pages.Admin.Emp
                 // Find the user associated with the employee's email
                 var user = await _userManager.FindByEmailAsync(employee.EmployeeEmail);
 
+                // Delete the employee record
+                _context.Employees.Remove(employee);
+                await _context.SaveChangesAsync();
+
                 if (user != null)
                 {
                     // Delete the Identity user
@@ -69,9 +73,7 @@ namespace RazorLogin.Pages.Admin.Emp
                     }
                 }
 
-                // Delete the employee record
-                _context.Employees.Remove(employee);
-                await _context.SaveChangesAsync();
+               
             }
 
             return RedirectToPage("./Index");
