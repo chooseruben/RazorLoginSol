@@ -26,7 +26,8 @@ namespace RazorLogin.Pages.CustomerShop
 
         public async Task OnGetAsync()
         {
-            Item = await _context.Items.ToListAsync();
+            // Retrieve items only from ShopId/StoreId 2
+            Item = await _context.Items.Where(i => i.ShopId == 2).ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(int itemId, int quantity)
@@ -48,12 +49,15 @@ namespace RazorLogin.Pages.CustomerShop
             }
 
             // Find the item being purchased
-            var item = await _context.Items.FindAsync(itemId);
+            var item = await _context.Items.FirstOrDefaultAsync(i => i.ItemId == itemId && i.ShopId == 2);
             if (item == null || item.ItemCount < quantity)
             {
                 ModelState.AddModelError("", "Insufficient stock or item not found.");
                 return Page();
             }
+
+            // Calculate the total price of the purchase
+            var totalPurchasePrice = item.ItemPrice * quantity;
 
             // Update the stock of the item
             item.ItemCount -= quantity;
@@ -67,15 +71,16 @@ namespace RazorLogin.Pages.CustomerShop
                 purchaseId = random.Next(10000, 99999);
             } while (await _context.Purchases.AnyAsync(p => p.PurchaseId == purchaseId));
 
-            
+            // Create a new purchase record
             var purchase = new Purchase
             {
-                PurchaseId = purchaseId, 
+                PurchaseId = purchaseId,
                 CustomerId = customer.CustomerId,
-                PurchaseDate = DateOnly.FromDateTime(DateTime.Now), 
-                PurchaseTime = TimeOnly.FromDateTime(DateTime.Now), 
+                PurchaseDate = DateOnly.FromDateTime(DateTime.Now),
+                PurchaseTime = TimeOnly.FromDateTime(DateTime.Now),
                 NumItems = quantity,
-                StoreId = item.ShopId
+                StoreId = item.ShopId,
+                TotalPurchasesPrice = totalPurchasePrice // Store the total purchase price
             };
 
             // Save the new purchase
@@ -87,4 +92,3 @@ namespace RazorLogin.Pages.CustomerShop
         }
     }
 }
-

@@ -12,6 +12,7 @@
                 <th>Quantity</th>
                 <th>Purchase Date</th>
                 <th>Purchase Time</th>
+                <th>Price</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,7 @@
                     <td>@purchase.NumItems</td>
                     <td>@purchase.PurchaseDate?.ToString("MM/dd/yyyy")</td>
                     <td>@purchase.PurchaseTime?.ToString("hh:mm:ss")</td>
+                    <td>@(purchase.TotalPurchasesPrice?.ToString("C") ?? "N/A")</td>
                 </tr>
             }
         </tbody>
