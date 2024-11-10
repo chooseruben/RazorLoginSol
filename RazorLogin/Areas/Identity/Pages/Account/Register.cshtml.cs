@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -139,7 +141,9 @@ namespace RazorLogin.Areas.Identity.Pages.Account
                     var customer = new Customer
                     {
                         CustomerEmail = Input.Email,
-                        // Add other fields as necessary
+                        MembershipType = "FREE TIER",
+                        MembershipStartDate = DateOnly.FromDateTime(DateTime.Now),
+                        MembershipEndDate = DateOnly.FromDateTime(DateTime.Now.AddYears(1))
                     };
 
                     _context.Customers.Add(customer);
