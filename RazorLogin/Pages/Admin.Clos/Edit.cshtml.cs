@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.Anim
+namespace RazorLogin.Pages.Admin.Clos
 {
     public class EditModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace RazorLogin.Pages.Admin.Anim
         }
 
         [BindProperty]
-        public Animal Animal { get; set; } = default!;
+        public Closing Closing { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,23 +29,15 @@ namespace RazorLogin.Pages.Admin.Anim
                 return NotFound();
             }
 
-            var animal = await _context.Animals
-                .FirstOrDefaultAsync(m => m.AnimalId == id);
-
-            if (animal == null)
+            var closing =  await _context.Closings.FirstOrDefaultAsync(m => m.ClosingId == id);
+            if (closing == null)
             {
                 return NotFound();
             }
-
-            Animal = animal;
-
-            // Set the selected value in the dropdowns to the current values of the Animal object
-            ViewData["EnclosureId"] = new SelectList(_context.Enclosures, "EnclosureId", "EnclosureId", Animal.EnclosureId);
-            ViewData["ZookeeperId"] = new SelectList(_context.Zookeepers, "ZookeeperId", "ZookeeperId", Animal.ZookeeperId);
-
+            Closing = closing;
+           ViewData["EnclosureId"] = new SelectList(_context.Enclosures, "EnclosureId", "EnclosureId");
             return Page();
         }
-
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
@@ -56,7 +48,7 @@ namespace RazorLogin.Pages.Admin.Anim
                 return Page();
             }
 
-            _context.Attach(Animal).State = EntityState.Modified;
+            _context.Attach(Closing).State = EntityState.Modified;
 
             try
             {
@@ -64,7 +56,7 @@ namespace RazorLogin.Pages.Admin.Anim
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AnimalExists(Animal.AnimalId))
+                if (!ClosingExists(Closing.ClosingId))
                 {
                     return NotFound();
                 }
@@ -77,9 +69,9 @@ namespace RazorLogin.Pages.Admin.Anim
             return RedirectToPage("./Index");
         }
 
-        private bool AnimalExists(int id)
+        private bool ClosingExists(int id)
         {
-            return _context.Animals.Any(e => e.AnimalId == id);
+            return _context.Closings.Any(e => e.ClosingId == id);
         }
     }
 }

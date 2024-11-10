@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Admin.Anim
+namespace RazorLogin.Pages.Admin.Clos
 {
     public class IndexModel : PageModel
     {
@@ -18,16 +18,12 @@ namespace RazorLogin.Pages.Admin.Anim
             _context = context;
         }
 
-        public IList<Animal> Animal { get;set; } = default!;
+        public IList<Closing> Closing { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Animal = await _context.Animals
-                .Include(a => a.Enclosure)
-                .Include(a => a.Zookeeper)
-                    .ThenInclude(z => z.Employee)  // Include the related Employee data for the Zookeeper
-                .ToListAsync();
+            Closing = await _context.Closings
+                .Include(c => c.Enclosure).ToListAsync();
         }
-
     }
 }

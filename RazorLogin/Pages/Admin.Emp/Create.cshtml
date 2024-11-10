@@ -14,6 +14,7 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <!-- Employee Fields (no changes here) -->
             <div class="form-group">
                 <label asp-for="Employee.Ssn" class="control-label"></label>
                 <input asp-for="Employee.Ssn" class="form-control" />
@@ -52,7 +53,7 @@
 
             <div class="form-group">
                 <label asp-for="Employee.DateOfEmployment" class="control-label"></label>
-                <!-- Set the date automatically to today's date -->
+
                 <input asp-for="Employee.DateOfEmployment" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" readonly />
                 <span asp-validation-for="Employee.DateOfEmployment" class="text-danger"></span>
             </div>
@@ -79,16 +80,20 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Employee.SupervisorId" class="control-label"></label><br />
-                <select asp-for="Employee.SupervisorId" class="form-control" asp-items="ViewBag.SupervisorId">
-                    <option value="">Select Supervisor's ID</option>
-                </select>
+                <label asp-for="Employee.SupervisorId" class="control-label"></label>
+                <input asp-for="Employee.SupervisorId" class="form-control" />
                 <span asp-validation-for="Employee.SupervisorId" class="text-danger"></span>
             </div>
 
+            <!-- Department Field -->
             <div class="form-group">
-                <label asp-for="Employee.Department" class="control-label"></label>
-                <input asp-for="Employee.Department" class="form-control" />
+                <label asp-for="Employee.Department" class="control-label"></label><br />
+                <select asp-for="Employee.Department" class="form-control">
+                    <option value="GIFT">Gift</option>
+                    <option value="FOOD">Food</option>
+                    <option value="ZOO">Zoo</option>
+                    <option value="GENERAL">General</option>
+                </select>
                 <span asp-validation-for="Employee.Department" class="text-danger"></span>
             </div>
 
@@ -105,28 +110,61 @@
                 <span asp-validation-for="Role" class="text-danger"></span>
             </div>
 
-            <!-- Conditional Store Type Buttons -->
+            <!-- Conditional Store Type Buttons (only show for Manager or Shop roles) -->
+
             <div class="form-group" id="storeTypeButtons" style="display:none;">
                 <label>Select Store Type:</label><br />
                 <button type="button" class="btn btn-primary" onclick="showStoreDropdown('foodStore')">Food Store</button>
                 <button type="button" class="btn btn-primary" onclick="showStoreDropdown('giftShop')">Gift Shop</button>
             </div>
 
-            <!-- Food Store Dropdown -->
+            <!-- Food Store Dropdown for Manager or Shop -->
             <div class="form-group" id="foodStoreDropdown" style="display:none;">
                 <label asp-for="Employee.FoodStoreId" class="control-label"></label>
+                <select asp-for="Employee.FoodStoreId" class="form-control" id="FoodStoreDropdown">
+                    <!-- Render both options (with and without managers) -->
+                    <option value="">Select Food Store</option>
 
-                <select asp-for="Employee.FoodStoreId" class="form-control" asp-items="ViewBag.FoodStoreId">
-                    <option value="">Select Food Store's ID</option>
+                    @if (ViewData["FoodStoresWithManagers"] != null)
+                    {
+                        foreach (var store in (List<SelectListItem>)ViewData["FoodStoresWithManagers"])
+                        {
+                            <option value="@store.Value">@store.Text</option>
+                        }
+                    }
+                    @if (ViewData["FoodStoresWithoutManagers"] != null)
+                    {
+                        foreach (var store in (List<SelectListItem>)ViewData["FoodStoresWithoutManagers"])
+                        {
+                            <option value="@store.Value">@store.Text</option>
+                        }
+                    }
+
                 </select>
                 <span asp-validation-for="Employee.FoodStoreId" class="text-danger"></span>
             </div>
 
-            <!-- Gift Shop Dropdown -->
+            <!-- Gift Shop Dropdown for Manager or Shop -->
             <div class="form-group" id="giftShopDropdown" style="display:none;">
                 <label asp-for="Employee.ShopId" class="control-label"></label>
-                <select asp-for="Employee.ShopId" class="form-control" asp-items="ViewBag.ShopId">
-                    <option value="">Select Gift Shop's ID</option>
+                <select asp-for="Employee.ShopId" class="form-control" id="GiftShopDropdown">
+                    <!-- Render both options (with and without managers) -->
+                    <option value="">Select Gift Shop</option>
+                    @if (ViewData["GiftShopsWithManagers"] != null)
+                    {
+                        foreach (var store in (List<SelectListItem>)ViewData["GiftShopsWithManagers"])
+                        {
+                            <option value="@store.Value">@store.Text</option>
+                        }
+                    }
+                    @if (ViewData["GiftShopsWithoutManagers"] != null)
+                    {
+                        foreach (var store in (List<SelectListItem>)ViewData["GiftShopsWithoutManagers"])
+                        {
+                            <option value="@store.Value">@store.Text</option>
+                        }
+                    }
+
                 </select>
                 <span asp-validation-for="Employee.ShopId" class="text-danger"></span>
             </div>
@@ -159,40 +197,32 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
 
     <script>
         // Show or hide the store-related fields based on the selected role
         function toggleStoreFields() {
             var role = document.getElementById('Role').value;
-            var storeTypeButtons = document.getElementById('storeTypeButtons');
-            var foodStoreDropdown = document.getElementById('foodStoreDropdown');
-            var giftShopDropdown = document.getElementById('giftShopDropdown');
 
-            // Hide all store dropdowns initially
-            foodStoreDropdown.style.display = 'none';
-            giftShopDropdown.style.display = 'none';
-            storeTypeButtons.style.display = 'none';
+            // Hide all store-related elements initially
+            document.getElementById('storeTypeButtons').style.display = 'none';
+            document.getElementById('foodStoreDropdown').style.display = 'none';
+            document.getElementById('giftShopDropdown').style.display = 'none';
 
-            // Show store options for Manager or Shop roles
-            if (role === 'MANAGER' || role === 'SHOP') {
-                storeTypeButtons.style.display = 'block'; // Show the store type selection buttons
+            // Show the store type buttons for Shop and Manager roles
+            if (role === 'SHOP' || role === 'MANAGER') {
+                document.getElementById('storeTypeButtons').style.display = 'block';
             }
         }
 
-        // Show a specific store dropdown based on the button clicked
+        // Show the dropdown for the selected store type
         function showStoreDropdown(storeType) {
-            var foodStoreDropdown = document.getElementById('foodStoreDropdown');
-            var giftShopDropdown = document.getElementById('giftShopDropdown');
-
             if (storeType === 'foodStore') {
-                foodStoreDropdown.style.display = 'block';
-                giftShopDropdown.style.display = 'none';
+                document.getElementById('foodStoreDropdown').style.display = 'block';
+                document.getElementById('giftShopDropdown').style.display = 'none';
             } else if (storeType === 'giftShop') {
-                foodStoreDropdown.style.display = 'none';
-                giftShopDropdown.style.display = 'block';
+                document.getElementById('foodStoreDropdown').style.display = 'none';
+                document.getElementById('giftShopDropdown').style.display = 'block';
+
             }
         }
 

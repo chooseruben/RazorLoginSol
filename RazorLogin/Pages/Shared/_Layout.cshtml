@@ -28,9 +28,9 @@
                     {
                         <ul class="navbar-nav flex-grow-1">
                            
-                            <li class="nav-item">
+                           <!-- <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Users/Index">Users</a>
-                             </li>
+                             </li>-->
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Cust/Index">Customers</a>
                             </li>
@@ -73,17 +73,43 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Encl/Index">Enclosures</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Clos/Index">Closings</a>
+                                    </li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin.GShps/Index">Stores</a>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" id="StoreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Stores
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="storeDropdown">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Admin.GShps/Index">Shops</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Admin.FShps/Index">Dining</a>
+                                    </li>
+                                </ul>
+
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin.FShps/Index">Dining</a>
-                            </li>
-                            <li>
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Tick/Index">Tickets</a>
-                            </li>
+
+
+                          
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" id="Moneydropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Finances
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="zookDropdown">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Pur/Index">Purchases</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Admin.Tick/Index">Tickets</a>
+                                    </li>
+                                </ul>
                          
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" id="personalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -93,10 +119,9 @@
                                     <li>
                                         <a class="dropdown-item" asp-area="" asp-page="/MyDependents/Index">My Dependents</a>
                                     </li>
-                                   <li>
+                                  <li>
                                         <a class="dropdown-item" asp-area="" asp-page="/Admin.Personal/Index">Employee Info</a>
                                     </li>
-
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -109,7 +134,6 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item" asp-area="" asp-page="/Admin.TixRep/Index">Ticket Sales Report</a>
-
                                     </li>
                                   
                                 </ul>
@@ -127,9 +151,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Manage.Employees/Index">Employees</a>
                         </li>
-                           <!-- <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Sho/Index">shopRuben</a>
-                             </li> -->
                         
 
                          <!---  <li class="nav-item">

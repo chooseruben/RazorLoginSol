@@ -43,7 +43,7 @@ namespace RazorLogin.Pages.Admin.Personal
 
         public async Task<IActionResult> OnPostAsync()
         {
-           
+
             if (!ModelState.IsValid)
             {
                 return Page(); // Return to the same page to show validation errors
@@ -59,7 +59,7 @@ namespace RazorLogin.Pages.Admin.Personal
             // Update the properties
             employeeToUpdate.EmployeeFirstName = Employee.EmployeeFirstName;
             employeeToUpdate.EmployeeLastName = Employee.EmployeeLastName;
-            employeeToUpdate.EmployeeAddress = Employee.EmployeeAddress; 
+            employeeToUpdate.EmployeeAddress = Employee.EmployeeAddress;
             employeeToUpdate.EmployeePhoneNumber = Employee.EmployeePhoneNumber;
             employeeToUpdate.EmployeeDob = Employee.EmployeeDob;
 
@@ -68,7 +68,7 @@ namespace RazorLogin.Pages.Admin.Personal
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
-            
+
 
         }
     }
