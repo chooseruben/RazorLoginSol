@@ -16,6 +16,7 @@
         <tr>
             <th>@Html.DisplayNameFor(model => model.Item[0].ItemName)</th>
             <th>@Html.DisplayNameFor(model => model.Item[0].ItemCount)</th>
+            <th>Price</th>
             <th>Purchase</th>
         </tr>
     </thead>
@@ -25,6 +26,7 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
                 <td>@Html.DisplayFor(modelItem => item.ItemCount)</td>
+                <td>@(item.ItemPrice?.ToString("C") ?? "N/A")</td>
                 <td>
                     @if (item.ItemCount > 0)
                     {

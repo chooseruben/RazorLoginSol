@@ -99,7 +99,7 @@
                 </div>
                 <div class="card-body">
                     <h2 class="card-text text-center">
-                        @Model.Report.TickCostsByTick.FirstOrDefault()?.ChildTotal.ToString("C")
+                        @((Model.Report.TickCostsByTick.FirstOrDefault()?.ChildTotal?? 0).ToString("C"))
                     </h2>
                     <p class="text-center">Total Revenue for Children Tickets</p>
                 </div>
@@ -113,7 +113,7 @@
                 </div>
                 <div class="card-body">
                     <h2 class="card-text text-center">
-                        @Model.Report.TickCostsByTick.FirstOrDefault()?.AdultTotal.ToString("C")
+                        @((Model.Report.TickCostsByTick.FirstOrDefault()?.AdultTotal?? 0).ToString("C"))
                     </h2>
                     <p class="text-center">Total Revenue for Adult Tickets</p>
                 </div>
@@ -127,7 +127,7 @@
                 </div>
                 <div class="card-body">
                     <h2 class="card-text text-center">
-                        @Model.Report.TickCostsByTick.FirstOrDefault()?.SeniorTotal.ToString("C")
+                        @((Model.Report.TickCostsByTick.FirstOrDefault()?.SeniorTotal?? 0).ToString("C"))
                     </h2>
                     <p class="text-center">Total Revenue for Senior Tickets</p>
                 </div>
@@ -141,7 +141,7 @@
                 </div>
                 <div class="card-body">
                     <h2 class="card-text text-center">
-                        @Model.Report.TickCostsByTick.FirstOrDefault()?.VeteranTotal.ToString("C")
+                        @((Model.Report.TickCostsByTick.FirstOrDefault()?.VeteranTotal?? 0).ToString("C"))
                     </h2>
                     <p class="text-center">Total Revenue for Veteran Tickets</p>
                 </div>

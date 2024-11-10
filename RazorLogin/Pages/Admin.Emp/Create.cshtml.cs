@@ -136,13 +136,17 @@ namespace RazorLogin.Pages.Admin.Emp
                 })
                 .ToList();
 
-            selectList.Insert(0, new SelectListItem()
-            {
-                Value = "",
-                Text = "--- Select Related Entity ---"
-            });
 
-            ViewData["RelatedEntity_Id"] = selectList;
+                 })
+                 .ToList();
+
+             selectList.Insert(0, new SelectListItem()
+             {
+                 Value = "",
+                 Text = "--- Select Related Entity ---"
+             });
+
+             ViewData["RelatedEntity_Id"] = selectList;
 
             // You can populate ViewData for SupervisorId (Manager)
             ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
@@ -172,6 +176,7 @@ namespace RazorLogin.Pages.Admin.Emp
                 ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
                 ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
                 return Page(); */
+
 
         }
 
@@ -251,6 +256,7 @@ namespace RazorLogin.Pages.Admin.Emp
                 }
             }
             else { Employee.Department = "GENERAL"; }
+
 
 
             _context.Employees.Add(Employee);

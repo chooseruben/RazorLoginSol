@@ -1,0 +1,35 @@
+﻿@page
+@model RazorLogin.Pages.Admin.Eve.IndexModel
+
+<h2>Events</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Employee Rep</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var eventItem in Model.Events)
+        {
+            <tr>
+                <td>@eventItem.EventName</td>
+                <td>@eventItem.EventLocation</td>
+                <td>@eventItem.EventDate?.ToString("MM/dd/yyyy")</td>
+                <td>@eventItem.EventStartTime</td>
+                <td>@eventItem.EventEndTime</td>
+                <td>@eventItem.EventEmployeeRep?.EmployeeFirstName</td> <!-- Assuming EmployeeName is a property of Employee -->
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@eventItem.EventId">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@eventItem.EventId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

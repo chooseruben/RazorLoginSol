@@ -40,6 +40,7 @@ namespace RazorLogin.Pages.Admin.Mana
                 AssignedStore = GetStoreName(m.Employee), // Get the store name for each manager's employee
                 EmployeeFirstName = m.Employee.EmployeeFirstName ?? "N/A", // Get the employee's first name
                 EmployeeLastName = m.Employee.EmployeeLastName ?? "N/A"  // Get the employee's last name
+
             }).ToList();
         }
 
@@ -73,6 +74,7 @@ namespace RazorLogin.Pages.Admin.Mana
         // Add these properties to hold the employee's name
         public string EmployeeFirstName { get; set; } = null!;
         public string EmployeeLastName { get; set; } = null!;
+
     }
 }
 
