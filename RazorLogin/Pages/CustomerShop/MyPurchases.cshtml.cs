@@ -28,7 +28,7 @@ namespace RazorLogin.Pages.CustomerShop
         {
             public int PurchaseId { get; set; }
             public int NumItems { get; set; }
-            public int? TotalPurchasesPrice { get; set; } // Add TotalPurchasesPrice property
+            public int? TotalPurchasesPrice { get; set; }
             public DateOnly? PurchaseDate { get; set; }
             public TimeOnly? PurchaseTime { get; set; }
         }
@@ -58,12 +58,11 @@ namespace RazorLogin.Pages.CustomerShop
                 .Where(p => p.CustomerId == customer.CustomerId)
                 .ToListAsync();
 
-            // Display the purchases directly in the view model
             Purchases = purchases.Select(p => new PurchaseViewModel
             {
                 PurchaseId = p.PurchaseId,
                 NumItems = p.NumItems ?? 0,
-                TotalPurchasesPrice = p.TotalPurchasesPrice, // Map TotalPurchasesPrice to the view model
+                TotalPurchasesPrice = p.TotalPurchasesPrice, 
                 PurchaseDate = p.PurchaseDate,
                 PurchaseTime = p.PurchaseTime
             }).ToList();
