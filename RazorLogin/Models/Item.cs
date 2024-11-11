@@ -16,7 +16,12 @@ public partial class Item
     public int? ShopId { get; set; }
 
     public int? FoodStoreId { get; set; }
-    public int? ItemPrice { get; set; }
+
+    public int? ItemPrice { get; set; } //change 11/9
+
+    public virtual FoodStore? FoodStore { get; set; } //change 11/9
+
+    public virtual GiftShop? Shop { get; set; } //change 11/9
 
     public virtual ICollection<FoodStore> FoodStores { get; set; } = new List<FoodStore>();
 

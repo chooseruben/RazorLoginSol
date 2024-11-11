@@ -585,13 +585,24 @@ public partial class ZooDbContext : DbContext
                 .HasMaxLength(45)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Item_name");
-            entity.Property(e => e.ItemPrice).HasColumnName("item_price");
+            entity.Property(e => e.ItemPrice).HasColumnName("item_price"); //change 11/9
+
             entity.Property(e => e.RestockDate).HasColumnName("Restock_date");
             entity.Property(e => e.ShopId)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Shop_ID");
+            //change 11/9 below
+            entity.HasOne(d => d.FoodStore).WithMany(p => p.Items)
+              .HasForeignKey(d => d.FoodStoreId)
+              .HasConstraintName("FK__Item__Food_store__7167D3BD");
 
-            entity.HasMany(d => d.FoodStores).WithMany(p => p.Items)
+            entity.HasOne(d => d.Shop).WithMany(p => p.Items)
+                .HasForeignKey(d => d.ShopId)
+                .HasConstraintName("FK__Item__Shop_ID__7073AF84");
+            // change 11/9 above
+
+            //entity.HasMany(d => d.FoodStores).WithMany(p => p.Items)
+            entity.HasMany(d => d.FoodStores).WithMany(p => p.ItemsNavigation)
                 .UsingEntity<Dictionary<string, object>>(
                     "ItemFoodStore",
                     r => r.HasOne<FoodStore>().WithMany()
@@ -606,12 +617,13 @@ public partial class ZooDbContext : DbContext
                     {
                         j.HasKey("ItemId", "FoodStoreId").HasName("PK_item_Food_store_Item_ID");
                         j.ToTable("item_Food_store");
-                        j.HasIndex(new[] { "FoodStoreId" }, "item_Food_store_ibfk_2");
+                        //j.HasIndex(new[] { "FoodStoreId" }, "item_Food_store_ibfk_2");
                         j.IndexerProperty<int>("ItemId").HasColumnName("Item_ID");
                         j.IndexerProperty<int>("FoodStoreId").HasColumnName("Food_store_ID");
                     });
 
-            entity.HasMany(d => d.Shops).WithMany(p => p.Items)
+            //entity.HasMany(d => d.Shops).WithMany(p => p.Items)
+            entity.HasMany(d => d.Shops).WithMany(p => p.ItemsNavigation)
                 .UsingEntity<Dictionary<string, object>>(
                     "ItemGiftShop",
                     r => r.HasOne<GiftShop>().WithMany()
@@ -626,7 +638,7 @@ public partial class ZooDbContext : DbContext
                     {
                         j.HasKey("ItemId", "ShopId").HasName("PK_item_Gift_shop_Item_ID");
                         j.ToTable("item_Gift_shop");
-                        j.HasIndex(new[] { "ShopId" }, "item_Gift_shop_ibfk_2");
+                        //j.HasIndex(new[] { "ShopId" }, "item_Gift_shop_ibfk_2");
                         j.IndexerProperty<int>("ItemId").HasColumnName("Item_ID");
                         j.IndexerProperty<int>("ShopId").HasColumnName("Shop_ID");
                     });

@@ -30,9 +30,9 @@ namespace RazorLogin.Pages.MembershipPage
             // Membership options
             MembershipOptions = new List<SelectListItem>
             {
-                new SelectListItem { Value = "Free", Text = "Free" },
-                new SelectListItem { Value = "Family", Text = "Family" },
-                new SelectListItem { Value = "VIP", Text = "VIP" }
+                new SelectListItem { Value = "FREE TIER", Text = "FREE TIER" },
+                new SelectListItem { Value = "FAMILY TIER", Text = "FAMILY TIER" },
+                new SelectListItem { Value = "VIP TIER", Text = "VIP TIER" }
             };
         }
 

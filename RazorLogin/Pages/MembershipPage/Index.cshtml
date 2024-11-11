@@ -9,12 +9,13 @@
 
 @if (Model.Customer != null)
 {
-    <table class="table">
-        <thead>
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-light">
             <tr>
                 <th>@Html.DisplayNameFor(model => Model.Customer.MembershipStartDate)</th>
                 <th>@Html.DisplayNameFor(model => Model.Customer.MembershipEndDate)</th>
                 <th>@Html.DisplayNameFor(model => Model.Customer.MembershipType)</th>
+                <th>Description</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -24,7 +25,19 @@
                 <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipEndDate)</td>
                 <td>@Html.DisplayFor(modelItem => Model.Customer.MembershipType)</td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@Model.Customer.CustomerId">Update or Upgrade Membership </a> |
+                    @{
+                        var description = Model.Customer.MembershipType switch
+                        {
+                            "FREE TIER" => "Access to basic features and content.",
+                            "FAMILY TIER" => "All-access for up to 5 family members with premium perks and multiple visits per year.",
+                            "VIP TIER" => "Exclusive benefits, access to many special perks, and unlimited visits.",
+                            _ => "No description available"
+                        };
+                    }
+                    @description
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@Model.Customer.CustomerId" class="btn btn-warning btn-sm">Update or Upgrade Membership</a>
                 </td>
             </tr>
         </tbody>
@@ -34,3 +47,21 @@ else
 {
     <p>No account details found.</p>
 }
+
+<h2>Membership Types</h2>
+<div>
+    <div class="mb-3">
+        <h4>Free Tier</h4>
+        <p>Access to basic features and content.</p>
+    </div>
+
+    <div class="mb-3">
+        <h4>Family Tier</h4>
+        <p>All-access for up to 5 family members with premium perks and multiple visits per year.</p>
+    </div>
+
+    <div class="mb-3">
+        <h4>VIP Tier</h4>
+        <p>Exclusive benefits, access to many special perks, and unlimited visits.</p>
+    </div>
+</div>

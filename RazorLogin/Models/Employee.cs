@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace RazorLogin.Models;
 
@@ -13,6 +14,7 @@ public partial class Employee
 
     public string? EmployeeLastName { get; set; }
 
+    [Required(ErrorMessage = "Date of Birth is required.")]
     public DateOnly? EmployeeDob { get; set; }
 
     public string? EmployeeAddress { get; set; }

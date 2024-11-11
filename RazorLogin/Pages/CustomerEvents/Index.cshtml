@@ -1,0 +1,49 @@
+﻿@page
+@model RazorLogin.Pages.CustomerEvents.IndexModel
+
+@{
+    ViewData["Title"] = "Available Events";
+}
+
+<h1>Available Events</h1>
+
+
+<div class="event-container">
+    @foreach (var item in Model.Event)
+    {
+        <div class="event-card">
+            <h2>@item.EventName</h2>
+            <p><strong>Start Time:</strong> @item.EventStartTime.ToShortTimeString()</p>
+            <p><strong>End Time:</strong> @item.EventEndTime.ToShortTimeString()</p>
+            <p><strong>Date:</strong> @(item.EventDate.HasValue ? item.EventDate.Value.ToLongDateString() : "N/A")</p>
+            <p><strong>Location:</strong> @item.EventLocation</p>
+        </div>
+    }
+</div>
+
+<style>
+    .event-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .event-card {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        width: 300px;
+        text-align: left;
+        background-color: #f9f9f9;
+    }
+
+        .event-card h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+
+</style>
