@@ -10,7 +10,10 @@
 
 <table class="table">
     <thead>
-        <tr>
+        <tr> 
+            <th>
+                @Html.DisplayNameFor(model => model.Enclosure[0].EnclosureId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Enclosure[0].EnclosureName)
             </th>
@@ -26,6 +29,9 @@
     <tbody>
 @foreach (var item in Model.Enclosure) {
         <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EnclosureId)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EnclosureName)
             </td>
