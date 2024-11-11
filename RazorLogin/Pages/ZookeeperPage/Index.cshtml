@@ -2,37 +2,32 @@
 @model RazorLogin.Pages.ZookeeperPage.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Zookeeper Information";
 }
 
-<<h1>Zookeeper Information</h1>
+<h1>Zookeeper Information</h1>
 
-<p>
-</p>
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].TrainingRenewalDate)</th>
-            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].LastTrainingDate)</th>
-            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].AssignedDepartment)</th>
-            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].Employee.EmployeeFirstName)</th>
-            <th>@Html.DisplayNameFor(model => model.Zookeeper[0].Employee.EmployeeLastName)</th>
+            <th>Employee First Name</th>
+            <th>Employee Last Name</th>
+            <th>Zookeeper ID</th>
+            <th>Assigned Department</th>
+            <th>Number of Assigned Cages</th>
+            
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Zookeeper)
+        @foreach (var zookeeper in Model.Zookeepers)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.TrainingRenewalDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.LastTrainingDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.AssignedDepartment)</td>
-                <td>@Html.DisplayFor(modelItem => item.Employee.EmployeeFirstName)</td>
-                <td>@Html.DisplayFor(modelItem => item.Employee.EmployeeLastName)</td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.ZookeeperId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.ZookeeperId">Details</a> |
-                    
-                </td>
+                <td>@zookeeper.Employee.EmployeeFirstName</td>
+                <td>@zookeeper.Employee.EmployeeLastName</td>
+                <td>@zookeeper.ZookeeperId</td>
+                <td>@zookeeper.AssignedDepartment</td>
+                <td>@(zookeeper.NumAssignedCages.HasValue ? zookeeper.NumAssignedCages.ToString() : "N/A")</td>
+                
             </tr>
         }
     </tbody>
