@@ -124,7 +124,7 @@ namespace RazorLogin.Pages.Admin.Emp
 
             ViewData["GiftShopsWithoutManagers"] = GiftShopsWithoutManagers;
             ViewData["FoodStoresWithoutManagers"] = FoodStoresWithoutManagers;
-   
+
 
 
             // Populate supervisor selection (you may already have this set correctly)
@@ -136,17 +136,13 @@ namespace RazorLogin.Pages.Admin.Emp
                 })
                 .ToList();
 
+            selectList.Insert(0, new SelectListItem()
+            {
+                Value = "",
+                Text = "--- Select Related Entity ---"
+            });
 
-                 })
-                 .ToList();
-
-             selectList.Insert(0, new SelectListItem()
-             {
-                 Value = "",
-                 Text = "--- Select Related Entity ---"
-             });
-
-             ViewData["RelatedEntity_Id"] = selectList;
+            ViewData["RelatedEntity_Id"] = selectList;
 
             // You can populate ViewData for SupervisorId (Manager)
             ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
@@ -177,7 +173,6 @@ namespace RazorLogin.Pages.Admin.Emp
                 ViewData["SupervisorId"] = new SelectList(_context.Managers, "ManagerId", "ManagerId");
                 return Page(); */
 
-
         }
 
         [BindProperty]
@@ -197,10 +192,10 @@ namespace RazorLogin.Pages.Admin.Emp
             }
 
             // Set default department to "GENERAL" if not specified
-           // if (string.IsNullOrWhiteSpace(Employee.Department))
-           // {
-           //     Employee.Department = "GENERAL";
-           // }
+            // if (string.IsNullOrWhiteSpace(Employee.Department))
+            // {
+            //     Employee.Department = "GENERAL";
+            // }
 
             // Determine department based on the role
             if (Role == "ZOOKEEPER")
@@ -240,7 +235,7 @@ namespace RazorLogin.Pages.Admin.Emp
                         Employee.SupervisorId = managerForFoodStore.ManagerId;
                     }
                 }
-        }
+            }
             else if (Role == "MANAGER")
             {
                 // Determine department based on store assignment
@@ -256,7 +251,6 @@ namespace RazorLogin.Pages.Admin.Emp
                 }
             }
             else { Employee.Department = "GENERAL"; }
-
 
 
             _context.Employees.Add(Employee);
