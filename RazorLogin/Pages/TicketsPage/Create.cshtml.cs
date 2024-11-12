@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity; 
+using Microsoft.AspNetCore.Identity;
 using RazorLogin.Models;
 
 namespace RazorLogin.Pages.TicketsPage
@@ -13,12 +13,12 @@ namespace RazorLogin.Pages.TicketsPage
     public class CreateModel : PageModel
     {
         private readonly RazorLogin.Models.ZooDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager; 
+        private readonly UserManager<IdentityUser> _userManager;
 
         public CreateModel(RazorLogin.Models.ZooDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
-            _userManager = userManager; 
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -34,6 +34,22 @@ namespace RazorLogin.Pages.TicketsPage
 
         [BindProperty]
         public string SelectedTicketType { get; set; } = string.Empty;
+
+        public string MembershipType { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var userEmail = user?.Email;
+
+            if (userEmail != null)
+            {
+                var customer = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerEmail == userEmail);
+                MembershipType = customer?.MembershipType;
+            }
+
+            return Page();
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -58,10 +74,21 @@ namespace RazorLogin.Pages.TicketsPage
             // Assign selected ticket type to the Ticket model
             Ticket.TicketType = SelectedTicketType;
 
-            // Set the ticket price based on the selected ticket type
-            if (TicketTypes.TryGetValue(SelectedTicketType, out var price))
+            // Set the ticket price based on selected ticket type
+            if (TicketTypes.TryGetValue(SelectedTicketType, out var basePrice))
             {
-                Ticket.TicketPrice = price;
+                Ticket.TicketPrice = basePrice;
+
+                // Apply membership discount
+                switch (customer.MembershipType)
+                {
+                    case "FAMILY TIER":
+                        Ticket.TicketPrice -= 2;
+                        break;
+                    case "VIP TIER":
+                        Ticket.TicketPrice -= 3;
+                        break;
+                }
             }
             else
             {
@@ -71,15 +98,14 @@ namespace RazorLogin.Pages.TicketsPage
 
             // Generate a unique Ticket_ID manually
             Ticket.TicketId = GenerateUniqueTicketId();
-
             Ticket.TicketPurchaseDate = DateOnly.FromDateTime(DateTime.Now);
 
-            // Create a new Purchase with a unique PurchaseId and associate it with the customer
+            // Create and save the purchase
             var purchase = new Purchase
             {
                 PurchaseId = GenerateUniquePurchaseId(),
                 CustomerId = customer.CustomerId,
-                PurchaseDate = Ticket.TicketPurchaseDate  // Set PurchaseDate to match TicketDate
+                PurchaseDate = Ticket.TicketPurchaseDate
             };
 
             _context.Purchases.Add(purchase);
@@ -87,7 +113,6 @@ namespace RazorLogin.Pages.TicketsPage
 
             // Link the Purchase to the Ticket
             Ticket.Purchase = purchase;
-
             _context.Tickets.Add(Ticket);
 
             try
@@ -103,7 +128,6 @@ namespace RazorLogin.Pages.TicketsPage
 
             return RedirectToPage("/Ticketspage/Index");
         }
-
 
         private int GenerateUniqueTicketId()
         {

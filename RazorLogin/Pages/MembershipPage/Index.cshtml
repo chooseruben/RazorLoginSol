@@ -28,9 +28,9 @@
                     @{
                         var description = Model.Customer.MembershipType switch
                         {
-                            "FREE TIER" => "Access to basic features and content.",
-                            "FAMILY TIER" => "All-access for up to 5 family members with premium perks and multiple visits per year.",
-                            "VIP TIER" => "Exclusive benefits, access to many special perks, and unlimited visits.",
+                            "FREE TIER" => "Access to basic features and standard pricing.",
+                            "FAMILY TIER" => "Access to select benefits and an additional $2 off ticket prices.",
+                            "VIP TIER" => "Exclusive benefits along with an extra $3 off ticket prices.",
                             _ => "No description available"
                         };
                     }
@@ -52,16 +52,16 @@ else
 <div>
     <div class="mb-3">
         <h4>Free Tier</h4>
-        <p>Access to basic features and content.</p>
+        <p>Access to basic features and standard pricing.</p>
     </div>
 
     <div class="mb-3">
         <h4>Family Tier</h4>
-        <p>All-access for up to 5 family members with premium perks and multiple visits per year.</p>
+        <p>Access to select benefits and an additional $2 off ticket prices.</p>
     </div>
 
     <div class="mb-3">
         <h4>VIP Tier</h4>
-        <p>Exclusive benefits, access to many special perks, and unlimited visits.</p>
+        <p>Exclusive benefits along with an extra $3 off ticket prices.</p>
     </div>
 </div>

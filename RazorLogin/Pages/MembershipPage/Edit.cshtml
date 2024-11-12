@@ -58,27 +58,27 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-        // Update membership price and dates based on selected membership tier
+        // Update membership price display based on selected membership tier
         function updateMembershipPrice() {
             var selectedMembership = document.getElementById('membershipDropdown').value;
             var priceDisplay = document.getElementById('membershipPrice');
-            var price = 0;
+            var priceText = "";
 
             switch (selectedMembership) {
-                case 'Free':
-                    price = 0;
+                case 'FREE TIER':
+                    priceText = "$0";
                     break;
-                case 'Family':
-                    price = 15;
+                case 'FAMILY TIER':
+                    priceText = "$15 Monthly";
                     break;
-                case 'VIP':
-                    price = 25;
+                case 'VIP TIER':
+                    priceText = "$25 Monthly";
                     break;
                 default:
-                    price = 0;
+                    priceText = "$0";
             }
 
-            priceDisplay.innerText = '$' + price + (price > 0 ? '/month' : '');
+            priceDisplay.innerText = priceText;
 
             // Set membership start and end dates
             var startDate = new Date();
@@ -88,5 +88,9 @@
             document.getElementById('MembershipStartDate').value = startDate.toISOString().split('T')[0]; // Set to current date
             document.getElementById('MembershipEndDate').value = endDate.toISOString().split('T')[0]; // Set to one year from now
         }
+
+        window.onload = function () {
+            updateMembershipPrice();
+        };
     </script>
 }

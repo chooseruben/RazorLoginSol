@@ -33,6 +33,8 @@
                 <p id="ticketPrice">$0</p>
             </div>
 
+            <!-- Hidden field for MembershipType -->
+            <input type="hidden" id="membershipType" value="@Model.MembershipType" />
 
             <!-- Submit Button -->
             <div class="form-group">
@@ -55,8 +57,9 @@
         function updateTicketPrice() {
             var ticketType = document.getElementById('SelectedTicketType').value;
             var ticketPrice = 0;
+            var membershipType = document.getElementById('membershipType').value;
 
-            // Define prices
+            // Define base prices
             switch (ticketType) {
                 case 'Adult':
                     ticketPrice = 25;
@@ -72,7 +75,14 @@
                     ticketPrice = 0;
             }
 
-            // Display the ticket price
+            // Apply membership discount
+            if (membershipType === "FAMILY TIER") {
+                ticketPrice -= 2;
+            } else if (membershipType === "VIP TIER") {
+                ticketPrice -= 3;
+            }
+
+            // Display the updated ticket price
             document.getElementById('ticketPrice').innerText = '$' + ticketPrice;
         }
     </script>
