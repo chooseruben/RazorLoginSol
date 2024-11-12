@@ -23,6 +23,10 @@
         .navbar-brand h2 {
             color: white;
         }
+
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link:focus {
+            color: #ffc107 !important;
+        }
     </style>
 </head>
 <body>
@@ -200,10 +204,13 @@
                                 <a class="nav-link text-white" asp-area="" asp-page="/EnclosurePage/Index">Enclosures</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/ZookeeperClosings/Index">Closings</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-page="/AnimalsPage/Index">Animals</a>
                             </li>
-                            <li>
-                                <a class="dropdown-item" asp-area="" asp-page="/Zoo.Myinfo/Index">Employee Info</a>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/Zoo.Myinfo/Index">Employee Info</a>
                             </li>
                         </ul>
                     }
@@ -212,7 +219,7 @@
                     {
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/CustomerEnclosures/Index">Available Enclosures</a>
+                                <a class="nav-link text-white" asp-area="" asp-page="/CustomerEnclosures/Index">Our Enclosures</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-page="/CustomerEvents/Index">Events</a>
