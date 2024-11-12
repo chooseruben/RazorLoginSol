@@ -1,0 +1,35 @@
+﻿@page
+@model RazorLogin.Pages.Manag.Inven.AddModel
+@{
+    ViewData["Title"] = "Add Item";
+}
+
+<h2>Add Item</h2>
+
+<form method="post">
+        <div class="form-group">
+            <label asp-for="Item.ItemName"></label>
+            <input asp-for="Item.ItemName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Item.ItemCount"></label>
+            <input asp-for="Item.ItemCount" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Item.RestockDate"></label>
+            <input asp-for="Item.RestockDate" type="date" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Select Store Type</label>
+            <select asp-for="StoreType" class="form-control">
+                <option value="GiftShop">Gift Shop</option>
+                <option value="FoodStore">Food Store</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Enter Store ID</label>
+            <input asp-for="StoreId" class="form-control" placeholder="Enter Store ID" />
+        </div>
+    <button type="submit" class="btn btn-primary">Add Item</button>
+    <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+</form>

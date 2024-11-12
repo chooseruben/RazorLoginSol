@@ -1,0 +1,56 @@
+﻿@page "{storeId:int}"
+@model RazorLogin.Pages.Manag.Inven.EditStoreModel
+@{
+    ViewData["Title"] = "Edit Store Details";
+}
+
+<h2>Edit Store Details</h2>
+
+@if (Model.AssignedGiftShop != null)
+{
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="AssignedGiftShop.GiftShopName"></label>
+            <input asp-for="AssignedGiftShop.GiftShopName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="AssignedGiftShop.GiftShopLocation"></label>
+            <input asp-for="AssignedGiftShop.GiftShopLocation" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="AssignedGiftShop.GiftShopOpenTime"></label>
+            <input asp-for="AssignedGiftShop.GiftShopOpenTime" class="form-control" type="time" />
+        </div>
+        <div class="form-group">
+            <label asp-for="AssignedGiftShop.GiftShopCloseTime"></label>
+            <input asp-for="AssignedGiftShop.GiftShopCloseTime" class="form-control" type="time" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+}
+else if (Model.AssignedFoodStore != null)
+{
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="AssignedFoodStore.FoodStoreName"></label>
+            <input asp-for="AssignedFoodStore.FoodStoreName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="AssignedFoodStore.FoodStoreLocation"></label>
+            <input asp-for="AssignedFoodStore.FoodStoreLocation" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="AssignedFoodStore.FoodStoreOpenTime"></label>
+            <input asp-for="AssignedFoodStore.FoodStoreOpenTime" type="time" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="AssignedFoodStore.FoodStoreCloseTime"></label>
+            <input asp-for="AssignedFoodStore.FoodStoreCloseTime" type="time" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+}
+else
+{
+    <p>No store details found for editing.</p>
+}
