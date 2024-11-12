@@ -80,7 +80,7 @@ namespace RazorLogin.Pages.CustomerShop
                 PurchaseTime = TimeOnly.FromDateTime(DateTime.Now),
                 NumItems = quantity,
                 StoreId = item.ShopId,
-                TotalPurchasesPrice = totalPurchasePrice // Store the total purchase price
+                TotalPurchasesPrice = totalPurchasePrice
             };
 
             // Save the new purchase
