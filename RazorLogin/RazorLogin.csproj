@@ -106,6 +106,10 @@
     <Content Remove="Pages\Admin.Reports\Index.cshtml" />
     <Content Remove="Pages\Admin.Tick\Details.cshtml" />
     <Content Remove="Pages\Admin.Zook\Details.cshtml" />
+    <Content Remove="Pages\Shop.Dining1\AddItem.cshtml" />
+    <Content Remove="Pages\Shop.Dining1\Editing.cshtml" />
+    <Content Remove="Pages\Shop.GShop\AddItem.cshtml" />
+    <Content Remove="Pages\Shop.GShop\Editing.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

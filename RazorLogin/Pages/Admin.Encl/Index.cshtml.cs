@@ -18,12 +18,16 @@ namespace RazorLogin.Pages.Admin.Encl
             _context = context;
         }
 
-        public IList<Enclosure> Enclosure { get;set; } = default!;
+        // The list of Enclosures to display
+        public IList<Enclosure> Enclosure { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
+            // Eager load Enclosures with Zookeeper and their related Employee data
             Enclosure = await _context.Enclosures
-                .Include(e => e.Zookeeper).ToListAsync();
+                .Include(e => e.Zookeeper)            // Include the Zookeeper for each Enclosure
+                    .ThenInclude(z => z.Employee)    // Include the related Employee (to get FirstName, LastName)
+                .ToListAsync();
         }
     }
 }

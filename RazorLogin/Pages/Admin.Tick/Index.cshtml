@@ -2,41 +2,48 @@
 @model RazorLogin.Pages.Admin.Tick.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tickets";
 }
 
 <h1>Tickets</h1>
 
-<table class="table">
+<!-- Instruction Note -->
+<div class="mt-3">
+    <small class="text-muted">
+        This page displays all the tickets purchased by visitors. You can edit or delete ticket information as needed.
+    </small>
+</div>
+
+<!-- Link to Add New Ticket -->
+<p class="mt-3">
+    <a class="btn btn-primary" asp-page="./Create">Add New Ticket</a>
+</p>
+
+<!-- Tickets Table -->
+<table class="table table-striped mt-3">
     <thead>
         <tr>
-            <th>Ticket Type</th>  <!-- Manually setting the display name -->
-            <th>Ticket Price</th> <!-- Manually setting the display name -->
-            <th>Ticket Purchase Date</th> <!-- Manually setting the display name -->
-            <th>Purchase ID</th> <!-- Manually setting the display name -->
-            <th></th>
+            <th>Ticket Type</th>
+            <th>Ticket Price</th>
+            <th>Purchase Date</th>
+            <th>Purchase ID</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Ticket) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketPurchaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Purchase.PurchaseId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.TicketId">Edit</a> |
-                <a asp-page="./Delete" asp-route-id="@item.TicketId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Ticket)
+        {
+            <tr>
+                <td>@item.TicketType</td>
+                <td>@item.TicketPrice.ToString("C")</td> <!-- Display price as currency -->
+                <td>@item.TicketPurchaseDate?.ToString("MM/dd/yyyy")</td> <!-- Format purchase date -->
+                <td>@item.Purchase?.PurchaseId</td> <!-- Ensure PurchaseId exists -->
+                <td>
+                    <!-- Action Buttons (Edit, Delete) -->
+                    <a class="btn btn-warning btn-sm" asp-page="./Edit" asp-route-id="@item.TicketId">Edit</a>
+                    <a class="btn btn-danger btn-sm" asp-page="./Delete" asp-route-id="@item.TicketId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

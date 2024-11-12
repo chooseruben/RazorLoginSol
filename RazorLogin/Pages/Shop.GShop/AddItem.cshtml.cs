@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
-
+// ADD ITEM PRICE !!!!!!!!!!!!!!!!!!!!!!!!!
 namespace RazorLogin.Pages.Shop.GShop
 {
     public class AddItemModel : PageModel
@@ -45,7 +45,7 @@ namespace RazorLogin.Pages.Shop.GShop
 
 
             // Insert item into the database using raw SQL
-            var sqlQuery = "INSERT INTO Item (item_ID, Item_name, Item_count, Restock_date, Shop_ID) VALUES (@ItemId, @ItemName, @ItemCount, @RestockDate, @ShopId)";
+            var sqlQuery = "INSERT INTO Item (item_ID, Item_name, Item_count, Restock_date, Shop_ID, item_price) VALUES (@ItemId, @ItemName, @ItemCount, @RestockDate, @ShopId, @ItemPrice)";
 
             using (var connection = _context.Database.GetDbConnection())
             {
@@ -59,6 +59,7 @@ namespace RazorLogin.Pages.Shop.GShop
                     command.Parameters.Add(new SqlParameter("@ItemCount", Item.ItemCount));
                     command.Parameters.Add(new SqlParameter("@RestockDate", Item.RestockDate));
                     command.Parameters.Add(new SqlParameter("@ShopId", Item.ShopId ?? (object)DBNull.Value));
+                    command.Parameters.Add(new SqlParameter("@ItemPrice", Item.ItemPrice));
                     await command.ExecuteNonQueryAsync();
                 }
             }

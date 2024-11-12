@@ -1,0 +1,42 @@
+﻿@page
+@model RazorLogin.Pages.Zook.Eve.IndexModel
+@{
+    ViewData["Title"] = "Event List";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <a asp-page="./Create" class="btn btn-primary">Create New Event</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>Event Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Location</th>
+            <th>Employee Rep</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Events)
+        {
+            <tr>
+                <td>@item.EventName</td>
+                <td>@item.EventDate?.ToString("d")</td> <!-- Format DateOnly to short date format -->
+                <td>@item.EventStartTime.ToString(@"hh\:mm")</td> <!-- Format TimeOnly -->
+                <td>@item.EventEndTime.ToString(@"hh\:mm")</td> <!-- Format TimeOnly -->
+                <td>@item.EventLocation</td>
+                <td>@item.EventEmployeeRep?.EmployeeFirstName @item.EventEmployeeRep?.EmployeeLastName</td> <!-- Assuming Employee has a Name property -->
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.EventId" class="btn btn-warning">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.EventId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

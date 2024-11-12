@@ -21,23 +21,34 @@ namespace RazorLogin.Pages.Admin.Pur
 
         public async Task OnGetAsync()
         {
-            // Get the connection string from configuration
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            // Create a new connection using the Microsoft.Data.SqlClient namespace
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 await connection.OpenAsync();
 
-                // Define your SQL query
-                string query = "SELECT * FROM Purchase ORDER BY Customer_ID";
+                // Updated SQL query to join Purchase and Ticket tables
+                string query = @"
+            SELECT 
+                p.Purchase_ID, 
+                p.Customer_ID, 
+                p.Store_ID, 
+                p.num_items, 
+                p.Total_purchases_price, 
+                p.Purchase_Method, 
+                t.Ticket_ID
+            FROM 
+                Purchase p
+            LEFT JOIN 
+                Ticket t ON p.Purchase_ID = t.Purchase_ID
+            ORDER BY 
+                p.Customer_ID;
+        ";
 
-                // Create a command object to execute the query
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     SqlDataReader reader = await command.ExecuteReaderAsync();
 
-                    // Read the data and map it to your model
                     while (await reader.ReadAsync())
                     {
                         var purchase = new Purchase
@@ -50,10 +61,18 @@ namespace RazorLogin.Pages.Admin.Pur
                             PurchaseMethod = reader.IsDBNull(reader.GetOrdinal("Purchase_Method")) ? null : reader.GetString(reader.GetOrdinal("Purchase_Method")),
                         };
 
+                        // Check if StoreId is null and if there's an associated ticket
+                        if (!purchase.StoreId.HasValue && reader["Ticket_ID"] != DBNull.Value)
+                        {
+                            // Set StoreId to 'Ticket Sale' for purchases with associated tickets
+                            purchase.StoreId = -1; // We will display 'Ticket Sale' in the UI for this case
+                        }
+
                         Purchases.Add(purchase);
                     }
                 }
             }
         }
+
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
 namespace RazorLogin.Pages.Admin.GShps
@@ -34,10 +35,20 @@ namespace RazorLogin.Pages.Admin.GShps
                 return Page();
             }
 
+            // Fetch the highest ShopId from the database, if any
+            var maxShopId = await _context.GiftShops
+                                            .OrderByDescending(s => s.ShopId)
+                                            .Select(s => s.ShopId)
+                                            .FirstOrDefaultAsync();
+
+            // Set the new ShopId by incrementing the maximum ShopId found (or default to 1 if no ShopId exists)
+            GiftShop.ShopId = maxShopId + 1;
+
             _context.GiftShops.Add(GiftShop);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
+
     }
 }

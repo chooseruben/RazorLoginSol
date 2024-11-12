@@ -12,18 +12,6 @@
         .navbar {
             background-color: #05472A;
         }
-
-        .navbar-nav .nav-link {
-            color: white !important; 
-        }
-
-        .navbar-nav .dropdown-menu .nav-link {
-            color: black !important; 
-        }
-
-        .navbar-brand h2 {
-            color: white;
-        }
     </style>
 </head>
 <body>
@@ -174,6 +162,19 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Shop.Eve/Index">Events</a>
                             </li>
+                            <li> 
+                             <li class= "nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Shop.Personal/Index">User Info</a>
+                            </li>
+                            <li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Shop.Deps/Index">My Dependants</a>
+                            </li>
+                            <li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Shop.MyShop/Index">My Shop</a>
+                            </li>
+
                         </ul>
                     }
 
@@ -188,6 +189,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-page="/AnimalsPage/Index">Animals</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-area="" asp-page="/Zoo.Myinfo/Index">Employee Info</a>
                             </li>
                         </ul>
                     }

@@ -18,17 +18,34 @@ namespace RazorLogin.Pages.Admin.Ite
             _context = context;
         }
 
+        [BindProperty(SupportsGet = true)]
+        public int? ShopId { get; set; }
+
+        [BindProperty]
+        public Item Item { get; set; } = new Item();  // Explicitly initializing Item
+
         public IActionResult OnGet()
         {
-        ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
-        ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
+            // Check if ShopId is available
+            if (ShopId.HasValue)
+            {
+                // Log ShopId value for debugging
+                Console.WriteLine($"ShopId is: {ShopId.Value}");
+                Item.FoodStoreId = ShopId.Value;
+            }
+            else
+            {
+                Console.WriteLine("ShopId is null!");
+            }
+
+
+            // Populate the SelectLists for the dropdowns
+            ViewData["FoodStoreId"] = new SelectList(_context.FoodStores, "FoodStoreId", "FoodStoreId");
+            ViewData["ShopId"] = new SelectList(_context.GiftShops, "ShopId", "ShopId");
+
             return Page();
         }
 
-        [BindProperty]
-        public Item Item { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -36,10 +53,26 @@ namespace RazorLogin.Pages.Admin.Ite
                 return Page();
             }
 
+            // Generate a random unique 5-digit ItemId
+            Item.ItemId = GenerateUniqueItemId();
+            Item.ShopId = ShopId.Value;
             _context.Items.Add(Item);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Admin.GShps/Index");
+        }
+
+        private int GenerateUniqueItemId()
+        {
+            Random rand = new Random();
+            int itemId;
+
+            do
+            {
+                itemId = rand.Next(10000, 100000);
+            } while (_context.Items.Any(i => i.ItemId == itemId));
+
+            return itemId;
         }
     }
 }

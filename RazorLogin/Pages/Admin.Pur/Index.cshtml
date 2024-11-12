@@ -54,6 +54,7 @@
                     <th>PurchaseId</th>
                     <th>CustomerId</th>
                     <th>StoreId</th>
+                    <th>Actions</th>
 
                 </tr>
             </thead>
@@ -63,7 +64,16 @@
                     <tr>
                         <td>@purchase.PurchaseId</td>
                         <td>@(purchase.CustomerId.HasValue ? purchase.CustomerId.ToString() : "null")</td>
-                        <td>@purchase.StoreId</td>
+                        <td>
+                            @if (purchase.StoreId == -1)
+                            {
+                                <span>Ticket Sale</span>
+                            }
+                            else
+                            {
+                                @(purchase.StoreId.HasValue ? purchase.StoreId.ToString() : "null")
+                            }
+                        </td>
 
                         <td>
                             <a href="/Admin.Pur/Edit?id=@purchase.PurchaseId">Edit</a> |
