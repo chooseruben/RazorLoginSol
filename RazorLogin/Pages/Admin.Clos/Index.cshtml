@@ -2,53 +2,48 @@
 @model RazorLogin.Pages.Admin.Clos.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Enclosure Closings";
 }
 
-<h1>Index</h1>
+<h1>Enclosure Closings</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
+<!-- Instruction Note -->
+<div class="mt-3">
+    <small class="text-muted">
+        This page displays all the enclosure closing events. You can view the start and end times, reasons for closure, and the associated enclosure.
+    </small>
+</div>
+
+<!-- Table with Closures -->
+<table class="table table-striped mt-3">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Closing[0].ClosingsEnd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Closing[0].ClosingsStart)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Closing[0].ClosingsReason)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Closing[0].Enclosure)
-            </th>
-            <th></th>
+            <th>Closing ID</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Enclosure</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Closing) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClosingsEnd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClosingsStart)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClosingsReason)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Enclosure.EnclosureId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ClosingId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ClosingId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ClosingId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Closing)
+        {
+            <tr>
+                <td>@item.ClosingId</td>
+                <td>@item.ClosingsStart.ToString("MM/dd/yyyy hh:mm tt")</td> <!-- Format Start Time -->
+                <td>@item.ClosingsEnd.ToString("MM/dd/yyyy hh:mm tt")</td>   <!-- Format End Time -->
+                <td>@item.Enclosure?.EnclosureId </td> <!-- Display enclosure ID or message if null -->
+
+                <td>
+                    <!-- Edit and Delete Links -->
+                    <a class="btn btn-warning btn-sm" asp-page="./Edit" asp-route-id="@item.ClosingId">Edit</a> |
+                    <a class="btn btn-danger btn-sm" asp-page="./Delete" asp-route-id="@item.ClosingId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<p>
+    <a class="btn btn-success" asp-page="Create">Create New Closing</a>
+</p>

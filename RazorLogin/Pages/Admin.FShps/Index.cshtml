@@ -26,6 +26,7 @@
             <th>Open Time</th>
             <th>Close Time</th>
             <th>Manager</th>
+            <th>Inventory</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -39,6 +40,11 @@
                 <td>@(item.FoodStoreOpenTime?.ToString("hh:mm tt") ?? "None")</td> <!-- Format Open Time or show "None" if null -->
                 <td>@(item.FoodStoreCloseTime?.ToString("hh:mm tt") ?? "None")</td> <!-- Format Close Time or show "None" if null -->
                 <td>@item.ManagerName</td> <!-- Display the manager's name (or 'None') -->
+                <td>
+                    <!-- Link to manage items in this shop -->
+                    <a asp-page="/Admin.IteF/Index" asp-route-foodstoreid="@item.FoodStoreId">Manage Items</a>
+                </td>
+                
                 <td>
                     <!-- Edit and Delete Links -->
                     <a class="btn btn-warning btn-sm" asp-page="./Edit" asp-route-id="@item.FoodStoreId">Edit</a>
