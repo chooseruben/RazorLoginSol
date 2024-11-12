@@ -13,11 +13,11 @@
         }
 
         .navbar-nav .nav-link {
-            color: white !important; 
+            color: white !important;
         }
 
         .navbar-nav .dropdown-menu .nav-link {
-            color: black !important; 
+            color: black !important;
         }
 
         .navbar-brand h2 {
@@ -140,26 +140,23 @@
                     {
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Manage.Shop/Index">Shops</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Tick/Index">Tickets</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Manage.Employees/Index">Employees</a>
-                            </li>
-                            <!---  <li class="nav-item">
-                                   <a class="nav-link text dark" asp-area="" asp-area="/Manager.Reports/Index">Reports</a>
-                               </li>
-                               <li class="nav-item">
-                                   <a class="nav-link text dark" asp-area="" asp-area="/Manager.Customers/Index">Customers</a>
-                               </li>
-                               <li class="nav-item">
-                                   <a class="nav-link text-dark" asp-area="" asp-page="/MyDependents/Index">My Dependents</a>
-                               </li>
-                            --->
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Manag.Report/Index">Dining Stores Report</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Purch/Index">Purchases</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Manag.Report2/Index">Gift Shops Report</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Inven/Index">Store</a>
+                            </li>
+                         
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Dep/Index">My Dependents</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Report/Index">Dining Stores Report</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Report2/Index">Gift Shops Report</a>
                             </li>
                         </ul>
                     }
@@ -176,6 +173,19 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Shop.Eve/Index">Events</a>
                             </li>
+                            <li> 
+                             <li class= "nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Shop.Personal/Index">User Info</a>
+                            </li>
+                            <li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Shop.Deps/Index">My Dependants</a>
+                            </li>
+                            <li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Shop.MyShop/Index">My Shop</a>
+                            </li>
+
                         </ul>
                     }
 
@@ -190,6 +200,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-page="/AnimalsPage/Index">Animals</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-area="" asp-page="/Zoo.Myinfo/Index">Employee Info</a>
                             </li>
                         </ul>
                     }

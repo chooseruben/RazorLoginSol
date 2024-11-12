@@ -1,0 +1,32 @@
+﻿@page
+@model RazorLogin.Pages.Manag.Inven.EditModel
+@{
+    ViewData["Title"] = "Edit Item";
+}
+
+<h2>Edit Item</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Item.ItemName">Item Name</label>
+        <input asp-for="Item.ItemName" class="form-control" />
+        <span asp-validation-for="Item.ItemName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.ItemCount">Item Count</label>
+        <input asp-for="Item.ItemCount" class="form-control" />
+        <span asp-validation-for="Item.ItemCount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.RestockDate">Restock Date</label>
+        <input asp-for="Item.RestockDate" class="form-control" />
+        <span asp-validation-for="Item.RestockDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.ItemPrice">Price</label>
+        <input asp-for="Item.ItemPrice" class="form-control" />
+        <span asp-validation-for="Item.ItemPrice" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+</form>
