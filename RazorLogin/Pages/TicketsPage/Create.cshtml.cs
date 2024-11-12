@@ -118,6 +118,7 @@ namespace RazorLogin.Pages.TicketsPage
             try
             {
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Your ticket has been successfully purchased!";
             }
             catch (DbUpdateException ex)
             {
@@ -126,7 +127,7 @@ namespace RazorLogin.Pages.TicketsPage
                 return Page();
             }
 
-            return RedirectToPage("/Ticketspage/Index");
+            return Page();
         }
 
         private int GenerateUniqueTicketId()

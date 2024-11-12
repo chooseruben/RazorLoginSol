@@ -2,10 +2,10 @@
 @model RazorLogin.Pages.CustomerEnclosures.IndexModel
 
 @{
-    ViewData["Title"] = "Available Enclosures";
+    ViewData["Title"] = "Our Enclosures";
 }
 
-<h1>Available Enclosures</h1>
+<h1>Our Enclosures</h1>
 
 <div class="enclosure-container">
     @foreach (var item in Model.Enclosure)
@@ -21,7 +21,7 @@
                 <ul>
                     @foreach (var animal in item.Animals)
                     {
-                        <li>@animal.Species</li> <!-- Assuming Animal has a SpeciesName property -->
+                        <li>@animal.Species</li>
                     }
                 </ul>
             </div>
@@ -58,7 +58,7 @@
     /* Title styling */
     .enclosure-title {
         font-size: 1.75em;
-        color: #2c6dbf; /* Blue color for the title */
+        color: #2c6dbf; 
         margin-bottom: 10px;
         font-weight: bold;
     }

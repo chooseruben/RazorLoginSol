@@ -23,6 +23,7 @@ namespace RazorLogin.Pages.CustomerShop
         }
 
         public IList<Item> Item { get; set; } = default!;
+        public string SuccessMessage { get; set; } = string.Empty; 
 
         public async Task OnGetAsync()
         {
@@ -87,7 +88,9 @@ namespace RazorLogin.Pages.CustomerShop
             _context.Purchases.Add(purchase);
             await _context.SaveChangesAsync();
 
-            // Redirect to refresh the page after the purchase
+            // Store the success message in TempData to display after redirect
+            TempData["SuccessMessage"] = "Purchase successful! Thank you for your order.";
+
             return RedirectToPage("./Index");
         }
     }
