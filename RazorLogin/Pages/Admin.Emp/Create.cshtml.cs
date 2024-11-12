@@ -184,6 +184,8 @@ namespace RazorLogin.Pages.Admin.Emp
         [BindProperty]
         public string Role { get; set; }
 
+        public string ErrorMessage { get; set; } // Store the error message for display
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -191,131 +193,134 @@ namespace RazorLogin.Pages.Admin.Emp
                 return Page();
             }
 
-            // Set default department to "GENERAL" if not specified
-            // if (string.IsNullOrWhiteSpace(Employee.Department))
-            // {
-            //     Employee.Department = "GENERAL";
-            // }
-
-            // Determine department based on the role
-            if (Role == "ZOOKEEPER")
+            try
             {
-                Employee.Department = "ZOO";
-            }
-            else if (Role == "ADMIN")
-            {
-                Employee.Department = "GENERAL";
-            }
-            else if (Role == "SHOP")
-            {
-                // Determine department based on store assignment
-                if (!string.IsNullOrEmpty(Employee.ShopId.ToString()) && Employee.ShopId != 0)
+                // Set department based on role
+                if (Role == "ZOOKEEPER")
                 {
-                    // Employee is assigned to a Gift Shop
-                    Employee.Department = "GIFT";
-
-                    // Set the supervisor (manager) for the Gift Shop
-                    var managerForGiftShop = _context.Managers
-                        .FirstOrDefault(mgr => mgr.EmployeeId != null && mgr.Employee.ShopId == Employee.ShopId);
-                    if (managerForGiftShop != null)
+                    Employee.Department = "ZOO";
+                }
+                else if (Role == "ADMIN")
+                {
+                    Employee.Department = "GENERAL";
+                }
+                else if (Role == "SHOP")
+                {
+                    if (!string.IsNullOrEmpty(Employee.ShopId.ToString()) && Employee.ShopId != 0)
                     {
-                        Employee.SupervisorId = managerForGiftShop.ManagerId;
+                        Employee.Department = "GIFT";
+
+                        // Set the supervisor for Gift Shop
+                        var managerForGiftShop = _context.Managers
+                            .FirstOrDefault(mgr => mgr.EmployeeId != null && mgr.Employee.ShopId == Employee.ShopId);
+                        if (managerForGiftShop != null)
+                        {
+                            Employee.SupervisorId = managerForGiftShop.ManagerId;
+                        }
+                    }
+                    else if (!string.IsNullOrEmpty(Employee.FoodStoreId.ToString()) && Employee.FoodStoreId != 0)
+                    {
+                        Employee.Department = "FOOD";
+
+                        // Set the supervisor for Food Store
+                        var managerForFoodStore = _context.Managers
+                            .FirstOrDefault(mgr => mgr.EmployeeId != null && mgr.Employee.FoodStoreId == Employee.FoodStoreId);
+                        if (managerForFoodStore != null)
+                        {
+                            Employee.SupervisorId = managerForFoodStore.ManagerId;
+                        }
                     }
                 }
-                else if (!string.IsNullOrEmpty(Employee.FoodStoreId.ToString()) && Employee.FoodStoreId != 0)
+                else if (Role == "MANAGER")
                 {
-                    // Employee is assigned to a Food Store
-                    Employee.Department = "FOOD";
-
-                    // Set the supervisor (manager) for the Food Store
-                    var managerForFoodStore = _context.Managers
-                        .FirstOrDefault(mgr => mgr.EmployeeId != null && mgr.Employee.FoodStoreId == Employee.FoodStoreId);
-                    if (managerForFoodStore != null)
+                    if (!string.IsNullOrEmpty(Employee.ShopId.ToString()) && Employee.ShopId != 0)
                     {
-                        Employee.SupervisorId = managerForFoodStore.ManagerId;
+                        Employee.Department = "GIFT";
+                    }
+                    else if (!string.IsNullOrEmpty(Employee.FoodStoreId.ToString()) && Employee.FoodStoreId != 0)
+                    {
+                        Employee.Department = "FOOD";
                     }
                 }
+                else
+                {
+                    Employee.Department = "GENERAL";
+                }
+
+                // Add employee to context
+                _context.Employees.Add(Employee);
+                await _context.SaveChangesAsync(); // This might trigger your SQL trigger
+
+                // Create IdentityUser for authentication
+                var user = new IdentityUser
+                {
+                    UserName = Employee.EmployeeEmail,
+                    Email = Employee.EmployeeEmail
+                };
+
+                var result = await _userManager.CreateAsync(user, Password);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return Page();
+                }
+
+                if (!string.IsNullOrEmpty(Role))
+                {
+                    await _userManager.AddToRoleAsync(user, Role);
+
+                    var randomSuffix = new Random().Next(10000, 99999);
+
+                    if (Role == "MANAGER")
+                    {
+                        var manager = new Manager
+                        {
+                            EmployeeId = Employee.EmployeeId,
+                            ManagerId = int.Parse($"{Employee.EmployeeId}{randomSuffix}"),
+                            Department = Employee.Department,
+                            ManagerEmploymentDate = DateOnly.FromDateTime(DateTime.Now)
+                        };
+                        _context.Managers.Add(manager);
+                    }
+                    else if (Role == "ZOOKEEPER")
+                    {
+                        var zookeeper = new Zookeeper
+                        {
+                            EmployeeId = Employee.EmployeeId,
+                            ZookeeperId = int.Parse($"{Employee.EmployeeId}{randomSuffix}"),
+                            TrainingRenewalDate = DateOnly.FromDateTime(DateTime.Now.AddYears(1))
+                        };
+                        _context.Zookeepers.Add(zookeeper);
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
+                return RedirectToPage("./Index");
             }
-            else if (Role == "MANAGER")
+            catch (DbUpdateException ex)
             {
-                // Determine department based on store assignment
-                if (!string.IsNullOrEmpty(Employee.ShopId.ToString()) && Employee.ShopId != 0)
+                // Catch errors related to database updates (including trigger errors)
+                var sqlException = ex.InnerException as SqlException;
+                if (sqlException != null)
                 {
-                    // Employee is assigned to a Gift Shop
-                    Employee.Department = "GIFT";
+                    // Handle SQL error (from trigger)
+                    ModelState.AddModelError(string.Empty, "An error occurred while saving the employee: " + sqlException.Message);
                 }
-                else if (!string.IsNullOrEmpty(Employee.FoodStoreId.ToString()) && Employee.FoodStoreId != 0)
+                else
                 {
-                    // Employee is assigned to a Food Store
-                    Employee.Department = "FOOD";
+                    // General error if not SQL-related
+                    ModelState.AddModelError(string.Empty, "An unknown error occurred while saving the employee.");
                 }
-            }
-            else { Employee.Department = "GENERAL"; }
 
-
-            _context.Employees.Add(Employee);
-            await _context.SaveChangesAsync();
-
-            var user = new IdentityUser
-            {
-                UserName = Employee.EmployeeEmail,
-                Email = Employee.EmployeeEmail
-            };
-
-            var result = await _userManager.CreateAsync(user, Password);
-
-            if (!result.Succeeded)
-            {
-                // Handle errors (e.g., display error messages)
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                // Return to the current page with the error message
                 return Page();
             }
-
-            if (!string.IsNullOrEmpty(Role))
-            {
-                await _userManager.AddToRoleAsync(user, Role);
-
-                // Generate a random numeric suffix
-                var randomSuffix = new Random().Next(10000, 99999); // Random number between 10000 and 99999
-
-                if (Role == "MANAGER")
-                {
-                    // Create a new Manager entry
-                    var manager = new Manager
-                    {
-                        EmployeeId = Employee.EmployeeId,
-                        // Concatenate EmployeeId with a random suffix
-                        ManagerId = int.Parse($"{Employee.EmployeeId}{randomSuffix}"), // Adjusted to be an int
-                        Department = Employee.Department, // Assuming you want to set the department
-                        ManagerEmploymentDate = DateOnly.FromDateTime(DateTime.Now) // Set to today's date
-                    };
-                    _context.Managers.Add(manager);
-                    //await _context.SaveChangesAsync();
-                }
-                else if (Role == "ZOOKEEPER")
-                {
-                    // Create a new Zookeeper entry
-                    var zookeeper = new Zookeeper
-                    {
-
-                        EmployeeId = Employee.EmployeeId,
-                        // Concatenate EmployeeId with a random suffix
-                        ZookeeperId = int.Parse($"{Employee.EmployeeId}{randomSuffix}"), // Adjusted to be an int
-                        TrainingRenewalDate = DateOnly.FromDateTime(DateTime.Now.AddYears(1)) // Set to one year from now
-                                                                                              // LastTrainingDate is left empty
-                    };
-                    _context.Zookeepers.Add(zookeeper);
-                    //await _context.SaveChangesAsync(); 
-                }
-
-                // Save the new Manager or Zookeeper entry
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
         }
+
     }
 }
