@@ -124,7 +124,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown">
+                            <!--<li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" id="financesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Reports
                                 </a>
@@ -137,7 +137,7 @@
                                         <a class="dropdown-item text-dark" asp-area="" asp-page="/Admin.PurchRep/Index">Purchase Sales Report</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
                         </ul>
                     }
 
@@ -157,11 +157,19 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Dep/Index">My Dependents</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Report/Index">Dining Stores Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Manag.Report2/Index">Gift Shops Report</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" id="financesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Finance Reports
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="financesDropdown">
+
+                                    <li>
+                                        <a class="dropdown-item text-dark" asp-area="" asp-page="/Admin.TixRep/Index">Ticket Sales Report</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-dark" asp-area="" asp-page="/Admin.PurchRep/Index">Purchase Sales Report</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     }
