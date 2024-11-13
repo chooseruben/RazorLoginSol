@@ -31,6 +31,7 @@ namespace RazorLogin.Pages.CustomerShop
             public int? TotalPurchasesPrice { get; set; }
             public DateOnly? PurchaseDate { get; set; }
             public TimeOnly? PurchaseTime { get; set; }
+            public string ItemName { get; set; } // New property for item name
         }
 
         public IList<PurchaseViewModel> Purchases { get; set; } = new List<PurchaseViewModel>();
@@ -53,18 +54,32 @@ namespace RazorLogin.Pages.CustomerShop
                 return NotFound("Customer not found.");
             }
 
-            // Fetch all the purchases associated with the customer's CustomerId
+            // Fetch purchases associated with the customer's CustomerId and exclude those with NumItems == 0,
+            // Order by PurchaseDate and PurchaseTime in descending order to show the most recent purchase first
             var purchases = await _context.Purchases
-                .Where(p => p.CustomerId == customer.CustomerId)
+                .Where(p => p.CustomerId == customer.CustomerId && (p.NumItems ?? 0) > 0)
+                .OrderByDescending(p => p.PurchaseDate)
+                .ThenByDescending(p => p.PurchaseTime)
                 .ToListAsync();
 
+            // Map the purchases to the view model
             Purchases = purchases.Select(p => new PurchaseViewModel
             {
                 PurchaseId = p.PurchaseId,
                 NumItems = p.NumItems ?? 0,
-                TotalPurchasesPrice = p.TotalPurchasesPrice, 
+                TotalPurchasesPrice = p.TotalPurchasesPrice,
                 PurchaseDate = p.PurchaseDate,
-                PurchaseTime = p.PurchaseTime
+                PurchaseTime = p.PurchaseTime,
+                ItemName = (p.NumItems > 1)
+                    ? "Bundle"  // Always say "Bundle" for quantity > 1
+                    : (p.TotalPurchasesPrice switch
+                    {
+                        30 => "Hat",
+                        25 => "Cap",
+                        40 => "Shirt",
+                        50 => "Pants",
+                        _ => "Unknown"
+                    })
             }).ToList();
 
             return Page();

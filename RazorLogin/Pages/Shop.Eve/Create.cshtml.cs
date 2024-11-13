@@ -53,10 +53,26 @@ namespace RazorLogin.Pages.Shop.Eve
                 Event.EventId = randomSuffix;
             }
 
-            _context.Events.Add(Event);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Events.Add(Event);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("An event is already scheduled at this date, time, and location."))
+                {
+                    ModelState.AddModelError(string.Empty, "This event cannot be scheduled because another event is already scheduled at the same date, time, and location.");
+                }
+                else
+                {
+                    // General error message for other database issues
+                    ModelState.AddModelError(string.Empty, "An error occurred while saving your data. Please try again.");
+                }
 
-            return RedirectToPage("./Index");
+                return Page();
+            }
         }
     }
 }
