@@ -27,7 +27,9 @@ namespace RazorLogin.Pages.Manag.Purch
             if (currentUser == null) return RedirectToPage("/Account/Login");
 
             // Retrieve all purchases to display
-            Purchases = await _context.Purchases.ToListAsync();
+            Purchases = await _context.Purchases
+                .Where(p => !_context.Tickets.Any(t => t.PurchaseId == p.PurchaseId)) // Adjust condition based on your data
+                .ToListAsync();
 
             return Page();
         }

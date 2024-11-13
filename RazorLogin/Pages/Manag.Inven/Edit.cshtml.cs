@@ -9,7 +9,7 @@ namespace RazorLogin.Pages.Manag.Inven
 {
     public class EditModel : PageModel
     {
-        
+
         private readonly ZooDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
@@ -43,17 +43,45 @@ namespace RazorLogin.Pages.Manag.Inven
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (!ModelState.IsValid)
-                return Page();
+            // Load the item from the database to ensure it exists and to attach it to the context
+            var itemToUpdate = await _context.Items.FirstOrDefaultAsync(m => m.ItemId == id);
+            if (itemToUpdate == null)
+            {
+                return NotFound();
+            }
 
-            _context.Attach(Item).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return Item.ShopId.HasValue
-                ? RedirectToPage("./Inventory", new { shopId = Item.ShopId })
-                : RedirectToPage("./Inventory", new { foodStoreId = Item.FoodStoreId });
+            // Attempt to update properties on itemToUpdate with values from the Item model bound to the page
+            if (await TryUpdateModelAsync<Item>(
+                itemToUpdate,
+                "Item",
+                i => i.ItemName,
+                i => i.ItemCount,
+                i => i.RestockDate,
+                i => i.ItemPrice)) // Note: Ensure this property matches the exact name in your model
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return itemToUpdate.ShopId.HasValue
+                        ? RedirectToPage("./Inventory", new { shopId = itemToUpdate.ShopId })
+                        : RedirectToPage("./Inventory", new { foodStoreId = itemToUpdate.FoodStoreId });
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    // Check if the item still exists in the database
+                    if (!_context.Items.Any(e => e.ItemId == id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            return Page();
         }
     }
 }

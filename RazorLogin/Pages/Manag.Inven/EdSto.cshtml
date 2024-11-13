@@ -6,6 +6,8 @@
 
 <h2>Edit Store Details</h2>
 
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
 @if (Model.AssignedGiftShop != null)
 {
     <form method="post">
@@ -26,6 +28,7 @@
             <input asp-for="AssignedGiftShop.GiftShopCloseTime" class="form-control" type="time" />
         </div>
         <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-page="./Index" class="btn btn-secondary ms-2">Cancel</a>
     </form>
 }
 else if (Model.AssignedFoodStore != null)
@@ -48,6 +51,13 @@ else if (Model.AssignedFoodStore != null)
             <input asp-for="AssignedFoodStore.FoodStoreCloseTime" type="time" class="form-control" />
         </div>
         <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-page="./Index" class="btn btn-secondary ms-2">Cancel</a>
+
+        <form method="post">
+            <input type="text" name="TestField" value="Test Value" />
+            <button type="submit">Submit Test Form</button>
+        </form>
+
     </form>
 }
 else
