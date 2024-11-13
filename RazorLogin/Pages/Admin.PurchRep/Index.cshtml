@@ -94,16 +94,7 @@
             </div>
         </div>
 
-        <!-- Purchases Per Day Bar Chart -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h3>Purchases Per Day (Bar Chart)</h3>
-                <p class="text-muted">This chart shows the total purchases per day within the selected date range.</p>
-            </div>
-            <div class="card-body">
-                <canvas id="purchasesPerDayChart" width="400" height="200"></canvas>
-            </div>
-        </div>
+      
 
         <!-- Purchases Per Day Table -->
         <div class="card mb-4">
@@ -137,108 +128,6 @@
     <!-- Optional Bootstrap JS (if needed for interactivity) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        var ctx = document.getElementById('purchasesPerDayChart').getContext('2d');
-
-        // Prepare the data for the chart
-        var purchasesData = @Html.Raw(Json.Serialize(Model.PurchasesPerDay));
-
-        // Get the start and end dates
-        var startDate = new Date('@Model.StartDate.ToString("yyyy-MM-dd")');
-        var endDate = new Date('@Model.EndDate.ToString("yyyy-MM-dd")');
-
-        // Create an array of all dates in the range from StartDate to EndDate
-        var allDates = [];
-        var currentDate = new Date(startDate);
-        while (currentDate <= endDate) {
-            allDates.push(new Date(currentDate));
-            currentDate.setDate(currentDate.getDate() + 1);
-        }
-
-        // Prepare labels (dates) and data (total purchases)
-        var labels = allDates.map(function (date) {
-            return date.toISOString().split('T')[0]; // Format as "yyyy-MM-dd"
-        });
-
-        var data = labels.map(function (date) {
-            var purchaseForDate = purchasesData.find(function (purchase) {
-                return purchase.purchase_date === date;
-            });
-
-            // Return purchase count, defaulting to 0 if no data found for this date
-            return purchaseForDate ? purchaseForDate.totalPurchases : 0;
-        });
-
-        // Create the chart
-        var chart = new Chart(ctx, {
-            type: 'bar',  // Changed to 'bar' for bar chart
-            data: {
-                labels: labels,  // Dates as labels
-                datasets: [{
-                    label: 'Total Purchases',
-                    data: data,  // Number of purchases as data
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Light green bars
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function (tooltipItem) {
-                                return tooltipItem.raw + ' purchases';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Date'
-                        },
-                        ticks: {
-                            autoSkip: true,
-                            maxRotation: 45,
-                            minRotation: 45,
-                            maxTicksLimit: 10
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Purchases'
-                        },
-                        beginAtZero: true
-                    }
-                },
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
-                zoom: {
-                    zoom: {
-                        wheel: {
-                            enabled: true,
-                            modifierKey: 'ctrl'
-                        },
-                        pinch: {
-                            enabled: true
-                        },
-                        mode: 'xy',
-                    },
-                    pan: {
-                        enabled: true,
-                        mode: 'xy'
-                    }
-                }
-            }
-        });
-    </script>
+   
 </body>
 </html>
