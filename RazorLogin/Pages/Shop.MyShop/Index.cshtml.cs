@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using RazorLogin.Data;
 using RazorLogin.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -23,24 +22,29 @@ namespace RazorLogin.Pages.Shop.MyShop
 
         public async Task OnGetAsync()
         {
-            // Retrieve the current user's email or ID
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
             if (string.IsNullOrEmpty(userEmail))
             {
-                // Handle missing email case
                 return;
             }
 
-            // Fetch employee record for the logged-in user
+            // Fetch employee based on the logged-in user's email
             var employee = await _context.Employees
-                .Include(e => e.FoodStore) // Include related FoodStore
-                .Include(e => e.Shop)  // Include related GiftShop
+                .Include(e => e.FoodStore)
+                .Include(e => e.Shop)
                 .FirstOrDefaultAsync(e => e.EmployeeEmail == userEmail);
 
             if (employee != null)
             {
-                FoodStore = employee.FoodStore;
-                GiftShop = employee.Shop;
+                // Assign the correct store based on department
+                if (employee.Department == "FOOD")
+                {
+                    FoodStore = employee.FoodStore;
+                }
+                else if (employee.Department == "GIFT")
+                {
+                    GiftShop = employee.Shop;
+                }
             }
         }
     }

@@ -17,9 +17,8 @@
                     <th>Location</th>
                     <th>Opening Time</th>
                     <th>Closing Time</th>
-                    <th>Customer Capacity</th>
-                    <th>Type</th>
-                    <th>Year To Date Sales</th>
+                    
+                    
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -29,12 +28,11 @@
                     <td>@Model.FoodStore.FoodStoreLocation</td>
                     <td>@Model.FoodStore.FoodStoreOpenTime?.ToString("hh:mm tt")</td>
                     <td>@Model.FoodStore.FoodStoreCloseTime?.ToString("hh:mm tt")</td>
-                    <td>@Model.FoodStore.FoodStoreCustomerCapacity</td>
-                    <td>@Model.FoodStore.FoodStoreType</td>
-                    <td>@Model.FoodStore.FoodStoreYearToDateSales</td>
+                    
+                    
                     <td>
-                        <a asp-page="./Details" asp-route-id="@Model.FoodStore.FoodStoreId" class="btn btn-primary btn-sm me-2">Details</a>
-                        <a asp-page="./Inventory" asp-route-storeId="@Model.FoodStore.FoodStoreId" class="btn btn-info btn-sm">View Inventory</a>
+                        <a asp-page="./Details" asp-route-foodStoreId="@Model.FoodStore.FoodStoreId" class="btn btn-primary btn-sm me-2">Details</a>
+                        <a asp-page="./Inventory" asp-route-foodStoreId="@Model.FoodStore.FoodStoreId" class="btn btn-info btn-sm">View Inventory</a>
                     </td>
                 </tr>
             </tbody>
@@ -49,7 +47,7 @@
                     <th>Location</th>
                     <th>Opening Time</th>
                     <th>Closing Time</th>
-                    <th>Year To Date Sales</th>
+                    
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -59,9 +57,9 @@
                     <td>@Model.GiftShop.GiftShopLocation</td>
                     <td>@Model.GiftShop.GiftShopOpenTime.ToString("hh:mm tt")</td>
                     <td>@Model.GiftShop.GiftShopCloseTime.ToString("hh:mm tt")</td>
-                    <td>@Model.GiftShop.GiftShopYearToDateSales</td>
+                    
                     <td>
-                        <a asp-page="./Details" asp-route-id="@Model.GiftShop.ShopId" class="btn btn-primary btn-sm me-2">Details</a>
+                        <a asp-page="./Details" class="btn btn-primary btn-sm me-2">Details</a>
                         <a asp-page="./Inventory" asp-route-shopId="@Model.GiftShop.ShopId" class="btn btn-info btn-sm">View Inventory</a>
                     </td>
                 </tr>
@@ -79,8 +77,8 @@
         text-align: center;
         vertical-align: middle;
     }
+
     .btn {
         min-width: 100px;
     }
 </style>
-
