@@ -36,6 +36,8 @@ namespace RazorLogin.Pages.AnimalsPage
         {
             if (!ModelState.IsValid)
             {
+                ViewData["ZookeeperId"] = new SelectList(_context.Zookeepers, "ZookeeperId", "ZookeeperId");
+                ViewData["EnclosureId"] = new SelectList(_context.Enclosures, "EnclosureId", "EnclosureId");
                 return Page();
             }
 
