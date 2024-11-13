@@ -9,6 +9,10 @@
     <h2 class="text-success mb-4">Create New Animal</h2>
 
     <form method="post">
+
+        <!-- Hidden input for ZookeeperId -->
+        <input type="hidden" asp-for="Animal.ZookeeperId" />
+
         <!-- Animal Name Field -->
         <div class="form-group mb-3">
             <label asp-for="Animal.AnimalName" class="control-label"></label>
@@ -55,15 +59,6 @@
                 <option value="">-- Select Enclosure --</option>
             </select>
             <span asp-validation-for="Animal.EnclosureId" class="text-danger"></span>
-        </div>
-
-        <!-- Zookeeper Assignment Field -->
-        <div class="form-group mb-3">
-            <label asp-for="Animal.ZookeeperId" class="control-label">Assign to Zookeeper</label>
-            <select asp-for="Animal.ZookeeperId" class="form-control" asp-items="ViewBag.ZookeeperId">
-                <option value="">-- Select Zookeeper --</option>
-            </select>
-            <span asp-validation-for="Animal.ZookeeperId" class="text-danger"></span>
         </div>
 
         <!-- Action Buttons -->

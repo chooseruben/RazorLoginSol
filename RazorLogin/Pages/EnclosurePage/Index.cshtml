@@ -15,7 +15,7 @@
 <!-- Instruction Note -->
 <div class="mt-3">
     <small class="text-muted">
-        This page lists all enclosures in the system, along with their department and assigned zookeepers. To update or delete an enclosure, click the corresponding action buttons.
+        This page lists all enclosures assigned to the currently logged in zookeeper. To update or delete an enclosure, click the corresponding action buttons.
     </small>
 </div>
 
@@ -25,12 +25,11 @@
             <th>@Html.DisplayNameFor(model => model.Enclosure[0].EnclosureId)</th>
             <th>@Html.DisplayNameFor(model => model.Enclosure[0].EnclosureName)</th>
             
-            <th>@Html.DisplayNameFor(model => model.Enclosure[0].OccupancyStatus)</th>
+            <th>Status</th>
             <th>@Html.DisplayNameFor(model => model.Enclosure[0].EnclosureOpenTime)</th>
             <th>@Html.DisplayNameFor(model => model.Enclosure[0].EnclosureCloseTime)</th>
             <th>@Html.DisplayNameFor(model => model.Enclosure[0].EnclosureCleaningTime)</th>
             <th>@Html.DisplayNameFor(model => model.Enclosure[0].EnclosureFeedingTime)</th>
-            <th>Zookeeper Name</th>
             
             <th>Actions</th>
         </tr>
@@ -48,17 +47,7 @@
                 <td>@item.EnclosureCleaningTime</td>
                 <td>@item.EnclosureFeedingTime</td>
 
-                <!-- Show Zookeeper's Full Name from Employee -->
-                <td>
-                    @if (item.Zookeeper != null && item.Zookeeper.Employee != null)
-                    {
-                        @item.Zookeeper.Employee.EmployeeFirstName  @item.Zookeeper.Employee.EmployeeLastName
-                    }
-                    else
-                    {
-                        <span>No Zookeeper Assigned</span>
-                    }
-                </td>
+               
 
                 
 

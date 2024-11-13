@@ -18,7 +18,8 @@
         <div class="card-body">
             <table class="table table-hover">
                 <thead class="table-light">
-                     <tr>
+                    <tr>
+                        <th>Animal ID</th>
                         <th>Animal Name</th>
                         <th>Animal Sex</th>
                         <th>Animal DOB</th>
@@ -26,42 +27,42 @@
                         <th>Weight</th>
                         <th>Diet</th>
                         <th>Arrival Date</th>
-                        <th>Medical Notes</th>
                         <th>Endangered Status</th>
                         <th>Feeding Time</th>
                         <th>Enclosure</th>
-                        <th>Zookeeper</th>
                         <th></th>
                     </tr>
                 </thead>
-    <tbody>
-        @foreach (var item in Model.Animal)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.AnimalName)</td>
-                <td>@Html.DisplayFor(modelItem => item.AnimalSex)</td>
-                <td>@Html.DisplayFor(modelItem => item.AnimalDob)</td>
-                <td>@Html.DisplayFor(modelItem => item.Species)</td>
-                <td>@Html.DisplayFor(modelItem => item.Weight)</td>
-                <td>@Html.DisplayFor(modelItem => item.Diet)</td>
-                <td>@Html.DisplayFor(modelItem => item.ArrivalDate)</td>
-                <td>@(string.IsNullOrEmpty(item.MedicalNotes) ? "N/A" : item.MedicalNotes)</td>
-                <td>@(string.IsNullOrEmpty(item.EndangeredStatus) ? "N/A" : item.EndangeredStatus)</td>
-                <td>@Html.DisplayFor(modelItem => item.FeedingTime)</td>
-                <td>@Html.DisplayFor(modelItem => item.Enclosure.EnclosureId)</td>
-                <td>@Html.DisplayFor(modelItem => item.Zookeeper.ZookeeperId)</td>
-                <td>
-                    <div class="mb-2">
-                        <a asp-page="./Edit" asp-route-id="@item.AnimalId" class="btn btn-warning btn-sm w-100">Edit</a>
-                    </div>
-                    <div class="mb-2">
-                        <a asp-page="./Details" asp-route-id="@item.AnimalId" class="btn btn-info btn-sm w-100">Details</a>
-                    </div>
-                    <div>
-                        <a asp-page="./Delete" asp-route-id="@item.AnimalId" class="btn btn-danger btn-sm w-100">Delete</a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                <tbody>
+                    @foreach (var item in Model.Animal)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.AnimalId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AnimalName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AnimalSex)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AnimalDob)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Species)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Weight)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Diet)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ArrivalDate)</td>
+                            <td>@(string.IsNullOrEmpty(item.EndangeredStatus) ? "N/A" : item.EndangeredStatus)</td>
+                            <td>@Html.DisplayFor(modelItem => item.FeedingTime)</td>
+                            <td>@(item.Enclosure?.EnclosureName ?? "N/A")</td> <!-- Display Enclosure Name -->
+                            <td>
+                                <div class="mb-2">
+                                    <a asp-page="./Edit" asp-route-id="@item.AnimalId" class="btn btn-warning btn-sm w-100">Edit</a>
+                                </div>
+                                <div class="mb-2">
+                                    <a asp-page="./Details" asp-route-id="@item.AnimalId" class="btn btn-info btn-sm w-100">Details</a>
+                                </div>
+                                <div>
+                                    <a asp-page="./Delete" asp-route-id="@item.AnimalId" class="btn btn-danger btn-sm w-100">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
