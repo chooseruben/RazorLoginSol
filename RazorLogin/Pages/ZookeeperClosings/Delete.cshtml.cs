@@ -28,7 +28,8 @@ namespace RazorLogin.Pages.ZookeeperClosings
                 return NotFound();
             }
 
-            var closing = await _context.Closings.FirstOrDefaultAsync(m => m.ClosingId == id);
+            var closing = await _context.Closings
+                .FirstOrDefaultAsync(m => m.ClosingId == id);
 
             if (closing == null)
             {
@@ -53,6 +54,17 @@ namespace RazorLogin.Pages.ZookeeperClosings
             {
                 Closing = closing;
                 _context.Closings.Remove(Closing);
+
+                // Update the Enclosure status to OPEN after deleting the closing
+                var enclosure = await _context.Enclosures
+                    .FirstOrDefaultAsync(e => e.EnclosureId == Closing.EnclosureId);
+
+                if (enclosure != null)
+                {
+                    enclosure.OccupancyStatus = "OPEN";
+                    _context.Enclosures.Update(enclosure);
+                }
+
                 await _context.SaveChangesAsync();
             }
 
