@@ -1,42 +1,52 @@
 ﻿@page
-@model RazorLogin.Pages.Zook.Eve.IndexModel
+@model RazorLogin.Pages.Shop.Eve.IndexModel
+
 @{
-    ViewData["Title"] = "Event List";
+    ViewData["Title"] = "Events";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Events</h2>
 
-<div>
-    <a asp-page="./Create" class="btn btn-primary">Create New Event</a>
+    <div class="mb-3 d-flex justify-content-between">
+        <a asp-page="./Create" class="btn btn-success">Create New Event</a>
+        <a asp-page="./Report" class="btn btn-primary">Filter Events</a>
+    </div>
+
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Event Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Events)
+            {
+                <tr>
+                    <td>@item.EventName</td>
+                    <td>@item.EventStartTime.ToString("hh:mm tt")</td>
+                    <td>@item.EventEndTime.ToString("hh:mm tt")</td>
+                    <td>@item.EventDate</td>
+                    <td>@item.EventLocation</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.EventId" class="btn btn-primary btn-sm me-2">Edit</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-eventId="@item.EventId" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Event Name</th>
-            <th>Event Date</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Location</th>
-            <th>Employee Rep</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Events)
-        {
-            <tr>
-                <td>@item.EventName</td>
-                <td>@item.EventDate?.ToString("d")</td> <!-- Format DateOnly to short date format -->
-                <td>@item.EventStartTime.ToString(@"hh\:mm")</td> <!-- Format TimeOnly -->
-                <td>@item.EventEndTime.ToString(@"hh\:mm")</td> <!-- Format TimeOnly -->
-                <td>@item.EventLocation</td>
-                <td>@item.EventEmployeeRep?.EmployeeFirstName @item.EventEmployeeRep?.EmployeeLastName</td> <!-- Assuming Employee has a Name property -->
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.EventId" class="btn btn-warning">Edit</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.EventId" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -5,29 +5,36 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using RazorLogin.Data;
 using RazorLogin.Models;
 
 namespace RazorLogin.Pages.Zook.Eve
 {
     public class CreateModel : PageModel
     {
-        private readonly RazorLogin.Models.ZooDbContext _context;
+        private readonly ZooDbContext _context;
 
-        public CreateModel(RazorLogin.Models.ZooDbContext context)
+        public CreateModel(ZooDbContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public Event Event { get; set; }
+
+        public SelectList EmployeeRepOptions { get; set; }
+
+        public async Task OnGetAsync()
         {
-        ViewData["EventEmployeeRepId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
-            return Page();
+            // Fetch employees for the dropdown list
+            var employees = await _context.Employees
+                .Select(e => new { e.EmployeeId, FullName = e.EmployeeFirstName + " " + e.EmployeeLastName })
+                .ToListAsync();
+
+            EmployeeRepOptions = new SelectList(employees, "EmployeeId", "FullName");
         }
 
-        [BindProperty]
-        public Event Event { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -35,10 +42,37 @@ namespace RazorLogin.Pages.Zook.Eve
                 return Page();
             }
 
-            _context.Events.Add(Event);
-            await _context.SaveChangesAsync();
+            // Generate a unique EventId
+            Random random = new Random();
+            int randomSuffix = random.Next(10000, 99999);
+            Event.EventId = randomSuffix;
 
-            return RedirectToPage("./Index");
+            while (await _context.Events.AnyAsync(d => d.EventId == Event.EventId))
+            {
+                randomSuffix = random.Next(10000, 99999);
+                Event.EventId = randomSuffix;
+            }
+
+            try
+            {
+                _context.Events.Add(Event);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("An event is already scheduled at this date, time, and location."))
+                {
+                    ModelState.AddModelError(string.Empty, "This event cannot be scheduled because another event is already scheduled at the same date, time, and location.");
+                }
+                else
+                {
+                    // General error message for other database issues
+                    ModelState.AddModelError(string.Empty, "An error occurred while saving your data. Please try again.");
+                }
+
+                return Page();
+            }
         }
     }
 }

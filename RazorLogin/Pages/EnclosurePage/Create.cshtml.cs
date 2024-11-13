@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore; // Ensure this is included
 using RazorLogin.Models;
 
 namespace RazorLogin.Pages.EnclosurePage
@@ -18,26 +19,22 @@ namespace RazorLogin.Pages.EnclosurePage
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
-            var zookeepers = _context.Zookeepers
-                .Select(z => new
-                {
-                    ZookeeperId = z.ZookeeperId,
-                    Name = z.Employee.EmployeeFirstName + " " + z.Employee.EmployeeLastName
-                }).ToList();
-
-            ViewData["ZookeeperId"] = new SelectList(zookeepers, "ZookeeperId", "Name");
-            return Page();
-        }
-
         [BindProperty]
         public Enclosure Enclosure { get; set; } = default!;
+
+        public IActionResult OnGet()
+        {
+            // Use ToList instead of ToListAsync to avoid async issues
+            ViewData["ZookeeperId"] = new SelectList(_context.Zookeepers.ToList(), "ZookeeperId", "ZookeeperId");
+            return Page();
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                // Re-populate the dropdown on postback
+                ViewData["ZookeeperId"] = new SelectList(_context.Zookeepers.ToList(), "ZookeeperId", "ZookeeperId");
                 return Page();
             }
 
