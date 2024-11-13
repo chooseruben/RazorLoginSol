@@ -21,7 +21,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Animal.AnimalSex" class="control-label"></label>
-                <input asp-for="Animal.AnimalSex" class="form-control" />
+                <select asp-for="Animal.AnimalSex" class="form-control">
+                    <option value="">Select Sex</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
                 <span asp-validation-for="Animal.AnimalSex" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -69,11 +73,13 @@
                 <input asp-for="Animal.FeedingTime" class="form-control" />
                 <span asp-validation-for="Animal.FeedingTime" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Animal.ZookeeperId" class="control-label"></label>
-                <select asp-for="Animal.ZookeeperId" class="form-control" asp-items="ViewBag.ZookeeperId"></select>
+                <input asp-for="Animal.ZookeeperId" class="form-control" />
                 <span asp-validation-for="Animal.ZookeeperId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

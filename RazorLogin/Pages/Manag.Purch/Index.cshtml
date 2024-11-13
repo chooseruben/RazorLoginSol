@@ -18,8 +18,8 @@
                         <tr>
                             <th>Purchase ID</th>
                             <th>Customer ID</th>
-                            <th>Store ID</th>
-                            <th>Number of Items</th>
+                            <th class="text-center">Store ID</th>
+                            <th class="text-center">Number of Items</th>
                             <th>Total Purchase Price</th>
                             <th>Purchase Date</th>
                             <th>Purchase Time</th>
@@ -31,8 +31,13 @@
                             <tr>
                                 <td>@purchase.PurchaseId</td>
                                 <td>@purchase.CustomerId</td>
-                                <td>@purchase.StoreId</td>
-                                <td>@purchase.NumItems</td>
+                                <td class="text-center">
+                                    @{
+                                        var storeText = purchase.StoreId == -1 ? "Ticket Sale" : purchase.StoreId?.ToString();
+                                    }
+                                    @storeText
+                                </td>
+                                <td class="text-center">@purchase.NumItems</td>
                                 <td>@purchase.TotalPurchasesPrice?.ToString("C")</td>
                                 <td>@purchase.PurchaseDate?.ToString("yyyy-MM-dd")</td>
                                 <td>@purchase.PurchaseTime?.ToString("hh\\:mm\\:ss")</td>

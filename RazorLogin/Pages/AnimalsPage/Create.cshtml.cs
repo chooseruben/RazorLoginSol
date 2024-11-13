@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,10 +13,12 @@ namespace RazorLogin.Pages.AnimalsPage
     public class CreateModel : PageModel
     {
         private readonly RazorLogin.Models.ZooDbContext _context;
+        private readonly UserManager<IdentityUser> _userZookeeper;
 
-        public CreateModel(RazorLogin.Models.ZooDbContext context)
+        public CreateModel(RazorLogin.Models.ZooDbContext context, UserManager<IdentityUser> userZookeeper)
         {
             _context = context;
+            _userZookeeper = userZookeeper;
         }
 
         public IActionResult OnGet()
@@ -28,7 +31,7 @@ namespace RazorLogin.Pages.AnimalsPage
         [BindProperty]
         public Animal Animal { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+   
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

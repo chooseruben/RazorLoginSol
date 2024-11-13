@@ -20,6 +20,16 @@
     </div>
 
     <div class="form-group">
+        <label asp-for="Animal.AnimalSex"></label>
+        <select asp-for="Animal.AnimalSex" class="form-control">
+            <option value="">Select Sex</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+        </select>
+        <span asp-validation-for="Animal.AnimalSex" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
         <label asp-for="Animal.AnimalDob" class="control-label">Date of Birth</label>
         <input asp-for="Animal.AnimalDob" class="form-control" type="date" />
         <span asp-validation-for="Animal.AnimalDob" class="text-danger"></span>
@@ -37,6 +47,12 @@
             <option value="">-- Select Enclosure --</option>
         </select>
         <span asp-validation-for="Animal.EnclosureId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Animal.ZookeeperId" class="control-label"></label>
+        <input asp-for="Animal.ZookeeperId" class="form-control" />
+        <span asp-validation-for="Animal.ZookeeperId" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Create</button>

@@ -6,26 +6,43 @@
 
 <h2>Edit Store Details</h2>
 
+@if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Error:</strong> @ViewData["ErrorMessage"]
+    </div>
+}
+
+
 @if (Model.AssignedGiftShop != null)
 {
     <form method="post">
         <div class="form-group">
             <label asp-for="AssignedGiftShop.GiftShopName"></label>
             <input asp-for="AssignedGiftShop.GiftShopName" class="form-control" />
+            <span asp-validation-for="AssignedGiftShop.GiftShopName" class="text-danger"></span>
         </div>
+
         <div class="form-group">
             <label asp-for="AssignedGiftShop.GiftShopLocation"></label>
             <input asp-for="AssignedGiftShop.GiftShopLocation" class="form-control" />
+            <span asp-validation-for="AssignedGiftShop.GiftShopLocation" class="text-danger"></span>
         </div>
+
         <div class="form-group">
             <label asp-for="AssignedGiftShop.GiftShopOpenTime"></label>
             <input asp-for="AssignedGiftShop.GiftShopOpenTime" class="form-control" type="time" />
+            <span asp-validation-for="AssignedGiftShop.GiftShopOpenTime" class="text-danger"></span>
         </div>
+
         <div class="form-group">
             <label asp-for="AssignedGiftShop.GiftShopCloseTime"></label>
             <input asp-for="AssignedGiftShop.GiftShopCloseTime" class="form-control" type="time" />
+            <span asp-validation-for="AssignedGiftShop.GiftShopCloseTime" class="text-danger"></span>
         </div>
+
         <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-page="./Index" class="btn btn-secondary ms-2">Cancel</a>
     </form>
 }
 else if (Model.AssignedFoodStore != null)
@@ -34,20 +51,31 @@ else if (Model.AssignedFoodStore != null)
         <div class="form-group">
             <label asp-for="AssignedFoodStore.FoodStoreName"></label>
             <input asp-for="AssignedFoodStore.FoodStoreName" class="form-control" />
+            <span asp-validation-for="AssignedFoodStore.FoodStoreName" class="text-danger"></span>
         </div>
+
         <div class="form-group">
             <label asp-for="AssignedFoodStore.FoodStoreLocation"></label>
             <input asp-for="AssignedFoodStore.FoodStoreLocation" class="form-control" />
+            <span asp-validation-for="AssignedFoodStore.FoodStoreLocation" class="text-danger"></span>
         </div>
+
         <div class="form-group">
             <label asp-for="AssignedFoodStore.FoodStoreOpenTime"></label>
             <input asp-for="AssignedFoodStore.FoodStoreOpenTime" type="time" class="form-control" />
+            <span asp-validation-for="AssignedFoodStore.FoodStoreOpenTime" class="text-danger"></span>
+
         </div>
+
         <div class="form-group">
             <label asp-for="AssignedFoodStore.FoodStoreCloseTime"></label>
             <input asp-for="AssignedFoodStore.FoodStoreCloseTime" type="time" class="form-control" />
+            <span asp-validation-for="AssignedFoodStore.FoodStoreCloseTime" class="text-danger"></span>
         </div>
+
         <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-page="./Index" class="btn btn-secondary ms-2">Cancel</a>
+
     </form>
 }
 else

@@ -29,7 +29,7 @@
                 <p><i class="fas fa-clock text-muted"></i> <strong>Open Time:</strong> @Model.AssignedFoodStore.FoodStoreOpenTime</p>
                 <p><i class="fas fa-clock text-muted"></i> <strong>Close Time:</strong> @Model.AssignedFoodStore.FoodStoreCloseTime</p>
                 <div class="d-flex">
-                    <a asp-page="./EdSto" asp-route-storeId="@Model.AssignedGiftShop.ShopId" class="btn btn-outline-secondary me-2">Edit Store Details</a>
+                    <a asp-page="./EdSto" asp-route-storeId="@Model.AssignedFoodStore.FoodStoreId" class="btn btn-outline-secondary me-2">Edit Store Details</a>
                     <a asp-page="./Inventory" asp-route-foodStoreId="@Model.AssignedFoodStore.FoodStoreId" class="btn btn-outline-primary">View Inventory</a>
                 </div>
             }
