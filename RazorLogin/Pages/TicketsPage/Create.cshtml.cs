@@ -105,7 +105,9 @@ namespace RazorLogin.Pages.TicketsPage
             {
                 PurchaseId = GenerateUniquePurchaseId(),
                 CustomerId = customer.CustomerId,
-                PurchaseDate = Ticket.TicketPurchaseDate
+                PurchaseDate = Ticket.TicketPurchaseDate,
+                TotalPurchasesPrice = Ticket.TicketPrice,
+                NumItems = 1
             };
 
             _context.Purchases.Add(purchase);
