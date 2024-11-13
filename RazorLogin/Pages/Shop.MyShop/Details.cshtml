@@ -1,6 +1,5 @@
-﻿@page "{shopId:int?}/{foodStoreId:int?}"
+﻿@page
 @model RazorLogin.Pages.Shop.MyShop.DetailsModel
-
 @{
     ViewData["Title"] = "Shop Details";
 }
@@ -25,8 +24,7 @@
                 <dt class="col-sm-3">Closing Time</dt>
                 <dd class="col-sm-9">@Model.FoodStore.FoodStoreCloseTime?.ToString("hh:mm tt")</dd>
 
-                <dt class="col-sm-3">Customer Capacity</dt>
-                <dd class="col-sm-9">@Model.FoodStore.FoodStoreCustomerCapacity</dd>
+                
             </dl>
         }
         else if (Model.GiftShop != null)
@@ -51,7 +49,7 @@
     <h2 class="mb-3">Employees Working at This Store</h2>
     <p>Total Employees: <strong>@Model.EmployeeCount</strong></p>
 
-    @if (Model.Employee.Count > 0)
+    @if (Model.Employees.Count > 0)
     {
         <table class="table table-striped table-hover shadow-sm">
             <thead class="table-dark">
@@ -60,7 +58,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var employee in Model.Employee)
+                @foreach (var employee in Model.Employees)
                 {
                     <tr>
                         <td>@employee.EmployeeFirstName @employee.EmployeeLastName</td>
