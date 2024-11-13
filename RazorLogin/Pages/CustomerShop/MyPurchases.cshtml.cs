@@ -74,6 +74,7 @@ namespace RazorLogin.Pages.CustomerShop
                     ? "Bundle"  // Always say "Bundle" for quantity > 1
                     : (p.TotalPurchasesPrice switch
                     {
+                        12 => "Cup",
                         30 => "Hat",
                         25 => "Cap",
                         40 => "Shirt",
