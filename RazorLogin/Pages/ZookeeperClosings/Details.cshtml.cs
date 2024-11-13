@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
-namespace RazorLogin.Pages.Zook.Eve
+namespace RazorLogin.Pages.ZookeeperClosings
 {
     public class DetailsModel : PageModel
     {
@@ -17,10 +18,8 @@ namespace RazorLogin.Pages.Zook.Eve
             _context = context;
         }
 
-        [BindProperty]
-        public Event Event { get; set; } = default!;
+        public Closing Closing { get; set; } = default!;
 
-        // This method retrieves the event by its ID to display the details
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -28,15 +27,15 @@ namespace RazorLogin.Pages.Zook.Eve
                 return NotFound();
             }
 
-            Event = await _context.Events
-                .Include(e => e.EventEmployeeRep) // Include the related EmployeeRep
-                .FirstOrDefaultAsync(m => m.EventId == id);
-
-            if (Event == null)
+            var closing = await _context.Closings.FirstOrDefaultAsync(m => m.ClosingId == id);
+            if (closing == null)
             {
                 return NotFound();
             }
-
+            else
+            {
+                Closing = closing;
+            }
             return Page();
         }
     }

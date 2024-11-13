@@ -29,13 +29,13 @@ namespace RazorLogin.Pages.EnclosurePage
                 return NotFound();
             }
 
-            var enclosure =  await _context.Enclosures.FirstOrDefaultAsync(m => m.EnclosureId == id);
+            var enclosure = await _context.Enclosures.FirstOrDefaultAsync(m => m.EnclosureId == id);
             if (enclosure == null)
             {
                 return NotFound();
             }
             Enclosure = enclosure;
-           ViewData["ZookeeperId"] = new SelectList(_context.Zookeepers, "ZookeeperId", "ZookeeperId");
+            ViewData["ZookeeperId"] = new SelectList(_context.Zookeepers, "ZookeeperId", "ZookeeperId");
             return Page();
         }
 

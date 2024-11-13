@@ -61,7 +61,7 @@ namespace RazorLogin.Pages.Admin.IteF
             _context.Items.Add(Item);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Admin.FShps/Index");
+            return RedirectToPage("/Admin.IteF/Index", new { FoodStoreId = Item.FoodStoreId });
         }
 
         private int GenerateUniqueItemId()

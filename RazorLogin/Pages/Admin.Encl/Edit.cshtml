@@ -19,11 +19,7 @@
                 <input asp-for="Enclosure.EnclosureName" class="form-control" />
                 <span asp-validation-for="Enclosure.EnclosureName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Enclosure.EnclosureDepartment" class="control-label"></label>
-                <input asp-for="Enclosure.EnclosureDepartment" class="form-control" />
-                <span asp-validation-for="Enclosure.EnclosureDepartment" class="text-danger"></span>
-            </div>
+           
             <div class="form-group">
                 <label asp-for="Enclosure.EnclosureOpenTime" class="control-label"></label>
                 <input asp-for="Enclosure.EnclosureOpenTime" class="form-control" />
@@ -49,11 +45,7 @@
                 <select asp-for="Enclosure.ZookeeperId" class="form-control" asp-items="ViewBag.ZookeeperId"></select>
                 <span asp-validation-for="Enclosure.ZookeeperId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Enclosure.OccupancyStatus" class="control-label"></label>
-                <input asp-for="Enclosure.OccupancyStatus" class="form-control" />
-                <span asp-validation-for="Enclosure.OccupancyStatus" class="text-danger"></span>
-            </div>
+           
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

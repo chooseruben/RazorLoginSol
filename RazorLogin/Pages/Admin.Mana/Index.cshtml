@@ -15,7 +15,6 @@
     </small>
 </div>
 
-
 <table class="table table-striped mt-3">
     <thead>
         <tr>
@@ -25,7 +24,6 @@
             <th>Employment Date</th>
             <th>Assigned Store</th>
             <th>Actions</th>
-
         </tr>
     </thead>
     <tbody>
@@ -36,12 +34,14 @@
                 <td>@item.EmployeeFirstName @item.EmployeeLastName</td>
                 <td>@item.Department</td>
                 <td>@item.ManagerEmploymentDate?.ToString("yyyy-MM-dd")</td>
-                <td>@item.AssignedStore</td>
+                <td>@item.StoreInfo</td>
                 <td>
+                    <!-- Link to the list of employees under this manager -->
+                    <a class="btn btn-info btn-sm" asp-page="/Admin.Mana/EmpList" asp-route-managerId="@item.ManagerId">Employees</a>
+
                     <!-- Edit and Delete Links -->
                     <a class="btn btn-warning btn-sm" asp-page="./Edit" asp-route-id="@item.ManagerId">Edit</a>
                     <a class="btn btn-danger btn-sm" asp-page="./Delete" asp-route-id="@item.ManagerId">Delete</a>
-
                 </td>
             </tr>
         }

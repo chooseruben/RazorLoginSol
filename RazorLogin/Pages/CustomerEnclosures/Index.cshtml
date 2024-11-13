@@ -2,43 +2,83 @@
 @model RazorLogin.Pages.CustomerEnclosures.IndexModel
 
 @{
-    ViewData["Title"] = "Available Enclosures";
+    ViewData["Title"] = "Our Enclosures";
 }
 
-<h1>Available Enclosures</h1>
+<h1>Our Enclosures</h1>
 
 <div class="enclosure-container">
     @foreach (var item in Model.Enclosure)
     {
-        <div class="enclosure-card">
-            <h2>@item.EnclosureName</h2>
-            <p><strong>Open Time:</strong> @item.EnclosureOpenTime.ToString("hh:mm tt")</p>
-            <p><strong>Close Time:</strong> @item.EnclosureCloseTime.ToString("hh:mm tt")</p>
-            <p><strong>Cleaning Time:</strong> @item.EnclosureCleaningTime.ToString("hh:mm tt")</p>
-            <p><strong>Feeding Time:</strong> @item.EnclosureFeedingTime.ToString("hh:mm tt")</p>
+        <div class="enclosure-item">
+            <h2 class="enclosure-title">@item.EnclosureName</h2>
+            <div class="enclosure-details">
+                <p><strong>Open Time:</strong> @item.EnclosureOpenTime.ToString("hh:mm tt")</p>
+                <p><strong>Close Time:</strong> @item.EnclosureCloseTime.ToString("hh:mm tt")</p>
+                <p><strong>Cleaning Time:</strong> @item.EnclosureCleaningTime.ToString("hh:mm tt")</p>
+                <p><strong>Feeding Time:</strong> @item.EnclosureFeedingTime.ToString("hh:mm tt")</p>
+                <p><strong>Animals in Enclosure:</strong></p>
+                <ul>
+                    @foreach (var animal in item.Animals)
+                    {
+                        <li>@animal.Species</li>
+                    }
+                </ul>
+            </div>
         </div>
     }
 </div>
 
 <style>
     .enclosure-container {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 20px;
-        justify-content: center;
+        justify-items: center;
+        margin-top: 20px;
     }
-    .enclosure-card {
+
+    .enclosure-item {
         border: 1px solid #ccc;
-        padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        width: 300px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        padding: 20px;
+        width: 100%;
+        max-width: 350px;
         text-align: left;
-        background-color: #f9f9f9;
+        transition: transform 0.3s ease-in-out;
     }
-    .enclosure-card h2 {
-        margin-top: 0;
-        font-size: 1.5em;
-        color: #333;
+
+        /* Hover effect */
+        .enclosure-item:hover {
+            transform: translateY(-5px);
+        }
+
+    /* Title styling */
+    .enclosure-title {
+        font-size: 1.75em;
+        color: #2c6dbf; 
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    /* Enclosure details section */
+    .enclosure-details p {
+        font-size: 1em;
+        color: #444;
+        margin: 8px 0;
+    }
+
+    .enclosure-details ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 5px;
+    }
+
+    .enclosure-details li {
+        font-size: 1em;
+        color: #555;
+        margin: 4px 0;
     }
 </style>

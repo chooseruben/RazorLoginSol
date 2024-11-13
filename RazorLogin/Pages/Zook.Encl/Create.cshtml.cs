@@ -20,14 +20,14 @@ namespace RazorLogin.Pages.Zook.Encl
 
         public IActionResult OnGet()
         {
-        ViewData["ZookeeperId"] = new SelectList(_context.Zookeepers, "ZookeeperId", "ZookeeperId");
+            // Populate dropdown list for ZookeeperId
+            ViewData["ZookeeperId"] = new SelectList(_context.Zookeepers, "ZookeeperId", "ZookeeperId");
             return Page();
         }
 
         [BindProperty]
         public Enclosure Enclosure { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -35,9 +35,11 @@ namespace RazorLogin.Pages.Zook.Encl
                 return Page();
             }
 
+            // Add enclosure to the database
             _context.Enclosures.Add(Enclosure);
             await _context.SaveChangesAsync();
 
+            // Redirect back to Index page after successful creation
             return RedirectToPage("./Index");
         }
     }

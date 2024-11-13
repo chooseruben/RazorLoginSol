@@ -23,7 +23,9 @@ namespace RazorLogin.Pages.CustomerEnclosures
         public async Task OnGetAsync()
         {
             Enclosure = await _context.Enclosures
-                .Include(e => e.Zookeeper).ToListAsync();
+                .Include(e => e.Zookeeper)
+                .Include(e => e.Animals) 
+                .ToListAsync();
         }
     }
 }

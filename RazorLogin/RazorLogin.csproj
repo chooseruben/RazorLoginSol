@@ -27,21 +27,26 @@
     <Compile Remove="Pages\Admin.Reports3\**" />
 
     <Compile Remove="Pages\Manag.Sho\**" />
+
+    <Compile Remove="Pages\Zook.Encl\**" />
     <Content Remove="obj\**" />
     <Content Remove="Pages\Admin.Purch\**" />
     <Content Remove="Pages\Admin.Reports2\**" />
     <Content Remove="Pages\Admin.Reports3\**" />
     <Content Remove="Pages\Manag.Sho\**" />
+    <Content Remove="Pages\Zook.Encl\**" />
     <EmbeddedResource Remove="obj\**" />
     <EmbeddedResource Remove="Pages\Admin.Purch\**" />
     <EmbeddedResource Remove="Pages\Admin.Reports2\**" />
     <EmbeddedResource Remove="Pages\Admin.Reports3\**" />
     <EmbeddedResource Remove="Pages\Manag.Sho\**" />
+    <EmbeddedResource Remove="Pages\Zook.Encl\**" />
     <None Remove="obj\**" />
     <None Remove="Pages\Admin.Purch\**" />
     <None Remove="Pages\Admin.Reports2\**" />
     <None Remove="Pages\Admin.Reports3\**" />
     <None Remove="Pages\Manag.Sho\**" />
+    <None Remove="Pages\Zook.Encl\**" />
 
   </ItemGroup>
 
@@ -52,6 +57,7 @@
     <Compile Remove="Pages\Admin.Reports\Index.cshtml.cs" />
     <Compile Remove="Pages\Admin.Tick\Details.cshtml.cs" />
     <Compile Remove="Pages\Admin.Zook\Details.cshtml.cs" />
+    <Compile Remove="Pages\Zook.Eve\Delete.cshtml.cs" />
     <Compile Remove="test2\Animal.cs" />
     <Compile Remove="test2\AspNetRole.cs" />
     <Compile Remove="test2\AspNetRoleClaim.cs" />
@@ -110,6 +116,7 @@
     <Content Remove="Pages\Shop.Dining1\Editing.cshtml" />
     <Content Remove="Pages\Shop.GShop\AddItem.cshtml" />
     <Content Remove="Pages\Shop.GShop\Editing.cshtml" />
+    <Content Remove="Pages\Zook.Eve\Delete.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

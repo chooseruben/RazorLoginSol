@@ -30,36 +30,40 @@ namespace RazorLogin.Pages.Admin.Mana
                 .ThenInclude(e => e.Shop) // Include the GiftShop related to the employee
                 .ToListAsync();
 
-            // Map the managers to a view model with the assigned store names
+            // Map the managers to a view model with the assigned store info (ID and Name)
             Managers = managers.Select(m => new ManagerViewModel
             {
                 ManagerId = m.ManagerId,
                 EmployeeId = m.EmployeeId,
                 Department = m.Department,
                 ManagerEmploymentDate = m.ManagerEmploymentDate,
-                AssignedStore = GetStoreName(m.Employee), // Get the store name for each manager's employee
                 EmployeeFirstName = m.Employee.EmployeeFirstName ?? "N/A", // Get the employee's first name
-                EmployeeLastName = m.Employee.EmployeeLastName ?? "N/A"  // Get the employee's last name
+                EmployeeLastName = m.Employee.EmployeeLastName ?? "N/A",  // Get the employee's last name
 
+                // Get the formatted store info (ID - Name)
+                StoreInfo = GetStoreInfo(m.Employee) // Assign formatted store info
             }).ToList();
         }
 
-        // Helper method to get the store name (either FoodStore or GiftShop)
-        private string GetStoreName(Employee employee)
+        // Helper method to get the store info (ID and Name)
+        private string GetStoreInfo(Employee employee)
         {
             if (employee.FoodStore != null)
             {
-                return employee.FoodStore.FoodStoreName; // FoodStore is assigned
+                // Format store info for FoodStore
+                return $"{employee.FoodStore.FoodStoreId} - {employee.FoodStore.FoodStoreName}";
             }
             else if (employee.Shop != null)
             {
-                return employee.Shop.GiftShopName; // GiftShop is assigned
+                // Format store info for GiftShop
+                return $"{employee.Shop.ShopId} - {employee.Shop.GiftShopName}";
             }
             else
             {
-                return "No store assigned"; // No store assigned
+                return "No store assigned"; // If no store is assigned
             }
         }
+
     }
 
     // ViewModel to display manager details with assigned store
@@ -69,13 +73,16 @@ namespace RazorLogin.Pages.Admin.Mana
         public int EmployeeId { get; set; }
         public string Department { get; set; }
         public DateOnly? ManagerEmploymentDate { get; set; }
-        public string AssignedStore { get; set; } // Store name (FoodStore or GiftShop)
+
+        // New property to hold formatted store info (ID and Name)
+        public string StoreInfo { get; set; } = null!;
 
         // Add these properties to hold the employee's name
         public string EmployeeFirstName { get; set; } = null!;
         public string EmployeeLastName { get; set; } = null!;
-
     }
+
+
 }
 
 
