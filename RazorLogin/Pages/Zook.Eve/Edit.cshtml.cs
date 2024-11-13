@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using RazorLogin.Data;
 using RazorLogin.Models;
 
 namespace RazorLogin.Pages.Zook.Eve
+
 {
     public class EditModel : PageModel
     {
@@ -18,20 +22,11 @@ namespace RazorLogin.Pages.Zook.Eve
         }
 
         [BindProperty]
-        public Event Event { get; set; } = default!;
+        public Event Event { get; set; }
 
-        // This method retrieves the event to be edited by its ID
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            // Retrieve the event and related employee rep
-            Event = await _context.Events
-                .Include(e => e.EventEmployeeRep) // Include the employee representative (if needed)
-                .FirstOrDefaultAsync(m => m.EventId == id);
+            Event = await _context.Events.FindAsync(id);
 
             if (Event == null)
             {
@@ -41,33 +36,37 @@ namespace RazorLogin.Pages.Zook.Eve
             return Page();
         }
 
-        // This method updates the event and saves changes to the database
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return Page();
             }
 
-            var eventToUpdate = await _context.Events.FindAsync(id);
+            _context.Attach(Event).State = EntityState.Modified;
 
-            if (eventToUpdate == null)
+            try
             {
-                return NotFound();
-            }
-
-            if (await TryUpdateModelAsync<Event>(
-                eventToUpdate,
-                "Event",   // Prefix for the binded properties
-                e => e.EventName, e => e.EventStartTime, e => e.EventEndTime,
-                e => e.EventLocation, e => e.EventDate, e => e.EventEmployeeRepId))
-            {
-                // Save changes to the database
                 await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventExists(Event.EventId))
+                {
+                    return NotFound();
+                }
+                throw;
             }
 
-            return Page(); // In case of validation errors, return the same page with error messages
+            return RedirectToPage("./Index");
         }
+
+        private bool EventExists(int id)
+        {
+            return _context.Events.Any(e => e.EventId == id);
+        }
+
     }
 }
+
+
