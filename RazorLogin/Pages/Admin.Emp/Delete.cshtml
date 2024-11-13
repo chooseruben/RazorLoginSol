@@ -24,6 +24,20 @@
         <!-- Employee Details Box -->
         <div class="card mb-4">
             <div class="card-body">
+
+                <!-- Display Errors -->
+                @if (!ModelState.IsValid)
+                {
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        </ul>
+                    </div>
+                }
+
                 <h4 class="card-title">Employee Information</h4>
                 <hr />
                 <div class="row mb-3">
