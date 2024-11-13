@@ -25,19 +25,7 @@
             <!-- Hidden field for ClosingId -->
             <input type="hidden" asp-for="Closing.ClosingId" />
 
-            <!-- Start Time -->
-            <div class="form-group">
-                <label asp-for="Closing.ClosingsStart" class="control-label"></label>
-                <input asp-for="Closing.ClosingsStart" class="form-control" type="datetime-local" />
-                <span asp-validation-for="Closing.ClosingsStart" class="text-danger"></span>
-            </div>
-
-            <!-- End Time -->
-            <div class="form-group">
-                <label asp-for="Closing.ClosingsEnd" class="control-label"></label>
-                <input asp-for="Closing.ClosingsEnd" class="form-control" type="datetime-local" />
-                <span asp-validation-for="Closing.ClosingsEnd" class="text-danger"></span>
-            </div>
+          
 
             <!-- Closing Reason -->
             <div class="form-group">
