@@ -41,14 +41,6 @@
             <span asp-validation-for="Event.EventLocation" class="text-danger"></span>
         </div>
 
-        <div class="form-group mb-3">
-            <label asp-for="Event.EventEmployeeRepId" class="form-label">Employee Representative</label>
-            <select asp-for="Event.EventEmployeeRepId" class="form-control" asp-items="Model.EmployeeRepOptions">
-                <option value="">-- Select an Employee --</option>
-            </select>
-            <span asp-validation-for="Event.EventEmployeeRepId" class="text-danger"></span>
-        </div>
-
         <button type="submit" class="btn btn-primary w-100">Create</button>
     </form>
 </div>
@@ -58,3 +50,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+

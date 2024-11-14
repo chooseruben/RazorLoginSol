@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Data;
 using RazorLogin.Models;
+using System.Security.Claims;
 
 namespace RazorLogin.Pages.Shop.Eve
 {
@@ -23,16 +22,10 @@ namespace RazorLogin.Pages.Shop.Eve
         [BindProperty]
         public Event Event { get; set; }
 
-        public SelectList EmployeeRepOptions { get; set; }
-
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            // Fetch employees for the dropdown list
-            var employees = await _context.Employees
-                .Select(e => new { e.EmployeeId, FullName = e.EmployeeFirstName + " " + e.EmployeeLastName })
-                .ToListAsync();
-
-            EmployeeRepOptions = new SelectList(employees, "EmployeeId", "FullName");
+            // No need for dropdown setup since we automatically set EmployeeRepId on post
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -53,6 +46,20 @@ namespace RazorLogin.Pages.Shop.Eve
                 Event.EventId = randomSuffix;
             }
 
+            // Get the logged-in user's ID and set it as the EmployeeRepId
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var employee = await _context.Employees.FirstOrDefaultAsync(e => e.EmployeeEmail == userEmail);
+
+            if (employee != null)
+            {
+                Event.EventEmployeeRepId = employee.EmployeeId;
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Unable to identify the current user as an employee.");
+                return Page();
+            }
+
             try
             {
                 _context.Events.Add(Event);
@@ -67,7 +74,6 @@ namespace RazorLogin.Pages.Shop.Eve
                 }
                 else
                 {
-                    // General error message for other database issues
                     ModelState.AddModelError(string.Empty, "An error occurred while saving your data. Please try again.");
                 }
 

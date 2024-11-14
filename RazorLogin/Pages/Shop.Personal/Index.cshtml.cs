@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using RazorLogin.Data;
 using RazorLogin.Models;
 using System.Security.Claims;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RazorLogin.Pages.Shop.Personal
 {
@@ -17,7 +20,8 @@ namespace RazorLogin.Pages.Shop.Personal
             _context = context;
         }
 
-        public IList<RazorLogin.Models.Employee> Employee { get; set; } = new List<RazorLogin.Models.Employee>();
+        public RazorLogin.Models.Employee Employee { get; set; }
+        public string ManagerName { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -26,12 +30,37 @@ namespace RazorLogin.Pages.Shop.Personal
             if (string.IsNullOrEmpty(userEmail))
             {
                 // Handle missing email case
+                return;
             }
 
-            // Fetch employee records matching the logged-in user's email
+            // Fetch employee record matching the logged-in user's email
             Employee = await _context.Employees
-                .Where(e => e.EmployeeEmail == userEmail)
-                .ToListAsync();
+                .FirstOrDefaultAsync(e => e.EmployeeEmail == userEmail);
+
+            if (Employee != null && Employee.SupervisorId != null)
+            {
+                // Fetch the manager’s name using the Supervisor ID
+                var manager = await _context.Managers
+                    .Where(m => m.ManagerId == Employee.SupervisorId)
+                    .Join(_context.Employees,
+                          m => m.EmployeeId,
+                          e => e.EmployeeId,
+                          (m, e) => new { e.EmployeeFirstName, e.EmployeeLastName })
+                    .FirstOrDefaultAsync();
+
+                if (manager != null)
+                {
+                    ManagerName = $"{manager.EmployeeFirstName} {manager.EmployeeLastName}";
+                }
+                else
+                {
+                    ManagerName = "No manager assigned";
+                }
+            }
+            else
+            {
+                ManagerName = "No manager assigned";
+            }
         }
     }
 }

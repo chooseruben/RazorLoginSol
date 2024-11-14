@@ -1,7 +1,7 @@
 ﻿@page
 @model RazorLogin.Pages.Shop.Personal.IndexModel
 @{
-    var employee = Model.Employee.FirstOrDefault(); // Assuming you only display one employee
+    var employee = Model.Employee; // Since we're using a single employee object directly
 }
 
 <h2 class="text-center mb-4">Your Information</h2>
@@ -37,6 +37,10 @@
                     <th scope="row">Address</th>
                     <td>@employee.EmployeeAddress</td>
                 </tr>
+                <tr>
+                    <th scope="row">Manager</th>
+                    <td>@Model.ManagerName</td> <!-- Display the manager's name here -->
+                </tr>
             </tbody>
         </table>
     </div>
@@ -44,4 +48,3 @@
         <a asp-page="./viewPersonal" asp-route-id="@employee.EmployeeId" class="btn btn-primary">Edit Information</a>
     </div>
 </div>
-
