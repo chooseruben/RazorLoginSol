@@ -13,6 +13,9 @@ public partial class Manager
     [Required(ErrorMessage = "Department is required.")]
     public string Department { get; set; } = null!;
 
+    public bool? IsDeleted { get; set; }
+
+
     public DateOnly? ManagerEmploymentDate { get; set; }
 
     public virtual Employee? Employee { get; set; } = null!;

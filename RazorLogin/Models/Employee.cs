@@ -36,6 +36,7 @@ public partial class Employee
     public int? FoodStoreId { get; set; } // POSSIBLE ERROR REMOVE QUESTION MRK
 
     public string EmployeeEmail { get; set; } = null!;
+    public bool? IsDeleted { get; set; }
 
     public virtual ICollection<Dependant> Dependants { get; set; } = new List<Dependant>();
 

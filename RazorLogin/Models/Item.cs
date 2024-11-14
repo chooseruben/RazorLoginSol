@@ -19,6 +19,9 @@ public partial class Item
 
     public int? ItemPrice { get; set; } //change 11/9
 
+    public bool? IsDeleted { get; set; }
+
+
     public virtual FoodStore? FoodStore { get; set; } //change 11/9
 
     public virtual GiftShop? Shop { get; set; } //change 11/9

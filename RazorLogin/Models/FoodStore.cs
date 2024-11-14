@@ -30,6 +30,9 @@ public partial class FoodStore
     [Display(Name = "YTD Sales")]
     public int FoodStoreYearToDateSales { get; set; }
 
+    public bool? IsDeleted { get; set; }
+
+
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 
     public virtual ICollection<Item> Items { get; set; } = new List<Item>(); //change 11/9

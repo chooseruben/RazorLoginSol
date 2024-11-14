@@ -100,6 +100,7 @@ public partial class ZooDbContext : DbContext
             entity.Property(e => e.FeedingTime)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Feeding_time");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.MedicalNotes)
                 .HasMaxLength(200)
                 .HasDefaultValueSql("(NULL)")
@@ -223,6 +224,7 @@ public partial class ZooDbContext : DbContext
                 .HasPrecision(0)
                 .HasColumnName("Closings_start");
             entity.Property(e => e.EnclosureId).HasColumnName("Enclosure_ID");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
 
             entity.HasOne(d => d.Enclosure).WithMany(p => p.Closings)
                 .HasForeignKey(d => d.EnclosureId)
@@ -260,6 +262,7 @@ public partial class ZooDbContext : DbContext
                 .HasMaxLength(45)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Customer_Last_name");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.MembershipEndDate).HasColumnName("Membership_end_date");
             entity.Property(e => e.MembershipStartDate).HasColumnName("Membership_start_date");
             entity.Property(e => e.MembershipType)
@@ -336,6 +339,7 @@ public partial class ZooDbContext : DbContext
                 .HasMaxLength(45)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Healthcare_tier");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.Relationship)
                 .HasMaxLength(45)
                 .HasDefaultValueSql("(NULL)");
@@ -404,6 +408,7 @@ public partial class ZooDbContext : DbContext
             entity.Property(e => e.FoodStoreId)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Food_store_ID");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.ShopId)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Shop_ID");
@@ -450,6 +455,7 @@ public partial class ZooDbContext : DbContext
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Enclosure_Name");
             entity.Property(e => e.EnclosureOpenTime).HasColumnName("Enclosure_Open_time");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.OccupancyStatus)
                 .HasMaxLength(8)
                 .HasDefaultValueSql("(NULL)")
@@ -488,6 +494,7 @@ public partial class ZooDbContext : DbContext
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Event_name");
             entity.Property(e => e.EventStartTime).HasColumnName("Event_start_time");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
 
             entity.HasOne(d => d.EventEmployeeRep).WithMany(p => p.Events)
                 .HasForeignKey(d => d.EventEmployeeRepId)
@@ -530,6 +537,7 @@ public partial class ZooDbContext : DbContext
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Food_store_type");
             entity.Property(e => e.FoodStoreYearToDateSales).HasColumnName("Food_store_year_to_date_sales");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
         });
 
         modelBuilder.Entity<GiftShop>(entity =>
@@ -560,6 +568,7 @@ public partial class ZooDbContext : DbContext
                 .HasColumnName("Gift_shop_Name");
             entity.Property(e => e.GiftShopOpenTime).HasColumnName("Gift_shop_open_time");
             entity.Property(e => e.GiftShopYearToDateSales).HasColumnName("Gift_shop_year_to_date_sales");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
         });
 
         modelBuilder.Entity<Item>(entity =>
@@ -580,6 +589,7 @@ public partial class ZooDbContext : DbContext
             entity.Property(e => e.FoodStoreId)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Food_store_ID");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.ItemCount).HasColumnName("Item_count");
             entity.Property(e => e.ItemName)
                 .HasMaxLength(45)
@@ -659,6 +669,7 @@ public partial class ZooDbContext : DbContext
                 .HasColumnName("Manager_ID");
             entity.Property(e => e.Department).HasMaxLength(45);
             entity.Property(e => e.EmployeeId).HasColumnName("Employee_ID");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.ManagerEmploymentDate)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Manager_employment_date");
@@ -685,6 +696,7 @@ public partial class ZooDbContext : DbContext
             entity.Property(e => e.CustomerId)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Customer_ID");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.ItemName)
               .HasMaxLength(50)
               .HasColumnName("item_name");
@@ -733,6 +745,7 @@ public partial class ZooDbContext : DbContext
             entity.Property(e => e.TicketId)
                 .ValueGeneratedNever()
                 .HasColumnName("Ticket_ID");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.PurchaseId).HasColumnName("Purchase_ID");
             entity.Property(e => e.TicketEntryTime)
                 .HasDefaultValueSql("(NULL)")
@@ -769,6 +782,7 @@ public partial class ZooDbContext : DbContext
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Assigned_department");
             entity.Property(e => e.EmployeeId).HasColumnName("Employee_ID");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.LastTrainingDate)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Last_training_date");

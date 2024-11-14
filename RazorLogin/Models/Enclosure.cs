@@ -22,6 +22,8 @@ public partial class Enclosure
     public int ZookeeperId { get; set; }
 
     public string? OccupancyStatus { get; set; }
+    public bool? IsDeleted { get; set; }
+
 
     public virtual ICollection<Animal> Animals { get; set; } = new List<Animal>();
 
