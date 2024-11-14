@@ -18,7 +18,6 @@
                         <tr>
                             <th>Purchase ID</th>
                             <th>Customer ID</th>
-                            <th class="text-center">Store ID</th>
                             <th class="text-center">Number of Items</th>
                             <th>Total Purchase Price</th>
                             <th>Purchase Date</th>
@@ -30,12 +29,6 @@
                             <tr>
                                 <td>@purchase.PurchaseId</td>
                                 <td>@purchase.CustomerId</td>
-                                <td class="text-center">
-                                    @{
-                                        var storeText = purchase.StoreId == -1 ? "Ticket Sale" : purchase.StoreId?.ToString();
-                                    }
-                                    @storeText
-                                </td>
                                 <td class="text-center">@purchase.NumItems</td>
                                 <td>@purchase.TotalPurchasesPrice?.ToString("C")</td>
                                 <td>@purchase.PurchaseDate?.ToString("yyyy-MM-dd")</td>

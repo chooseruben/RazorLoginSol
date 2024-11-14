@@ -31,13 +31,9 @@ namespace RazorLogin.Pages.Manag.Purch
             .Include(p => p.Tickets) // Assuming a navigation property exists
             .ToListAsync();
 
-            foreach (var purchase in Purchases)
-            {
-                if (!purchase.StoreId.HasValue && purchase.Tickets.Any())
-                {
-                    purchase.StoreId = -1; // Using -1 as a placeholder for "Ticket Sale"
-                }
-            }
+            Purchases = await _context.Purchases
+                .Where(p => !_context.Tickets.Any(t => t.PurchaseId == p.PurchaseId))
+                .ToListAsync();
 
             return Page();
         }
