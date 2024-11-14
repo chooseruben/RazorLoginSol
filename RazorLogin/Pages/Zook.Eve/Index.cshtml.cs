@@ -23,7 +23,8 @@ namespace RazorLogin.Pages.Zook.Eve
 
         public async Task OnGetAsync()
         {
-            var query = "SELECT Event_ID, Event_name, Event_start_time, Event_end_time, Event_date, Event_Location FROM Event";
+            // Delete past events
+            var deletePastEventsQuery = "DELETE FROM Event WHERE Event_date < CAST(GETDATE() AS DATE)";
 
             try
             {
@@ -31,10 +32,19 @@ namespace RazorLogin.Pages.Zook.Eve
                 {
                     await connection.OpenAsync();
 
-                    using (var command = new SqlCommand(query, connection))
+                    // Execute delete query for past events
+                    using (var deleteCommand = new SqlCommand(deletePastEventsQuery, connection))
                     {
-                        using (var reader = await command.ExecuteReaderAsync())
+                        await deleteCommand.ExecuteNonQueryAsync();
+                    }
+
+                    // Now fetch the remaining events
+                    var fetchEventsQuery = "SELECT Event_ID, Event_name, Event_start_time, Event_end_time, Event_date, Event_Location FROM Event";
+                    using (var fetchCommand = new SqlCommand(fetchEventsQuery, connection))
+                    {
+                        using (var reader = await fetchCommand.ExecuteReaderAsync())
                         {
+                            Events = new List<Event>();
                             while (await reader.ReadAsync())
                             {
                                 Events.Add(new Event
@@ -53,7 +63,7 @@ namespace RazorLogin.Pages.Zook.Eve
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", $"An error occurred while fetching the events: {ex.Message}");
+                ModelState.AddModelError("", $"An error occurred while processing the events: {ex.Message}");
             }
         }
 
