@@ -90,7 +90,7 @@ namespace RazorLogin.Pages.Admin.IteF
                 }
             }
 
-            return RedirectToPage("/Admin.FShps/Index");
+            return RedirectToPage("/Admin.IteF/Index", new { FoodStoreId = Item.FoodStoreId });
         }
 
         private bool ItemExists(int id)

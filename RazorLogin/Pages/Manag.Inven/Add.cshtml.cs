@@ -62,8 +62,8 @@ namespace RazorLogin.Pages.Manag.Inven
             }
 
             // Insert item into the database using raw SQL to directly set ItemId
-            var sqlQuery = "INSERT INTO Item (item_ID, Item_name, Item_count, Restock_date, Shop_ID, Food_store_ID) " +
-                           "VALUES (@ItemId, @ItemName, @ItemCount, @RestockDate, @ShopId, @FoodStoreId)";
+            var sqlQuery = "INSERT INTO Item (item_ID, Item_name, Item_count, item_Price, Restock_date, Shop_ID, Food_store_ID) " +
+                           "VALUES (@ItemId, @ItemName, @ItemCount, @ItemPrice, @RestockDate, @ShopId, @FoodStoreId)";
 
             using (var connection = _context.Database.GetDbConnection())
             {
@@ -75,6 +75,7 @@ namespace RazorLogin.Pages.Manag.Inven
                     command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@ItemId", Item.ItemId));
                     command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@ItemName", Item.ItemName));
                     command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@ItemCount", Item.ItemCount));
+                    command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@ItemPrice", Item.ItemPrice));
                     command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@RestockDate", Item.RestockDate));
                     command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@ShopId", Item.ShopId ?? (object)DBNull.Value));
                     command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@FoodStoreId", Item.FoodStoreId ?? (object)DBNull.Value));

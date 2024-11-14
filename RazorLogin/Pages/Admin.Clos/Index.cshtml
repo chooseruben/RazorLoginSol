@@ -19,8 +19,7 @@
     <thead>
         <tr>
             <th>Closing ID</th>
-            <th>Start Time</th>
-            <th>End Time</th>
+           
             <th>Enclosure</th>
             <th>Actions</th>
         </tr>
@@ -30,8 +29,7 @@
         {
             <tr>
                 <td>@item.ClosingId</td>
-                <td>@item.ClosingsStart.ToString("MM/dd/yyyy hh:mm tt")</td> <!-- Format Start Time -->
-                <td>@item.ClosingsEnd.ToString("MM/dd/yyyy hh:mm tt")</td>   <!-- Format End Time -->
+           
                 <td>@item.Enclosure?.EnclosureId </td> <!-- Display enclosure ID or message if null -->
 
                 <td>

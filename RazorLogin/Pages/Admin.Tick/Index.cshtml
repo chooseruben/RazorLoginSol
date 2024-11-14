@@ -23,10 +23,10 @@
 <table class="table table-striped mt-3">
     <thead>
         <tr>
+            <th>Purchase ID</th>
             <th>Ticket Type</th>
             <th>Ticket Price</th>
             <th>Purchase Date</th>
-            <th>Purchase ID</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -34,10 +34,10 @@
         @foreach (var item in Model.Ticket)
         {
             <tr>
+                <td>@item.Purchase?.PurchaseId</td> <!-- Ensure PurchaseId exists -->
                 <td>@item.TicketType</td>
                 <td>@item.TicketPrice.ToString("C")</td> <!-- Display price as currency -->
                 <td>@item.TicketPurchaseDate?.ToString("MM/dd/yyyy")</td> <!-- Format purchase date -->
-                <td>@item.Purchase?.PurchaseId</td> <!-- Ensure PurchaseId exists -->
                 <td>
                     <!-- Action Buttons (Edit, Delete) -->
                     <a class="btn btn-warning btn-sm" asp-page="./Edit" asp-route-id="@item.TicketId">Edit</a>

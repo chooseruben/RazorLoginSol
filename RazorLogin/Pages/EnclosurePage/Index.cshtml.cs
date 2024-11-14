@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
-using RazorLogin.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,38 +11,42 @@ namespace RazorLogin.Pages.EnclosurePage
     public class IndexModel : PageModel
     {
         private readonly ZooDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager; // UserManager to access the logged-in user
 
-        public IndexModel(ZooDbContext context)
+        public IndexModel(ZooDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // List to hold the ViewModel data
-        public IList<EnclosureViewModel> Enclosures { get; set; } = default!;
+        public IList<Enclosure> Enclosure { get; set; } = new List<Enclosure>();
 
         public async Task OnGetAsync()
         {
-            // Query the database and map the data to the ViewModel
-            Enclosures = await _context.Enclosures
-                .Include(e => e.Zookeeper) // Load related Zookeeper data
-                .Select(e => new EnclosureViewModel
-                {
-                    EnclosureId = e.EnclosureId,
-                    EnclosureName = e.EnclosureName,
-                    EnclosureDepartment = e.EnclosureDepartment,
-                    OccupancyStatus = e.OccupancyStatus,
-                    EnclosureOpenTime = e.EnclosureOpenTime,
-                    EnclosureCloseTime = e.EnclosureCloseTime,
-                    IsClosed = e.Closings.Any(c => c.EnclosureId == e.EnclosureId), // Check if closed
-                    ZookeeperId = e.Zookeeper != null ? e.Zookeeper.ZookeeperId : (int?)null // Nullable if unassigned
-                })
-                .ToListAsync();
-        }
+            // Get the current logged-in user
+            var user = await _userManager.GetUserAsync(User);
 
-        // Helper method to determine if an enclosure is closed
-        public bool IsEnclosureClosed(EnclosureViewModel enclosure)
-        {
-            return enclosure.IsClosed;
+            if (user != null)
+            {
+                // Find the employee by their email
+                var employee = await _context.Employees.FirstOrDefaultAsync(e => e.EmployeeEmail == user.Email);
+                if (employee != null)
+                {
+                    // Find the corresponding zookeeper linked to this employee
+                    var zookeeper = await _context.Zookeepers
+                        .FirstOrDefaultAsync(z => z.EmployeeId == employee.EmployeeId);
+
+                    if (zookeeper != null)
+                    {
+                        // Fetch the enclosures assigned to this zookeeper
+                        Enclosure = await _context.Enclosures
+                            .Where(e => e.ZookeeperId == zookeeper.ZookeeperId)
+                            .Include(e => e.Zookeeper) // Include Zookeeper for each Enclosure
+                                .ThenInclude(z => z.Employee) // Include the related Employee data (for FirstName, LastName)
+                            .ToListAsync();
+                    }
+                }
+            }
         }
     }
 }

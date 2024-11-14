@@ -8,6 +8,19 @@
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
+
+@if (!ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
 <div>
     <h4>Enclosure</h4>
     <hr />

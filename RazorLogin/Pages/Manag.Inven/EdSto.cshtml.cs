@@ -53,53 +53,55 @@ namespace RazorLogin.Pages.Manag.Inven
         {
             if (!ModelState.IsValid) { }
 
-            try
-            {
-
-                if (AssignedGiftShop != null)
+                try
                 {
-                    var store = await _context.GiftShops.FindAsync(storeId);
-                    if (store != null)
+
+                    if (AssignedGiftShop != null)
                     {
-                        store.GiftShopName = AssignedGiftShop.GiftShopName;
-                        store.GiftShopLocation = AssignedGiftShop.GiftShopLocation;
-                        store.GiftShopOpenTime = AssignedGiftShop.GiftShopOpenTime;
-                        store.GiftShopCloseTime = AssignedGiftShop.GiftShopCloseTime;
+                        var store = await _context.GiftShops.FindAsync(storeId);
+                        if (store != null)
+                        {
+                            store.GiftShopName = AssignedGiftShop.GiftShopName;
+                            store.GiftShopLocation = AssignedGiftShop.GiftShopLocation;
+                            store.GiftShopOpenTime = AssignedGiftShop.GiftShopOpenTime;
+                            store.GiftShopCloseTime = AssignedGiftShop.GiftShopCloseTime;
 
-                        _context.Attach(store).State = EntityState.Modified;
+                            _context.Attach(store).State = EntityState.Modified;
+                        }
                     }
-                }
-                else if (AssignedFoodStore != null)
-                {
-                    var store = await _context.FoodStores.FindAsync(storeId);
-                    if (store != null)
+                    else if (AssignedFoodStore != null)
                     {
-                        store.FoodStoreName = AssignedFoodStore.FoodStoreName;
-                        store.FoodStoreLocation = AssignedFoodStore.FoodStoreLocation;
-                        store.FoodStoreOpenTime = AssignedFoodStore.FoodStoreOpenTime;
-                        store.FoodStoreCloseTime = AssignedFoodStore.FoodStoreCloseTime;
+                        var store = await _context.FoodStores.FindAsync(storeId);
+                        if (store != null)
+                        {
+                            store.FoodStoreName = AssignedFoodStore.FoodStoreName;
+                            store.FoodStoreLocation = AssignedFoodStore.FoodStoreLocation;
+                            store.FoodStoreOpenTime = AssignedFoodStore.FoodStoreOpenTime;
+                            store.FoodStoreCloseTime = AssignedFoodStore.FoodStoreCloseTime;
 
-                        _context.Attach(store).State = EntityState.Modified;
+                            _context.Attach(store).State = EntityState.Modified;
+                        }
                     }
-                }
 
-                await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
-            }
-            catch (DbUpdateException ex)
-            {
-                // Check if the exception is due to the trigger constraint
-                if (ex.InnerException?.Message.Contains("Closing time cannot be earlier than or equal to opening time") == true)
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("./Index");
+                }
+            
+                catch (DbUpdateException ex)
                 {
+                    // Check if the exception is due to the trigger constraint
+                    if (ex.InnerException?.Message.Contains("Closing time cannot be earlier than or equal to opening time") == true)
+                    {
                     // Add a custom error message to ModelState
-                    ModelState.AddModelError(string.Empty, "Closing time cannot be earlier than or equal to opening time. Please correct the times and try again.");
+                    ViewData["ErrorMessage"] = "Closing time cannot be earlier than or equal to opening time. Please correct the times and try again.";
                     return Page(); // Redisplay the form with the error message
+                    }
+                    else
+                    {
+                        throw; // Re-throw if it's a different kind of error
+                    }
                 }
-                else
-                {
-                    throw; // Re-throw if it's a different kind of error
-                }
-            }
+            
         }
     }
 }

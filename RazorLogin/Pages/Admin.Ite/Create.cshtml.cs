@@ -59,7 +59,7 @@ namespace RazorLogin.Pages.Admin.Ite
             _context.Items.Add(Item);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Admin.GShps/Index");
+            return RedirectToPage("/Admin.Ite/Index", new { shopId = Item.ShopId });
         }
 
         private int GenerateUniqueItemId()

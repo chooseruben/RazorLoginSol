@@ -21,7 +21,6 @@ namespace RazorLogin.Pages.Admin.Pur
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            // Get the connection string from configuration
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -60,24 +59,53 @@ namespace RazorLogin.Pages.Admin.Pur
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            // Get the connection string from configuration
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 await connection.OpenAsync();
 
-                // Query to delete the purchase record
-                string query = "DELETE FROM Purchase WHERE Purchase_ID = @PurchaseId";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
+                try
                 {
-                    command.Parameters.AddWithValue("@PurchaseId", id);
-                    await command.ExecuteNonQueryAsync();
+                    // Query to check if the purchase is referenced by any other table (e.g., foreign keys)
+                    string checkQuery = "SELECT COUNT(*) FROM Ticket WHERE Purchase_ID = @PurchaseId";  // Example of checking related data
+                    using (SqlCommand checkCommand = new SqlCommand(checkQuery, connection))
+                    {
+                        checkCommand.Parameters.AddWithValue("@PurchaseId", id);
+                        int relatedRecords = (int)await checkCommand.ExecuteScalarAsync();
+
+                        if (relatedRecords > 0)
+                        {
+                            // Add an error to the ModelState if the purchase cannot be deleted (due to foreign key constraints)
+                            ModelState.AddModelError(string.Empty, "Cannot delete this purchase because it is a ticket. Delete matching purchaseID from Ticket table first.");
+                            return Page(); // Re-render the page with the error
+                        }
+                    }
+
+                    // Query to delete the purchase record
+                    string deleteQuery = "DELETE FROM Purchase WHERE Purchase_ID = @PurchaseId";
+                    using (SqlCommand command = new SqlCommand(deleteQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@PurchaseId", id);
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    // If deletion was successful, redirect to the index page
+                    return RedirectToPage("Index");
+                }
+                catch (SqlException ex)
+                {
+                    // Handle any database-specific errors (e.g., foreign key violations)
+                    ModelState.AddModelError(string.Empty, "An error occurred while trying to delete this purchase. " + ex.Message);
+                    return Page(); // Re-render the page with the error
+                }
+                catch (Exception ex)
+                {
+                    // Handle any unexpected errors
+                    ModelState.AddModelError(string.Empty, "An unexpected error occurred. Please try again later.");
+                    return Page(); // Re-render the page with the error
                 }
             }
-
-            return RedirectToPage("Index"); // Redirect back to the list page
         }
     }
 }

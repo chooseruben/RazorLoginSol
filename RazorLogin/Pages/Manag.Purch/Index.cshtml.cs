@@ -28,8 +28,16 @@ namespace RazorLogin.Pages.Manag.Purch
 
             // Retrieve all purchases to display
             Purchases = await _context.Purchases
-                .Where(p => !_context.Tickets.Any(t => t.PurchaseId == p.PurchaseId)) // Adjust condition based on your data
-                .ToListAsync();
+            .Include(p => p.Tickets) // Assuming a navigation property exists
+            .ToListAsync();
+
+            foreach (var purchase in Purchases)
+            {
+                if (!purchase.StoreId.HasValue && purchase.Tickets.Any())
+                {
+                    purchase.StoreId = -1; // Using -1 as a placeholder for "Ticket Sale"
+                }
+            }
 
             return Page();
         }

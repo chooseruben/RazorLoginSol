@@ -247,6 +247,7 @@ namespace RazorLogin.Pages.Admin.Emp
                     Employee.Department = "GENERAL";
                 }
 
+
                 // Add employee to context
                 _context.Employees.Add(Employee);
                 await _context.SaveChangesAsync(); // This might trigger your SQL trigger
@@ -258,6 +259,7 @@ namespace RazorLogin.Pages.Admin.Emp
                     Email = Employee.EmployeeEmail
                 };
 
+
                 var result = await _userManager.CreateAsync(user, Password);
 
                 if (!result.Succeeded)
@@ -268,6 +270,9 @@ namespace RazorLogin.Pages.Admin.Emp
                     }
                     return Page();
                 }
+
+              
+
 
                 if (!string.IsNullOrEmpty(Role))
                 {
@@ -316,6 +321,8 @@ namespace RazorLogin.Pages.Admin.Emp
                     // General error if not SQL-related
                     ModelState.AddModelError(string.Empty, "An unknown error occurred while saving the employee.");
                 }
+
+
 
                 // Return to the current page with the error message
                 return Page();
