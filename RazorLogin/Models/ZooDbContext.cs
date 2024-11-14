@@ -685,6 +685,9 @@ public partial class ZooDbContext : DbContext
             entity.Property(e => e.CustomerId)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("Customer_ID");
+            entity.Property(e => e.ItemName)
+              .HasMaxLength(50)
+              .HasColumnName("item_name");
             entity.Property(e => e.NumItems)
                 .HasDefaultValueSql("(NULL)")
                 .HasColumnName("num_items");
