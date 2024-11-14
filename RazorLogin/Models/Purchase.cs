@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RazorLogin.Models;
 
@@ -20,6 +21,9 @@ public partial class Purchase
     public string? PurchaseMethod { get; set; }
 
     public TimeOnly? PurchaseTime { get; set; }
+
+    [Column("item_name")]
+    public string? ItemName { get; set; }
 
     public virtual Customer? Customer { get; set; }
 

@@ -15,6 +15,13 @@
         </div>
     }
 
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
     <hr />
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -24,7 +31,7 @@
                 <input type="hidden" asp-for="Customer.MembershipStartDate" id="MembershipStartDate" />
                 <input type="hidden" asp-for="Customer.MembershipEndDate" id="MembershipEndDate" />
 
-                <!-- Customer Email Display (Separate Label and Input) -->
+                <!-- Customer Email Display -->
                 <div class="form-group">
                     <label asp-for="Customer.CustomerEmail" class="form-label">Customer Email:</label>
                     <input asp-for="Customer.CustomerEmail" class="form-control" readonly />
