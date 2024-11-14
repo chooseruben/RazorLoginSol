@@ -18,13 +18,14 @@ namespace RazorLogin.Pages.CustomerEnclosures
             _context = context;
         }
 
-        public IList<Enclosure> Enclosure { get;set; } = default!;
+        public IList<Enclosure> Enclosure { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             Enclosure = await _context.Enclosures
+                .Where(e => e.OccupancyStatus == "OPEN") // Only include enclosures that are open
                 .Include(e => e.Zookeeper)
-                .Include(e => e.Animals) 
+                .Include(e => e.Animals)
                 .ToListAsync();
         }
     }

@@ -13,8 +13,6 @@
     <table class="table table-striped table-bordered table-hover">
         <thead class="thead-dark">
             <tr>
-                <th>Closing End</th>
-                <th>Closing Start</th>
                 <th>Closing Reason</th>
                 <th>Enclosure ID</th>
                 <th>Actions</th>
@@ -24,8 +22,6 @@
             @foreach (var item in Model.Closing)
             {
                 <tr>
-                    <td>@item.ClosingsEnd.ToString("MMM dd, yyyy hh:mm tt")</td>
-                    <td>@item.ClosingsStart.ToString("MMM dd, yyyy hh:mm tt")</td>
                     <td>@item.ClosingsReason</td>
                     <td>@item.Enclosure.EnclosureId</td>
                     <td>
