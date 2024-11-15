@@ -48,6 +48,12 @@ namespace RazorLogin.Pages.TicketsPage
                 MembershipType = customer?.MembershipType;
             }
 
+            // If a ticket type was selected previously, retain the selected value
+            if (!string.IsNullOrEmpty(SelectedTicketType))
+            {
+                Ticket.TicketType = SelectedTicketType;
+            }
+
             return Page();
         }
 
