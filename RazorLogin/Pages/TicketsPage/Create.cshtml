@@ -28,11 +28,11 @@
                         <!-- Ticket Type Dropdown Section -->
                         <div class="form-group">
                             <label asp-for="SelectedTicketType" class="control-label">Ticket Type</label>
-                            <select asp-for="SelectedTicketType" class="form-control" id="SelectedTicketType" onchange="updateTicketPrice()">
+                            <select asp-for="SelectedTicketType" class="form-control" onchange="updateTicketPrice()">
                                 <option value="">Select Ticket Type</option>
                                 @foreach (var ticketType in Model.TicketTypes)
                                 {
-                                    <option>@ticketType.Key</option>
+                                    <option value="@ticketType.Key">@ticketType.Key</option>
                                 }
                             </select>
                             <span asp-validation-for="SelectedTicketType" class="text-danger"></span>
@@ -62,7 +62,7 @@
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
@@ -100,23 +100,5 @@
             // Display the updated ticket price
             document.getElementById('ticketPrice').innerText = '$' + ticketPrice;
         }
-
-        window.onload = function () {
-            var selectedTicketType = '@Model.SelectedTicketType';
-            var ticketSelect = document.getElementById('SelectedTicketType');
-
-            // Set the selected option based on the model value
-            for (var i = 0; i < ticketSelect.options.length; i++) {
-                if (ticketSelect.options[i].text === selectedTicketType) {
-                    ticketSelect.selectedIndex = i;
-                    break;
-                }
-            }
-
-            // Call updateTicketPrice() if there is a selected ticket type
-            if (selectedTicketType) {
-                updateTicketPrice();
-            }
-        };
     </script>
 }
