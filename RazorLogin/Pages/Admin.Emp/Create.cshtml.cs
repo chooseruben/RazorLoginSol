@@ -215,6 +215,14 @@ namespace RazorLogin.Pages.Admin.Emp
                 return Page();
             }
 
+            // Step 2: Check if both a FoodStore and a GiftShop are selected
+            if ((Employee.FoodStoreId.HasValue && Employee.FoodStoreId.Value != 0) &&
+                (Employee.ShopId.HasValue && Employee.ShopId.Value != 0))
+            {
+                ModelState.AddModelError(string.Empty, "An employee cannot be assigned to both a Food Store and a Gift Shop. Please select only one.");
+                return Page();
+            }
+
             try
             {
                 // Set department based on role

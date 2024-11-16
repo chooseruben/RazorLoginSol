@@ -9,6 +9,11 @@
 
 <h4>GiftShop</h4>
 <hr />
+
+<div class="alert alert-info">
+    <strong>Note:</strong> Location must be unique.
+</div>
+
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -27,12 +32,12 @@
            
             <div class="form-group">
                 <label asp-for="GiftShop.GiftShopOpenTime" class="control-label"></label>
-                <input asp-for="GiftShop.GiftShopOpenTime" class="form-control" />
+                <input asp-for="GiftShop.GiftShopOpenTime" class="form-control" type="time" />
                 <span asp-validation-for="GiftShop.GiftShopOpenTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="GiftShop.GiftShopCloseTime" class="control-label"></label>
-                <input asp-for="GiftShop.GiftShopCloseTime" class="form-control" />
+                <input asp-for="GiftShop.GiftShopCloseTime" class="form-control" type="time"/>
                 <span asp-validation-for="GiftShop.GiftShopCloseTime" class="text-danger"></span>
             </div>
             <div class="form-group">
