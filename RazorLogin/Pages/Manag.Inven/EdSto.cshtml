@@ -49,26 +49,26 @@ else if (Model.AssignedFoodStore != null)
 {
     <form method="post">
         <div class="form-group">
-            <label asp-for="AssignedFoodStore.FoodStoreName"></label>
+            <label asp-for="AssignedFoodStore.FoodStoreName" class="form-label">Food Store Name</label>
             <input asp-for="AssignedFoodStore.FoodStoreName" class="form-control" />
             <span asp-validation-for="AssignedFoodStore.FoodStoreName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="AssignedFoodStore.FoodStoreLocation"></label>
+            <label asp-for="AssignedFoodStore.FoodStoreLocation">Food Store Location</label>
             <input asp-for="AssignedFoodStore.FoodStoreLocation" class="form-control" />
             <span asp-validation-for="AssignedFoodStore.FoodStoreLocation" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="AssignedFoodStore.FoodStoreOpenTime"></label>
+            <label asp-for="AssignedFoodStore.FoodStoreOpenTime">Food Store Open Time</label>
             <input asp-for="AssignedFoodStore.FoodStoreOpenTime" type="time" class="form-control" />
             <span asp-validation-for="AssignedFoodStore.FoodStoreOpenTime" class="text-danger"></span>
 
         </div>
 
         <div class="form-group">
-            <label asp-for="AssignedFoodStore.FoodStoreCloseTime"></label>
+            <label asp-for="AssignedFoodStore.FoodStoreCloseTime">Food Store Close Time</label>
             <input asp-for="AssignedFoodStore.FoodStoreCloseTime" type="time" class="form-control" />
             <span asp-validation-for="AssignedFoodStore.FoodStoreCloseTime" class="text-danger"></span>
         </div>

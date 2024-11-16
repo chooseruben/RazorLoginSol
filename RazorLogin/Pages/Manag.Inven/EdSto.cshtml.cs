@@ -81,7 +81,9 @@ namespace RazorLogin.Pages.Manag.Inven
 
                             _context.Attach(store).State = EntityState.Modified;
                         }
-                    }
+
+
+                }
 
                     await _context.SaveChangesAsync();
                     return RedirectToPage("./Index");

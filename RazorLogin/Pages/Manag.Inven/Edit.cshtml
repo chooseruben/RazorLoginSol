@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @model RazorLogin.Pages.Manag.Inven.EditModel
 @{
     ViewData["Title"] = "Edit Item";
@@ -36,12 +36,15 @@
             <input asp-for="Item.ItemPrice" class="form-control" placeholder="Enter item price" />
             <span asp-validation-for="Item.ItemPrice" class="text-danger"></span>
         </div>
-
+        <button type="submit" class="btn btn-primary me-2">Save Changes</button>
         <!-- Action Buttons with Spacing -->
         <div class="mt-4">
-            <button type="submit" class="btn btn-primary me-2">Save Changes</button>
-            <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+            <a asp-page="./Inventory"
+               asp-route-shopId="@(Model.Item?.ShopId ?? (int?)null)"
+               asp-route-foodStoreId="@(Model.Item?.FoodStoreId ?? (int?)null)"
+               class="btn btn-secondary">Cancel</a>
         </div>
+
     </form>
 </div>
 

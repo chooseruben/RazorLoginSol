@@ -1,92 +1,88 @@
 using System;
-using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
-using System.Threading.Tasks;
 
 namespace RazorLogin.Pages.Manag.Inven
 {
-    public class AddModel : PageModel
+    public class AddItemModel : PageModel
     {
-        
+        private readonly string _connectionString;
         private readonly ZooDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public AddModel(ZooDbContext context, UserManager<IdentityUser> userManager)
+        public AddItemModel(ZooDbContext context)
         {
             _context = context;
-            _userManager = userManager;
+            _connectionString = context.Database.GetDbConnection().ConnectionString;
         }
 
         [BindProperty]
         public Item Item { get; set; }
+        public int? ShopId { get; set; }
+        public int? FoodStoreId { get; set; }
 
-        [BindProperty]
-        public string StoreType { get; set; }
+        public async Task<IActionResult> OnGetAsync(int? shopId, int? foodStoreId)
+        {
+            if (shopId == null && foodStoreId == null)
+            {
+                return RedirectToPage("./Inventory");
+            }
 
-        [BindProperty]
-        public int StoreId { get; set; }
+            ShopId = shopId;
+            FoodStoreId = foodStoreId;
+
+            ViewData["ShopId"] = shopId;
+            ViewData["FoodStoreId"] = foodStoreId;
+
+            return Page();
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-                return Page();
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var employee = await _context.Employees
+                .Include(e => e.Shop)
+                .Include(e => e.FoodStore)
+                .FirstOrDefaultAsync(e => e.EmployeeEmail == userEmail);
 
-            Random random = new Random();
-            int randomSuffix = random.Next(10000, 99999);
-            Item.ItemId = randomSuffix;
-
-            while (await _context.Items.AnyAsync(d => d.ItemId == Item.ItemId))
+            if (employee == null || (employee.Shop == null && employee.FoodStore == null))
             {
-                randomSuffix = random.Next(10000, 99999);
-                Item.ItemId = randomSuffix;
+                return NotFound("No shop assigned to the logged-in user.");
             }
 
-            // Set the appropriate store ID based on the selected StoreType
-            if (StoreType == "GiftShop")
-            {
-                Item.ShopId = StoreId;
-                Item.FoodStoreId = null;
-            }
-            else if (StoreType == "FoodStore")
-            {
-                Item.ShopId = null;
-                Item.FoodStoreId = StoreId;
-            }
-            else
-            {
-                ModelState.AddModelError("", "Please select a valid store type.");
-                return Page();
-            }
+            var shopId = employee.Shop?.ShopId;
+            var foodStoreId = employee.FoodStore?.FoodStoreId;
 
-            // Insert item into the database using raw SQL to directly set ItemId
-            var sqlQuery = "INSERT INTO Item (item_ID, Item_name, Item_count, item_Price, Restock_date, Shop_ID, Food_store_ID) " +
-                           "VALUES (@ItemId, @ItemName, @ItemCount, @ItemPrice, @RestockDate, @ShopId, @FoodStoreId)";
+            // Generate a random 5-digit Item ID
+            var random = new Random();
+            int randomItemId = random.Next(10000, 99999);
 
-            using (var connection = _context.Database.GetDbConnection())
+            var query = "INSERT INTO Item (Item_ID, Item_name, Item_count, Restock_date, Item_price, Shop_ID, Food_store_ID) " +
+                        "VALUES (@itemId, @itemName, @itemCount, @restockDate, @itemPrice, @shopId, @foodStoreId)";
+
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = sqlQuery;
-                    command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@ItemId", Item.ItemId));
-                    command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@ItemName", Item.ItemName));
-                    command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@ItemCount", Item.ItemCount));
-                    command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@ItemPrice", Item.ItemPrice));
-                    command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@RestockDate", Item.RestockDate));
-                    command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@ShopId", Item.ShopId ?? (object)DBNull.Value));
-                    command.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@FoodStoreId", Item.FoodStoreId ?? (object)DBNull.Value));
+                    command.CommandText = query;
+                    command.Parameters.Add(new SqlParameter("@itemId", randomItemId));
+                    command.Parameters.Add(new SqlParameter("@itemName", Item.ItemName));
+                    command.Parameters.Add(new SqlParameter("@itemCount", Item.ItemCount));
+                    command.Parameters.Add(new SqlParameter("@restockDate", Item.RestockDate.ToDateTime(TimeOnly.MinValue)));
+                    command.Parameters.Add(new SqlParameter("@itemPrice", Item.ItemPrice));
+                    command.Parameters.Add(new SqlParameter("@shopId", shopId ?? (object)DBNull.Value));
+                    command.Parameters.Add(new SqlParameter("@foodStoreId", foodStoreId ?? (object)DBNull.Value));
+
                     await command.ExecuteNonQueryAsync();
                 }
             }
 
-            return Item.ShopId.HasValue
-                ? RedirectToPage("./Inventory", new { shopId = Item.ShopId })
-                : RedirectToPage("./Inventory", new { foodStoreId = Item.FoodStoreId });
-        
+            return RedirectToPage("./Inventory", new { shopId = shopId, foodStoreId = foodStoreId });
         }
     }
 }

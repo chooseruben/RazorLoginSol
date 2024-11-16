@@ -1,39 +1,53 @@
-﻿@page
-@model RazorLogin.Pages.Manag.Inven.AddModel
+﻿@page 
+@model RazorLogin.Pages.Manag.Inven.AddItemModel
 @{
     ViewData["Title"] = "Add Item";
 }
 
-<h2>Add Item</h2>
+<div class="container mt-5 p-4" style="background-color: #e8f5e9; border-radius: 15px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+    <h1 class="text-center text-success mb-4">Add New Item</h1>
 
-<form method="post">
-        <div class="form-group">
-            <label asp-for="Item.ItemName"></label>
-            <input asp-for="Item.ItemName" class="form-control" />
+    <div class="row justify-content-center">
+        <!-- Form Section -->
+        <div class="col-md-8">
+            <form method="post" class="shadow p-4 rounded bg-white">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Item.ItemName" class="form-label">Item Name</label>
+                    <input asp-for="Item.ItemName" class="form-control" placeholder="Enter item name" />
+                    <span asp-validation-for="Item.ItemName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Item.ItemCount" class="form-label">Item Count</label>
+                    <input asp-for="Item.ItemCount" class="form-control" placeholder="Enter quantity" />
+                    <span asp-validation-for="Item.ItemCount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Item.RestockDate" class="form-label">Restock Date</label>
+                    <input asp-for="Item.RestockDate" class="form-control" type="date" />
+                    <span asp-validation-for="Item.RestockDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Item.ItemPrice" class="form-label">Item Price</label>
+                    <input asp-for="Item.ItemPrice" class="form-control" placeholder="Enter price" />
+                    <span asp-validation-for="Item.ItemPrice" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Add Item</button>
+            </form>
+
+            <div class="mt-4">
+                <a asp-page="./Inventory"
+                   asp-route-shopId="@Model.ShopId"
+                   asp-route-foodStoreId="@Model.FoodStoreId"
+                   class="btn btn-secondary w-100">Back to Inventory</a>
+            </div>
+
+
         </div>
-        <div class="form-group">
-            <label asp-for="Item.ItemCount"></label>
-            <input asp-for="Item.ItemCount" class="form-control" />
-        </div>
-    <div class="form-group">
-        <label asp-for="Item.ItemPrice"></label>
-        <input asp-for="Item.ItemPrice" class="form-control" />
     </div>
-        <div class="form-group">
-            <label asp-for="Item.RestockDate"></label>
-            <input asp-for="Item.RestockDate" type="date" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Select Store Type</label>
-            <select asp-for="StoreType" class="form-control">
-                <option value="GiftShop">Gift Shop</option>
-                <option value="FoodStore">Food Store</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Enter Store ID</label>
-            <input asp-for="StoreId" class="form-control" placeholder="Enter Store ID" />
-        </div>
-    <button type="submit" class="btn btn-primary">Add Item</button>
-    <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
-</form>
+</div>
