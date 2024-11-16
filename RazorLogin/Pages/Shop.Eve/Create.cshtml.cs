@@ -24,7 +24,6 @@ namespace RazorLogin.Pages.Shop.Eve
 
         public async Task<IActionResult> OnGetAsync()
         {
-            // No need for dropdown setup since we automatically set EmployeeRepId on post
             return Page();
         }
 
@@ -60,23 +59,31 @@ namespace RazorLogin.Pages.Shop.Eve
                 return Page();
             }
 
+            // Ensure the IsDeleted column is set to false for new events
+            Event.IsDeleted = false;
+
             try
             {
+                // Check for conflicts, excluding soft-deleted events
+                var conflict = await _context.Events
+                    .Where(e => e.EventDate == Event.EventDate &&
+                                e.EventLocation == Event.EventLocation &&
+                                (e.IsDeleted == false || e.IsDeleted == null)) // Handle nullable IsDeleted
+                    .FirstOrDefaultAsync();
+
+                if (conflict != null)
+                {
+                    ModelState.AddModelError(string.Empty, "This event cannot be scheduled because another event is already scheduled at the same date, time, and location.");
+                    return Page();
+                }
+
                 _context.Events.Add(Event);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");
             }
             catch (DbUpdateException ex)
             {
-                if (ex.InnerException != null && ex.InnerException.Message.Contains("An event is already scheduled at this date, time, and location."))
-                {
-                    ModelState.AddModelError(string.Empty, "This event cannot be scheduled because another event is already scheduled at the same date, time, and location.");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "An error occurred while saving your data. Please try again.");
-                }
-
+                ModelState.AddModelError(string.Empty, $"An error occurred while saving your data: {ex.InnerException?.Message ?? ex.Message}");
                 return Page();
             }
         }

@@ -186,10 +186,40 @@ namespace RazorLogin.Pages.Admin.Emp
 
         public string ErrorMessage { get; set; } // Store the error message for display
 
+        // Password validation method
+        private bool ValidatePassword(string password)
+        {
+            if (password.Length < 6)
+            {
+                return false; // Password is too short
+            }
+
+            bool hasUpperCase = password.Any(char.IsUpper);
+            bool hasDigit = password.Any(char.IsDigit);
+            bool hasNonAlphanumeric = password.Any(ch => !char.IsLetterOrDigit(ch));
+
+            return hasUpperCase && hasDigit && hasNonAlphanumeric;
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                return Page();
+            }
+
+            // Step 1: Manually validate the password
+            if (!ValidatePassword(Password))
+            {
+                ModelState.AddModelError(string.Empty, "Password must contain at least one uppercase letter, one digit, one non-alphanumeric character, and be at least 6 characters long.");
+                return Page();
+            }
+
+            // Step 2: Check if both a FoodStore and a GiftShop are selected
+            if ((Employee.FoodStoreId.HasValue && Employee.FoodStoreId.Value != 0) &&
+                (Employee.ShopId.HasValue && Employee.ShopId.Value != 0))
+            {
+                ModelState.AddModelError(string.Empty, "An employee cannot be assigned to both a Food Store and a Gift Shop. Please select only one.");
                 return Page();
             }
 

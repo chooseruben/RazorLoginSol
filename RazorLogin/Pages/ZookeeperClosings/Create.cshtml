@@ -34,8 +34,8 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label asp-for="Closing.EnclosureId" class="form-label fw-bold">Enclosure Id</label>
-                    <select asp-for="Closing.EnclosureId" class="form-control" asp-items="ViewBag.EnclosureId">
+                    <label asp-for="Closing.EnclosureId" class="form-label fw-bold">Enclosure</label>
+                    <select asp-for="Closing.EnclosureId" class="form-control" asp-items="Model.EnclosureOptions">
                         <option value="">Select Enclosure</option>
                     </select>
                     <span asp-validation-for="Closing.EnclosureId" class="text-danger"></span>

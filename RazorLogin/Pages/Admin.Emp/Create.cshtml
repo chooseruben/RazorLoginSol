@@ -121,24 +121,23 @@
             <div class="form-group" id="foodStoreDropdown" style="display:none;">
                 <label asp-for="Employee.FoodStoreId" class="control-label"></label>
                 <select asp-for="Employee.FoodStoreId" class="form-control" id="FoodStoreDropdown">
-                    <!-- Render both options (with and without managers) -->
                     <option value="">Select Food Store</option>
 
                     @if (ViewData["FoodStoresWithManagers"] != null)
                     {
                         foreach (var store in (List<SelectListItem>)ViewData["FoodStoresWithManagers"])
                         {
-                            <option value="@store.Value">@store.Text</option>
+                            <option value="@store.Value" data-has-manager="true">@store.Text</option>
                         }
                     }
+
                     @if (ViewData["FoodStoresWithoutManagers"] != null)
                     {
                         foreach (var store in (List<SelectListItem>)ViewData["FoodStoresWithoutManagers"])
                         {
-                            <option value="@store.Value">@store.Text</option>
+                            <option value="@store.Value" data-has-manager="false">@store.Text</option>
                         }
                     }
-
                 </select>
                 <span asp-validation-for="Employee.FoodStoreId" class="text-danger"></span>
             </div>
@@ -147,26 +146,27 @@
             <div class="form-group" id="giftShopDropdown" style="display:none;">
                 <label asp-for="Employee.ShopId" class="control-label"></label>
                 <select asp-for="Employee.ShopId" class="form-control" id="GiftShopDropdown">
-                    <!-- Render both options (with and without managers) -->
                     <option value="">Select Gift Shop</option>
+
                     @if (ViewData["GiftShopsWithManagers"] != null)
                     {
                         foreach (var store in (List<SelectListItem>)ViewData["GiftShopsWithManagers"])
                         {
-                            <option value="@store.Value">@store.Text</option>
+                            <option value="@store.Value" data-has-manager="true">@store.Text</option>
                         }
                     }
+
                     @if (ViewData["GiftShopsWithoutManagers"] != null)
                     {
                         foreach (var store in (List<SelectListItem>)ViewData["GiftShopsWithoutManagers"])
                         {
-                            <option value="@store.Value">@store.Text</option>
+                            <option value="@store.Value" data-has-manager="false">@store.Text</option>
                         }
                     }
-
                 </select>
                 <span asp-validation-for="Employee.ShopId" class="text-danger"></span>
             </div>
+
 
             <!-- Login Information Section -->
             <h4>Login Information</h4>
@@ -216,13 +216,38 @@
 
         // Show the dropdown for the selected store type
         function showStoreDropdown(storeType) {
-            if (storeType === 'foodStore') {
-                document.getElementById('foodStoreDropdown').style.display = 'block';
-                document.getElementById('giftShopDropdown').style.display = 'none';
-            } else if (storeType === 'giftShop') {
-                document.getElementById('foodStoreDropdown').style.display = 'none';
-                document.getElementById('giftShopDropdown').style.display = 'block';
+            var role = document.getElementById('Role').value;
+            var foodStoreDropdown = document.getElementById('foodStoreDropdown');
+            var giftShopDropdown = document.getElementById('giftShopDropdown');
 
+            // Hide both dropdowns initially
+            foodStoreDropdown.style.display = 'none';
+            giftShopDropdown.style.display = 'none';
+
+            if (storeType === 'foodStore') {
+                foodStoreDropdown.style.display = 'block';
+                filterStoreOptions(foodStoreDropdown, role);
+            } else if (storeType === 'giftShop') {
+                giftShopDropdown.style.display = 'block';
+                filterStoreOptions(giftShopDropdown, role);
+            }
+        }
+
+        // Filter store options based on the selected role
+        function filterStoreOptions(dropdown, role) {
+            var options = dropdown.getElementsByTagName('option');
+
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i];
+                var hasManager = option.getAttribute('data-has-manager');
+
+                if (role === 'SHOP' && hasManager === 'true') {
+                    option.style.display = 'block';
+                } else if (role === 'MANAGER' && hasManager === 'false') {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
             }
         }
 
@@ -230,6 +255,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             toggleStoreFields(); // Adjust visibility based on the selected role
         });
+
     </script>
 
     <script src="~/lib/jquery.validate.min.js"></script>
