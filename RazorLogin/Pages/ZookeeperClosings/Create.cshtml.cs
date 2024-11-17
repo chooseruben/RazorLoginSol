@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -37,7 +38,9 @@ namespace RazorLogin.Pages.ZookeeperClosings
             }
 
             // Find the employee by their email
-            var employee = await _context.Employees.FirstOrDefaultAsync(e => e.EmployeeEmail == user.Email);
+            var employee = await _context.Employees
+                .Where(e => e.IsDeleted == null || e.IsDeleted == false) // Exclude soft-deleted employees
+                .FirstOrDefaultAsync(e => e.EmployeeEmail == user.Email);
 
             if (employee == null)
             {
@@ -46,6 +49,7 @@ namespace RazorLogin.Pages.ZookeeperClosings
 
             // Find the corresponding zookeeper linked to this employee
             var zookeeper = await _context.Zookeepers
+                .Where(z => z.IsDeleted == null || z.IsDeleted == false) // Exclude soft-deleted zookeepers
                 .FirstOrDefaultAsync(z => z.EmployeeId == employee.EmployeeId);
 
             if (zookeeper == null)
@@ -53,9 +57,9 @@ namespace RazorLogin.Pages.ZookeeperClosings
                 return NotFound("Zookeeper record not found.");
             }
 
-            // Fetch only the enclosures assigned to this zookeeper
+            // Fetch only the enclosures assigned to this zookeeper and not soft-deleted
             var enclosures = await _context.Enclosures
-                .Where(e => e.ZookeeperId == zookeeper.ZookeeperId)
+                .Where(e => e.ZookeeperId == zookeeper.ZookeeperId && (e.IsDeleted == null || e.IsDeleted == false))
                 .Select(e => new { e.EnclosureId, e.EnclosureName })
                 .ToListAsync();
 
@@ -78,9 +82,10 @@ namespace RazorLogin.Pages.ZookeeperClosings
             do
             {
                 newClosingId = random.Next(1, int.MaxValue);
-            } while (await _context.Closings.AnyAsync(c => c.ClosingId == newClosingId));
+            } while (await _context.Closings.AnyAsync(c => c.ClosingId == newClosingId && (c.IsDeleted == null || c.IsDeleted == false))); // Exclude soft-deleted closings
 
             Closing.ClosingId = newClosingId;
+            Closing.IsDeleted = false; // Ensure new records are not soft-deleted
 
             _context.Closings.Add(Closing);
             await _context.SaveChangesAsync();
@@ -89,4 +94,3 @@ namespace RazorLogin.Pages.ZookeeperClosings
         }
     }
 }
-
