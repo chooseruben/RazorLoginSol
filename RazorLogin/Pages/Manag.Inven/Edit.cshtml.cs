@@ -64,9 +64,17 @@ namespace RazorLogin.Pages.Manag.Inven
                 try
                 {
                     await _context.SaveChangesAsync();
-                    return itemToUpdate.ShopId.HasValue
-                        ? RedirectToPage("./Inventory", new { shopId = itemToUpdate.ShopId })
-                        : RedirectToPage("./Inventory", new { foodStoreId = itemToUpdate.FoodStoreId });
+
+                    if (itemToUpdate.ShopId.HasValue)
+                    {
+                        // Redirect to Inventory for ShopId
+                        return Redirect($"/Manag.Inven/Inventory?shopId={itemToUpdate.ShopId}");
+                    }
+                    else if (itemToUpdate.FoodStoreId.HasValue)
+                    {
+                        // Redirect to Inventory for FoodStoreId
+                        return Redirect($"/Manag.Inven/Inventory?foodStoreId={itemToUpdate.FoodStoreId}");
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

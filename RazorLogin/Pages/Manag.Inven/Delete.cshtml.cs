@@ -47,9 +47,19 @@ namespace RazorLogin.Pages.Manag.Inven
                 await _context.SaveChangesAsync();
             }
 
-            return item.ShopId.HasValue
-                ? RedirectToPage("./Inventory", new { shopId = item.ShopId })
-                : RedirectToPage("./Inventory", new { foodStoreId = item.FoodStoreId });
+            if (item.ShopId.HasValue)
+            {
+                // Redirect to Inventory for ShopId
+                return Redirect($"/Manag.Inven/Inventory?shopId={item.ShopId}");
+            }
+            else if (item.FoodStoreId.HasValue)
+            {
+                // Redirect to Inventory for FoodStoreId
+                return Redirect($"/Manag.Inven/Inventory?foodStoreId={item.FoodStoreId}");
+            }
+
+            // Fallback redirection if neither ShopId nor FoodStoreId is available
+            return RedirectToPage("./Inventory");
         }
     }
 }

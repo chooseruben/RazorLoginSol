@@ -19,7 +19,8 @@
                 <p><i class="fas fa-clock text-muted"></i> <strong>Close Time:</strong> @Model.AssignedGiftShop.GiftShopCloseTime</p>
                 <div class="d-flex">
                     <a asp-page="./EdSto" asp-route-storeId="@Model.AssignedGiftShop.ShopId" class="btn btn-outline-secondary me-2">Edit Store Details</a>
-                    <a asp-page="./Inventory" asp-route-shopId="@Model.AssignedGiftShop.ShopId" class="btn btn-outline-primary">View Inventory</a>
+                    <!-- Manual Link for View Inventory -->
+                    <a href="/Manag.Inven/Inventory?shopId=@Model.AssignedGiftShop.ShopId" class="btn btn-outline-primary">View Inventory</a>
                 </div>
             }
             else if (Model.AssignedFoodStore != null)
@@ -30,7 +31,8 @@
                 <p><i class="fas fa-clock text-muted"></i> <strong>Close Time:</strong> @Model.AssignedFoodStore.FoodStoreCloseTime</p>
                 <div class="d-flex">
                     <a asp-page="./EdSto" asp-route-storeId="@Model.AssignedFoodStore.FoodStoreId" class="btn btn-outline-secondary me-2">Edit Store Details</a>
-                    <a asp-page="./Inventory" asp-route-foodStoreId="@Model.AssignedFoodStore.FoodStoreId" class="btn btn-outline-primary">View Inventory</a>
+                    <!-- Manual Link for View Inventory -->
+                    <a href="/Manag.Inven/Inventory?foodStoreId=@Model.AssignedFoodStore.FoodStoreId" class="btn btn-outline-primary">View Inventory</a>
                 </div>
             }
             else
