@@ -106,11 +106,15 @@ namespace RazorLogin.Pages.TicketsPage
             Ticket.TicketId = GenerateRandomId();
             Ticket.TicketPurchaseDate = DateOnly.FromDateTime(DateTime.Now);
 
+            // Get current purchase time
+            var purchaseTime = TimeOnly.FromDateTime(DateTime.Now);
+
             var purchase = new Purchase
             {
                 PurchaseId = GenerateRandomId(),
                 CustomerId = customer.CustomerId,
                 PurchaseDate = Ticket.TicketPurchaseDate,
+                PurchaseTime = purchaseTime, 
                 TotalPurchasesPrice = Ticket.TicketPrice,
                 NumItems = 1,
                 ItemName = "Ticket" 
@@ -145,7 +149,7 @@ namespace RazorLogin.Pages.TicketsPage
 
             do
             {
-                newId = random.Next(1000, 9999); // Generate a random 4-digit number
+                newId = random.Next(1000, 9999);
             }
             while (_context.Tickets.Any(t => t.TicketId == newId) ||
                    _context.Purchases.Any(p => p.PurchaseId == newId)); // Ensure no conflict with existing IDs
