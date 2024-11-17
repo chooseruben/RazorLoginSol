@@ -33,17 +33,13 @@ namespace RazorLogin.Pages.Manag.Inven
                 .FirstOrDefaultAsync(e => e.EmployeeEmail == currentUser.Email);
 
             // Load store details based on the employee's assignment
-            if (employee?.FoodStoreId == storeId)
-            {
-                AssignedFoodStore = await _context.FoodStores.FindAsync(storeId);
-                if (AssignedFoodStore == null)
-                {
-                    return NotFound("FoodStore not found.");
-                }
-            }
-            else if (employee?.ShopId == storeId)
+            if (employee?.ShopId == storeId)
             {
                 AssignedGiftShop = await _context.GiftShops.FindAsync(storeId);
+            }
+            else if (employee?.FoodStoreId == storeId)
+            {
+                AssignedFoodStore = await _context.FoodStores.FindAsync(storeId);
             }
             else
             {
@@ -55,14 +51,25 @@ namespace RazorLogin.Pages.Manag.Inven
 
         public async Task<IActionResult> OnPostAsync(int storeId)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            if (!ModelState.IsValid) { }
 
             try
             {
-                if (AssignedFoodStore != null)
+
+                if (AssignedGiftShop != null)
+                {
+                    var store = await _context.GiftShops.FindAsync(storeId);
+                    if (store != null)
+                    {
+                        store.GiftShopName = AssignedGiftShop.GiftShopName;
+                        store.GiftShopLocation = AssignedGiftShop.GiftShopLocation;
+                        store.GiftShopOpenTime = AssignedGiftShop.GiftShopOpenTime;
+                        store.GiftShopCloseTime = AssignedGiftShop.GiftShopCloseTime;
+
+                        _context.Attach(store).State = EntityState.Modified;
+                    }
+                }
+                else if (AssignedFoodStore != null)
                 {
                     var store = await _context.FoodStores.FindAsync(storeId);
                     if (store != null)
@@ -73,23 +80,22 @@ namespace RazorLogin.Pages.Manag.Inven
                         store.FoodStoreCloseTime = AssignedFoodStore.FoodStoreCloseTime;
 
                         _context.Attach(store).State = EntityState.Modified;
-                        await _context.SaveChangesAsync();
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Food store not found.");
-                        return Page();
                     }
                 }
 
+
+                await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");
             }
+
             catch (DbUpdateException ex)
             {
+                // Check if the exception is due to the trigger constraint
                 if (ex.InnerException?.Message.Contains("Closing time cannot be earlier than or equal to opening time") == true)
                 {
-                    ViewData["ErrorMessage"] = "Closing time cannot be earlier than or equal to opening time.";
-                    return Page();
+                    // Add a custom error message to ModelState
+                    ViewData["ErrorMessage"] = "Closing time cannot be earlier than or equal to opening time. Please correct the times and try again.";
+                    return Page(); // Redisplay the form with the error message
                 }
                 else
                 {
