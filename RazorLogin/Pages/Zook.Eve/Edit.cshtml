@@ -10,6 +10,8 @@
 
     <form method="post" class="shadow p-4 rounded bg-light">
         <input type="hidden" asp-for="Event.EventId" />
+        <input type="hidden" asp-for="Event.EventEmployeeRepId" />
+
 
         <div class="form-group mb-3">
             <label asp-for="Event.EventName" class="form-label">Event Name</label>
