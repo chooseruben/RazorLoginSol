@@ -12,21 +12,28 @@
     <h4>Closing</h4>
     <hr />
     <dl class="row">
-       
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Closing.ClosingsReason)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Closing.ClosingsReason)
         </dd>
+
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Closing.Enclosure)
+            @Html.DisplayNameFor(model => model.Closing.ClosingsStart)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Closing.Enclosure.EnclosureId)
+            @Html.DisplayFor(model => model.Closing.ClosingsStart)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Closing.ClosingsEnd)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Closing.ClosingsEnd)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="Closing.ClosingId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

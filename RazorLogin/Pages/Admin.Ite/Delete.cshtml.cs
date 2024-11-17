@@ -56,7 +56,7 @@ namespace RazorLogin.Pages.Admin.Ite
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("/Admin.GShps/Index", new { shopId = Item.ShopId });
+            return RedirectToPage("/Admin.Ite/Index", new { shopId = Item.ShopId });
         }
     }
 }

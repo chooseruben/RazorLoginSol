@@ -53,6 +53,17 @@ namespace RazorLogin.Pages.Admin.Clos
             {
                 Closing = closing;
                 _context.Closings.Remove(Closing);
+
+                // Update the Enclosure status to OPEN after deleting the closing
+                var enclosure = await _context.Enclosures
+                    .FirstOrDefaultAsync(e => e.EnclosureId == Closing.EnclosureId);
+
+                if (enclosure != null)
+                {
+                    enclosure.OccupancyStatus = "OPEN";
+                    _context.Enclosures.Update(enclosure);
+                }
+
                 await _context.SaveChangesAsync();
             }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 
 namespace RazorLogin.Pages.Admin.Anim
@@ -35,6 +36,24 @@ namespace RazorLogin.Pages.Admin.Anim
             {
                 return Page();
             }
+
+            // Generate a random 5-digit number
+            Random random = new Random();
+            int randomSuffix = random.Next(10000, 99999);  // Generate a 5-digit random number
+
+            // Concatenate the Zookeeper's EmployeeId and the random number to form the AnimalId
+            int animalId = int.Parse($"{randomSuffix}");
+
+            // Check if the generated AnimalId already exists
+            while (await _context.Animals.AnyAsync(a => a.AnimalId == animalId))
+            {
+                // If it exists, generate a new random number
+                randomSuffix = random.Next(10000, 99999);
+                animalId = int.Parse($"{randomSuffix}");
+            }
+
+            // Assign the generated AnimalId to the Animal object
+            Animal.AnimalId = animalId;
 
             _context.Animals.Add(Animal);
             await _context.SaveChangesAsync();

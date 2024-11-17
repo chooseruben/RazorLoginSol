@@ -56,7 +56,7 @@ namespace RazorLogin.Pages.Admin.IteF
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("/Admin.FShps/Index");
+            return RedirectToPage("/Admin.IteF/Index", new { foodStoreId = Item.FoodStoreId });
         }
     }
 }
