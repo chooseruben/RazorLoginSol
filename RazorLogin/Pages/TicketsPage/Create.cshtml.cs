@@ -102,18 +102,18 @@ namespace RazorLogin.Pages.TicketsPage
                 return Page();
             }
 
-            // Generate a unique Ticket_ID manually
-            Ticket.TicketId = GenerateUniqueTicketId();
+            // Generate random IDs for Ticket and Purchase
+            Ticket.TicketId = GenerateRandomId();
             Ticket.TicketPurchaseDate = DateOnly.FromDateTime(DateTime.Now);
 
-            // Create and save the purchase
             var purchase = new Purchase
             {
-                PurchaseId = GenerateUniquePurchaseId(),
+                PurchaseId = GenerateRandomId(),
                 CustomerId = customer.CustomerId,
                 PurchaseDate = Ticket.TicketPurchaseDate,
                 TotalPurchasesPrice = Ticket.TicketPrice,
-                NumItems = 1
+                NumItems = 1,
+                ItemName = "Ticket" 
             };
 
             _context.Purchases.Add(purchase);
@@ -138,16 +138,19 @@ namespace RazorLogin.Pages.TicketsPage
             return Page();
         }
 
-        private int GenerateUniqueTicketId()
+        private int GenerateRandomId()
         {
-            var maxTicketId = _context.Tickets.Any() ? _context.Tickets.Max(t => t.TicketId) : 0;
-            return maxTicketId + 1;
-        }
+            var random = new Random();
+            int newId;
 
-        private int GenerateUniquePurchaseId()
-        {
-            var maxId = _context.Purchases.Any() ? _context.Purchases.Max(p => p.PurchaseId) : 0;
-            return maxId + 1;
+            do
+            {
+                newId = random.Next(1000, 9999); // Generate a random 4-digit number
+            }
+            while (_context.Tickets.Any(t => t.TicketId == newId) ||
+                   _context.Purchases.Any(p => p.PurchaseId == newId)); // Ensure no conflict with existing IDs
+
+            return newId;
         }
     }
 }

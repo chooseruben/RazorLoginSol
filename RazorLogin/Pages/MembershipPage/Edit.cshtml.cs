@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RazorLogin.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RazorLogin.Pages.MembershipPage
@@ -30,7 +31,6 @@ namespace RazorLogin.Pages.MembershipPage
 
             if (Customer == null)
             {
-                // Handle case where customer is not found, redirect or show error
                 TempData["ErrorMessage"] = "Customer not found.";
                 return RedirectToPage("./Index");
             }
@@ -61,8 +61,9 @@ namespace RazorLogin.Pages.MembershipPage
                 return Page();
             }
 
-            // Update the customer's membership details in the database
-            var customerToUpdate = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerEmail == Customer.CustomerEmail);
+            // Fetch the customer to update based on email
+            var customerToUpdate = await _context.Customers
+                .FirstOrDefaultAsync(c => c.CustomerEmail == Customer.CustomerEmail);
 
             if (customerToUpdate == null)
             {
@@ -77,54 +78,48 @@ namespace RazorLogin.Pages.MembershipPage
 
             if (!membershipChanged)
             {
-                // No changes in membership, no need to charge again
                 TempData["SuccessMessage"] = "Your membership details have not changed, no charge applied.";
                 return RedirectToPage("./Index");
             }
 
-            // Update the customer's membership details
+            // Update membership details
             customerToUpdate.MembershipType = Customer.MembershipType;
             customerToUpdate.MembershipStartDate = Customer.MembershipStartDate;
             customerToUpdate.MembershipEndDate = Customer.MembershipEndDate;
 
-            // Generate a random PurchaseId
-            var randomPurchaseId = new Random().Next(1000, 9999); // Random 4-digit number
-
-            // Create the initial purchase record (for the first month)
+            // Generate the first purchase record
             var purchase = new Purchase
             {
-                PurchaseId = randomPurchaseId,  
-                CustomerId = customerToUpdate.CustomerId,
+                PurchaseId = new Random().Next(1000, 9999),
+                CustomerId = customerToUpdate.CustomerId, // Ensure this is not null
                 PurchaseDate = DateOnly.FromDateTime(DateTime.Now),
                 PurchaseTime = TimeOnly.FromDateTime(DateTime.Now),
-                NumItems = 1,  
-                ItemName = customerToUpdate.MembershipType, // Membership type as ItemName
-                TotalPurchasesPrice = (int?)GetMembershipPrice(Customer.MembershipType), 
-                StoreId = 2  
+                NumItems = 1,
+                ItemName = customerToUpdate.MembershipType,
+                TotalPurchasesPrice = (int?)GetMembershipPrice(Customer.MembershipType),
+                StoreId = 2
             };
 
             _context.Purchases.Add(purchase);
-            await _context.SaveChangesAsync();
 
-            // Create recurring monthly charges (simulating monthly payment)
+            // Recurring purchases for subsequent months
             var currentDate = DateTime.Now;
-            var numMonths = 12; 
+            int numMonths = 12; // Number of months for recurring purchases
 
             for (int i = 1; i <= numMonths; i++)
             {
                 var nextMonthDate = currentDate.AddMonths(i);
 
-                // Create the recurring purchase for each month
                 var recurringPurchase = new Purchase
                 {
-                    PurchaseId = new Random().Next(1000, 9999), // New random ID for each monthly charge
-                    CustomerId = customerToUpdate.CustomerId,
+                    PurchaseId = new Random().Next(1000, 9999),
+                    CustomerId = customerToUpdate.CustomerId, // Ensure correct association
                     PurchaseDate = DateOnly.FromDateTime(nextMonthDate),
                     PurchaseTime = TimeOnly.FromDateTime(nextMonthDate),
                     NumItems = 1,
                     ItemName = customerToUpdate.MembershipType,
-                    TotalPurchasesPrice = (int?)GetMembershipPrice(Customer.MembershipType), // Monthly charge
-                    StoreId = 2 
+                    TotalPurchasesPrice = (int?)GetMembershipPrice(Customer.MembershipType),
+                    StoreId = 2
                 };
 
                 _context.Purchases.Add(recurringPurchase);
@@ -133,23 +128,7 @@ namespace RazorLogin.Pages.MembershipPage
             await _context.SaveChangesAsync();
 
             TempData["SuccessMessage"] = "Your membership details have been updated and the first charge has been applied.";
-
-            // Repopulate membership options
-            MembershipOptions = new List<SelectListItem>
-    {
-        new SelectListItem { Value = "FREE TIER", Text = "FREE TIER" },
-        new SelectListItem { Value = "FAMILY TIER", Text = "FAMILY TIER" },
-        new SelectListItem { Value = "VIP TIER", Text = "VIP TIER" }
-    };
-
-            // Set the selected membership type
-            var selectedMembership = MembershipOptions.FirstOrDefault(x => x.Value == Customer.MembershipType);
-            if (selectedMembership != null)
-            {
-                selectedMembership.Selected = true;
-            }
-
-            return Page();
+            return RedirectToPage("./Index");
         }
 
         private decimal GetMembershipPrice(string membershipType)
@@ -168,4 +147,3 @@ namespace RazorLogin.Pages.MembershipPage
         }
     }
 }
-

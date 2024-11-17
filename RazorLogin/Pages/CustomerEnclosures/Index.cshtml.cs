@@ -23,7 +23,6 @@ namespace RazorLogin.Pages.CustomerEnclosures
         public async Task OnGetAsync()
         {
             Enclosure = await _context.Enclosures
-                .Where(e => e.OccupancyStatus == "OPEN") // Only include enclosures that are open
                 .Include(e => e.Zookeeper)
                 .Include(e => e.Animals)
                 .ToListAsync();

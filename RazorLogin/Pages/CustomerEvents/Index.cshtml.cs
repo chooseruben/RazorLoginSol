@@ -15,7 +15,6 @@ namespace RazorLogin.Pages.CustomerEvents
 
         public List<Event> Event { get; set; } = new List<Event>();
 
-        // Constructor to inject the database context
         public IndexModel(RazorLogin.Models.ZooDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));

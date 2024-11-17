@@ -10,7 +10,7 @@
 <div class="enclosure-container">
     @foreach (var item in Model.Enclosure)
     {
-        <div class="enclosure-item">
+        <div class="enclosure-item @(item.OccupancyStatus == "CLOSED" ? "closed-enclosure" : "")">
             <h2 class="enclosure-title">@item.EnclosureName</h2>
             <div class="enclosure-details">
                 <p><strong>Open Time:</strong> @item.EnclosureOpenTime.ToString("hh:mm tt")</p>
@@ -24,6 +24,10 @@
                         <li>@animal.Species</li>
                     }
                 </ul>
+                @if (item.OccupancyStatus == "CLOSED")
+                {
+                    <p class="closed-status">Currently Closed</p>
+                }
             </div>
         </div>
     }
@@ -58,7 +62,7 @@
     /* Title styling */
     .enclosure-title {
         font-size: 1.75em;
-        color: #2c6dbf; 
+        color: #2c6dbf;
         margin-bottom: 10px;
         font-weight: bold;
     }
@@ -80,5 +84,19 @@
         font-size: 1em;
         color: #555;
         margin: 4px 0;
+    }
+
+    /* Styling for closed enclosures */
+    .closed-enclosure {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        opacity: 0.6; /* Dim the closed enclosures */
+    }
+
+    .closed-status {
+        color: #721c24;
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-top: 10px;
     }
 </style>
