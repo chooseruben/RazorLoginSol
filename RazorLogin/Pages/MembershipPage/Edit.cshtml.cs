@@ -87,63 +87,35 @@ namespace RazorLogin.Pages.MembershipPage
             customerToUpdate.MembershipStartDate = Customer.MembershipStartDate;
             customerToUpdate.MembershipEndDate = Customer.MembershipEndDate;
 
-            // Generate the first purchase record
             var purchase = new Purchase
             {
-                PurchaseId = new Random().Next(1000, 9999),
-                CustomerId = customerToUpdate.CustomerId, // Ensure this is not null
+                PurchaseId = new Random().Next(1000, 9999), // Random unique ID
+                CustomerId = customerToUpdate.CustomerId,
                 PurchaseDate = DateOnly.FromDateTime(DateTime.Now),
                 PurchaseTime = TimeOnly.FromDateTime(DateTime.Now),
                 NumItems = 1,
-                ItemName = customerToUpdate.MembershipType,
+                ItemName = customerToUpdate.MembershipType, 
                 TotalPurchasesPrice = (int?)GetMembershipPrice(Customer.MembershipType),
                 StoreId = 2
             };
 
             _context.Purchases.Add(purchase);
 
-            // Recurring purchases for subsequent months
-            var currentDate = DateTime.Now;
-            int numMonths = 12; // Number of months for recurring purchases
-
-            for (int i = 1; i <= numMonths; i++)
-            {
-                var nextMonthDate = currentDate.AddMonths(i);
-
-                var recurringPurchase = new Purchase
-                {
-                    PurchaseId = new Random().Next(1000, 9999),
-                    CustomerId = customerToUpdate.CustomerId, // Ensure correct association
-                    PurchaseDate = DateOnly.FromDateTime(nextMonthDate),
-                    PurchaseTime = TimeOnly.FromDateTime(nextMonthDate),
-                    NumItems = 1,
-                    ItemName = customerToUpdate.MembershipType,
-                    TotalPurchasesPrice = (int?)GetMembershipPrice(Customer.MembershipType),
-                    StoreId = 2
-                };
-
-                _context.Purchases.Add(recurringPurchase);
-            }
-
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "Your membership details have been updated and the first charge has been applied.";
+            TempData["SuccessMessage"] = "Your membership details have been updated and the charge has been applied.";
             return RedirectToPage("./Index");
         }
 
         private decimal GetMembershipPrice(string membershipType)
         {
-            switch (membershipType)
+            return membershipType switch
             {
-                case "FREE TIER":
-                    return 0;
-                case "FAMILY TIER":
-                    return 15; 
-                case "VIP TIER":
-                    return 25; 
-                default:
-                    return 0;
-            }
+                "FREE TIER" => 0,
+                "FAMILY TIER" => 15,
+                "VIP TIER" => 25,
+                _ => 0
+            };
         }
     }
 }
