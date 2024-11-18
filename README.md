@@ -14,7 +14,11 @@ SHOP LOG IN: Employee@Employee.com  password = Test1234!
 
 Steps to run the website:<br />
 
-    1.Clone the repository using Visual Studio 2022 <br />
-    2.In Visual Studio 2022, click "File -> Open -> Project Solution" <br />
-    3.Navigate to the cloned project folder and open file "RazorLoginSol.sln" <br />
-    4.Start the project <br />
+    1.Clone the repository using Visual Studio 2022 
+    2.In Visual Studio 2022, click "File -> Open -> Project Solution" 
+    3.Navigate to the cloned project folder and open file "RazorLoginSol.sln" 
+    4.Start the project 
+
+All c# and accompannying html razor files can be found within the pages folder.
+All models of sql tables can be found in the Models folder, including the dbcontext, ZooDbContext.
+dbo.Trigger.sql is defunct and reamins for documentation.
