@@ -9,7 +9,7 @@ ADMIN LOG IN: Admin@Official.com  password = Test1234! <br />
 MANAGER LOG IN: onlinemanager@zoo.com  password = Test1234! <br />
 ZOOKEEPER LOG IN: Zookeeper@Zookeeper.com  password = Test1234! <br />
 CUSTOMER LOG IN:  mina@customer.com  password = Test1234! <br />
-SHOP LOG IN: Employee@Employee.com  password = Test1234!
+SHOP LOG IN: Employee2@Employee2.com  password = Test1234!
 
 
 Steps to run the website:<br />
