@@ -22,3 +22,5 @@ Steps to run the website:<br />
 All c# and accompannying html razor files can be found within the pages folder.<br />
 All models of sql tables can be found in the Models folder, including the dbcontext, ZooDbContext.<br />
 dbo.Trigger.sql is defunct and reamins for documentation.<br />
+
+<br /><br /><br /> ALL CODE FILES CAN BE FOUND IN RazorLogin FOLDER
