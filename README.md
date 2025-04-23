@@ -33,5 +33,15 @@ TRIGGERS<br />
 QUERIES <br />
 1. Can be found in Employee view in Events tab. Allows user to filter events by date and view the associated employees. Pulls from Events table and Employees table. <br />
 2. Can be found in manager view in Finance Reports tab --> Ticket Report tab. Allows user to filter by date for ticket sales and view customer information in relation to the sales. pulls from customer table and ticket table. <br />
-3. Can be found in manager view in Finance Reports tab --> Purchase Sales Report tab. Allows user to filter by date for Purchase sales and view customer information in relation to the sales. pulls from customer table and Purchases table.
+3. Can be found in manager view in Finance Reports tab --> Purchase Sales Report tab. Allows user to filter by date for Purchase sales and view customer information in relation to the sales. pulls from customer table and Purchases table.<br /><br />
     
+MY CONTRIBUTIONS (Ruben De La Torre) <br />
+
+As part of Team 10 (Fall 2024, Database Systems @ University of Houston), I contributed the following:
+- Built Razor Pages for the **Manager** role to edit shop/store details (name, hours, inventory)
+- Developed Razor Pages for the **Zookeeper** role to manage enclosures, animal records, and events
+- Wrote and tested **SQL Triggers** to:
+  - Automatically mark enclosures as "CLOSED" based on scheduling inputs
+  - Prevent zookeepers/employees from assigning themselves more than 2 future events
+- Collaborated on queries to generate reports for ticket sales and purchase summaries filtered by date
+
